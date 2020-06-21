@@ -1,21 +1,22 @@
+/* eslint-disable class-methods-use-this */
 const AUDIO_FILES_PATH = './media/audio/';
 
-export default {
+export default class BaseView {
   getElement(selector) {
     return document.querySelector(selector);
-  },
+  }
 
   clearElement(element) {
     while (element.firstChild) {
       element.removeChild(element.firstChild);
     }
-  },
+  }
 
   clearElementFrom(element, index) {
     for (let i = index; index < element.children.length; i += 1) {
       element.removeChild(element.children[index]);
     }
-  },
+  }
 
   createElement(tag, className) {
     const element = document.createElement(tag);
@@ -23,7 +24,7 @@ export default {
     if (className) element.classList.add(className);
 
     return element;
-  },
+  }
 
   createMenuItem(name, id) {
     const fragment = document.createDocumentFragment();
@@ -37,7 +38,7 @@ export default {
 
     fragment.appendChild(li);
     return fragment;
-  },
+  }
 
   playAudio(fileName) {
     const audio = new Audio(AUDIO_FILES_PATH + fileName);
@@ -45,5 +46,5 @@ export default {
     audio.play();
 
     return new Promise((resolve) => audio.addEventListener('ended', resolve, { once: true }));
-  },
+  }
 }
