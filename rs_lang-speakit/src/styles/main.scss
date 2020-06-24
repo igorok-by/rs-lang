@@ -1,0 +1,86 @@
+@import "reset";
+@import "variables";
+@import "settings";
+@import "animate";
+@import "modal";
+
+//@import "./fonts.scss";
+
+.wr-header {
+  height: 40px;
+  position: relative;
+  padding: 10px 0;
+  background-color: #158fef;
+  .container {
+    text-align: center;
+  }
+  h2 {
+    display: inline-block;
+    margin: 10px auto 0;
+    font-family: "Roboto-Bold";
+    font-size: 23px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
+
+.wr-main{
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+          "app-panel-header app-header"
+          "app-panel        app-main"
+          "app-panel        app-footer";
+  .container {
+    display: flex;
+  }
+}
+.app-panel {
+  grid-area: app-panel;
+  height: calc(100vh - 60px);
+  background-color: #b3d4fc;
+  .menuItem{
+    width: 150px;
+  }
+}
+.app-header {
+  grid-area: app-header;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: #fccd86;
+  height: 60px;
+  box-sizing: border-box;
+  padding: 15px;
+  text-align: center;
+}
+.app-main {
+  grid-area: app-main;
+  background-color: #6593fc;
+  .menuItem{
+    width: 150px;
+  }
+}
+.app-menu-header{
+  grid-area: app-panel-header;
+  background-color: #91fc65;
+}
+
+.root-content{
+  width: 100%;
+  background-color: #b293fc;
+}
+.show{
+  display: block;
+}
+footer{
+  height: 40px;
+  position: relative;
+  padding: 15px 0;
+  background-color: #ef6eb0;
+  .container {
+    text-align: center;
+  }
+}
