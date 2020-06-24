@@ -20,17 +20,16 @@ class Controller {
     ];
   }
 
-  async showGame(gameName, params) {
-    const game = this.games.find((el) => el.name === gameName);
+  showGame(hash, params) {
+    const game = this.games.find((el) => el.hash === hash);
     if (game) {
-      const html = await game.display(params);
-      view.showIn('main', html);
+      game.display(view.showIn.bind(view, 'main'));
     } else {
-      throw new Error(`There is no game by name ${gameName}`);
+      throw new Error(`There is no game by name ${hash}`);
     }
   }
 
-  async login() {
+  login() {
     Login.display();
   }
 }

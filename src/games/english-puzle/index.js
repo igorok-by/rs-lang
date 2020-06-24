@@ -1,16 +1,32 @@
-import markup from './EnglishPuzzle.html';
-import './styles.scss';
-import View from '../../services/view';
+import GUI from './js/view';
+import Model from './js/model';
 
-class SpeakIt extends View {
-  constructor() {
-    super();
-    this.name = 'englishPuzzle';
+class EnglishPuzzle {
+  constructor(gui, model) {
+    this.gui = gui;
+    this.model = model;
+    this.hash = 'englishPuzzle';
   }
 
-  display(params) {
-    return this.render(markup, { title: 'ENGLISH PUZZLE' });
+  init() {
+    this.gui.init();
+
+    this.gui.bindTestField(this.model.updateWords.bind(this.model));
+
+    this.model.bindDisplayWords(this.gui.displayWords.bind(this.gui));
+  }
+
+  /**
+   *
+   * @param show Function to insert HTML to main section
+   */
+  display(show) {
+    const html = this.gui.getUI();
+
+    show(html);
+
+    this.init();
   }
 }
 
-export default new SpeakIt();
+export default new EnglishPuzzle(new GUI(), new Model());

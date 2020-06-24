@@ -4,6 +4,7 @@ import { REST_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
 
 class Model {
+  // TODO
   constructor() {
     this.token = '';
     this.userId = '';
@@ -97,7 +98,7 @@ class Model {
   // textMeaningTranslate: "Если что-то типичное, это нормально, или что-то, что обычно происходит"
   // wordTranslate: "типичный"
   // wordsPerExampleSentence: 7
-  async getWords({ group, page }) {
+  async getWords({ group, page } = {}) {
     let url = UrlPath(REST_URL, 'words');
 
     if (group || page) {
