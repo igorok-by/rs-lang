@@ -1,0 +1,11 @@
+@import "../../styles/variables";
+@import "styles/main.css";
+
+.english-puzzle.game-section {
+  background-color: $color_success;
+  text-align: center;
+}
+
+.english-puzzle__header{
+  margin: 15px auto;
+}
