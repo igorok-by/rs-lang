@@ -20,10 +20,10 @@ class Controller {
     ];
   }
 
-  showGame(gameName, params) {
+  async showGame(gameName, params) {
     const game = this.games.find((el) => el.name === gameName);
     if (game) {
-      const html = game.display(params);
+      const html = await game.display(params);
       view.showIn('main', html);
     } else {
       throw new Error(`There is no game by name ${gameName}`);
