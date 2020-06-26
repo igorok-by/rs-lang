@@ -6,10 +6,16 @@ import MainModel from '../../services/model';
 class Lingvist extends View {
   constructor() {
     super();
-    this.name = 'lingvist';
+    this.hash = 'lingvist';
     this.mainModel = new MainModel();
     this.scopeOfWords = [];
-    this.hash = this.name;
+    this.audioBtn = this.createElement('button', 'card__audio');
+    this.checkBtn = this.createElement('button', 'card__btn');
+    this.lookBtn = this.createElement('button', 'card__btn');
+    this.form = '';
+    this.header = '';
+    this.body = '';
+    this.footer = '';
   }
 
   async getWords() {
@@ -17,22 +23,38 @@ class Lingvist extends View {
     return words;
   }
 
-  async renderTemplate() {
-    this.scopeOfWords = await this.getWords();
-    const phrase = this.scopeOfWords[0].word;
-    const translated = this.scopeOfWords[0].wordTranslate;
+  insertAudioBtn() {
+    const imageSVG = '<svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>';
+    this.audioBtn.insertAdjacentHTML('beforeend', imageSVG);
+    this.audioBtn.type = 'button';
 
-    return this.render(markup, {
-      title: 'LINGVIST',
-      phrase,
-      translated,
-    });
+    this.header = this.getElement('.card__header');
+    this.header.append(this.audioBtn);
   }
 
-  async display(show) {
-    const templateHTML = await this.renderTemplate();
+  insertControlBtns() {
+    this.checkBtn.insertAdjacentText('beforeend', 'Проверить');
+    this.checkBtn.type = 'submit';
 
+    this.lookBtn.type = 'button';
+    this.lookBtn.classList.add('card__btn--light');
+    this.lookBtn.insertAdjacentText('beforeend', 'Показать ответ');
+
+    this.footer = this.getElement('.card__footer');
+    this.footer.append(this.lookBtn, this.checkBtn);
+  }
+
+  insertElementsAfterRender() {
+    this.insertAudioBtn();
+    this.insertControlBtns();
+    this.form = this.getElement('#formCard');
+    this.body = this.getElement('.card__body');
+  }
+
+  display(show) {
+    const templateHTML = this.render(markup, { title: 'Lingvist' });
     show(templateHTML);
+    this.insertElementsAfterRender();
   }
 }
 
