@@ -9,6 +9,7 @@ class Lingvist extends View {
     this.name = 'lingvist';
     this.mainModel = new MainModel();
     this.scopeOfWords = [];
+    this.hash = this.name;
   }
 
   async getWords() {
@@ -16,18 +17,22 @@ class Lingvist extends View {
     return words;
   }
 
-  async display() {
+  async renderTemplate() {
     this.scopeOfWords = await this.getWords();
     const phrase = this.scopeOfWords[0].word;
     const translated = this.scopeOfWords[0].wordTranslate;
-
-    console.log(this.scopeOfWords);
 
     return this.render(markup, {
       title: 'LINGVIST',
       phrase,
       translated,
     });
+  }
+
+  async display(show) {
+    const templateHTML = await this.renderTemplate();
+
+    show(templateHTML);
   }
 }
 
