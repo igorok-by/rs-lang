@@ -1,21 +1,80 @@
 .card-container {
-  display: flex;
-  justify-content: center;
-  align-self: stretch;
-  flex: none;
+  color: $dark;
 }
 
 .card {
-
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 15px;
+  background-color: $success;
+  border-radius: $border-radius;
+  border: $border;
+  border-color: $dark;
+  box-shadow: $box-shadow;
 }
 
-.card__navigate {
+.card__header {
+  display: flex;
+  justify-content: flex-end;
+}
 
-  &--prev {
-    
+.card__body {
+  
+}
+
+.card__footer {
+display: flex;
+justify-content: flex-end;
+}
+
+.card__audio {
+  height: 30px;
+  width: 30px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: $primary-dark;
+    transition: $def-transition;
   }
 
-  &--next {
+  &:hover svg {
+    fill: $primary;
+  }
 
+  &--active svg {
+    fill: $warning;
+    animation: scaleUp 0.5s ease-in-out infinite alternate;
+  }
+}
+
+.card__btn {
+  padding: 13px;
+  background: $primary;
+  font-size: 22px;
+  color: $success;
+  border-radius: $border-radius;
+  border: $border;
+  transition: $def-transition;
+
+  &:hover {
+    background: $primary-hover;
+    border-color: $primary-hover;
+  }
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+
+  &--light {
+    background: $success;
+    color: $primary;
+
+    &:hover {
+      background: $primary;
+      color: $success;
+      border-color: $primary;
+    }
   }
 }

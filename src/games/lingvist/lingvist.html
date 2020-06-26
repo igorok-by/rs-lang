@@ -1,9 +1,13 @@
-<div class="game-section">
+<div class="game-section game-section--lingv">
   <main class="game-body">
     <h2 class="game-body__title">{{title}}</h2>
-    <div class="card-container">
+    <form class="card-container" action="/" id="formCard">
       <div class="card">
-        <div class="card__header"></div>
+        <div class="card__header">
+          <button class="card__audio" type="button">
+            <svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>
+          </button>
+        </div>
         <div class="card__body">
           <div class="learn">
             <p class="learn__phrase">{{phrase}}</p>
@@ -11,12 +15,10 @@
           </div>
         </div>
         <div class="card__footer">
-          <button class="card__audio">
-            <svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>
-          </button>
-          <button class="card__next">Проверить</button>
+          <button class="card__btn card__btn--light" type="button">Показать ответ</button>
+          <button class="card__btn" type="submit">Проверить</button>
         </div>
       </div>
-    </div>
+    </form>
   </main>
 </div>
