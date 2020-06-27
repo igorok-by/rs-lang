@@ -1,5 +1,5 @@
-import GUI from './js/view';
-import Model from './js/model';
+import GUI from './view/view';
+import Model from './model/model';
 
 class EnglishPuzzle {
   constructor(gui, model) {
