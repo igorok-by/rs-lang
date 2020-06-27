@@ -13,9 +13,9 @@ class GUI extends View {
     this.statusBar = new StatusBar(this);
   }
 
-  init() {
+  init({ onSettings, onLevel, onPage }) {
     this.testField = this.getElement('.english-puzzle__test-field');
-    this.statusBar.init();
+    this.statusBar.init({ onSettings, onLevel, onPage });
   }
 
   displayWords(words) {
