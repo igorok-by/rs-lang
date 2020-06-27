@@ -4,7 +4,7 @@
 @import "animate";
 @import "modal";
 
-//@import "./fonts.scss";
+//@import "fonts";
 
 .wr-header {
   height: 40px;
@@ -34,7 +34,7 @@
           "app-panel        app-main"
           "app-panel        app-footer";
   .container {
-    display: flex;
+    //display: flex;
   }
 }
 .app-panel {

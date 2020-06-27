@@ -1,4 +1,4 @@
-import GUI from './view/view';
+import GUI from './view/index';
 import Model from './model/model';
 
 class EnglishPuzzle {
@@ -9,9 +9,10 @@ class EnglishPuzzle {
   }
 
   init() {
+    console.log( '@index.js init : ' );
     this.gui.init();
 
-    this.gui.bindTestField(this.model.updateWords.bind(this.model));
+    // this.gui.bindTestField(this.model.updateWords.bind(this.model));
 
     this.model.bindDisplayWords(this.gui.displayWords.bind(this.gui));
   }
