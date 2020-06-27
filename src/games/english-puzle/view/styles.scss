@@ -1,13 +1,18 @@
 @import "../../../styles/variables";
-@import "../styles/main.css";
 
 .english-puzzle.game-section {
   background-color: $color_success;
   text-align: center;
+  padding: 10px 0 0 0;
 }
-
+.english-puzzle .container{
+  height: 100%;
+}
 .english-puzzle__header{
   margin: 15px auto;
+}
+.english-puzzle__component{
+  margin: 15px 0;
 }
 
 .english-puzzle__test-field{

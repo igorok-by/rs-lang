@@ -4,7 +4,7 @@
 @import "animate";
 @import "modal";
 
-//@import "./fonts.scss";
+//@import "fonts";
 
 .wr-header {
   position: relative;
@@ -39,7 +39,7 @@
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
   .container {
-    display: flex;
+    //display: flex;
   }
 }
 
