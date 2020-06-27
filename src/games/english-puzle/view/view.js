@@ -1,6 +1,6 @@
-import markup from '../EnglishPuzzle.html';
-import '../styles.scss';
-import View from '../../../services/view';
+import markup from './EnglishPuzzle.html';
+import './styles.scss';
+import View from '../../services/view';
 
 class GUI extends View {
   constructor() {

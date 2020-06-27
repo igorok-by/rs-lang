@@ -1,4 +1,0 @@
-/**
- * SOME JS CODE
- */
- 
