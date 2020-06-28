@@ -62,6 +62,21 @@ module.exports = {
         test: /\.html$/,
         loader: 'html-loader',
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[folder]/[name].[ext]',
+              outputPath: 'media',
+              esModule: false,
+              useRelativePath: true,
+
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [

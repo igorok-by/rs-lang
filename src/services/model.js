@@ -2,12 +2,13 @@
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
-
+const synth = window.speechSynthesis;
 class Model {
   // TODO
   constructor() {
     this.token = '';
     this.userId = '';
+    this.utterance = new SpeechSynthesisUtterance();
   }
 
   async signIn(user) {
@@ -110,6 +111,17 @@ class Model {
     return result;
   }
 
+
+  speak(text, language) {
+    const voices = synth.getVoices();
+    const langVoice = voices.find(({ lang }) => lang === language);
+    this.utterance.text = text;
+
+    this.utterance.voice = langVoice;
+
+    synth.speak(this.utterance);
+  }
+
   async getImageUrl(path) {
     return UrlPath(MEDIA_CONTENT_URL, path);
   }
@@ -122,7 +134,6 @@ class Model {
     audio.play();
 
     return audio;
-  }
 }
 
 export default Model;

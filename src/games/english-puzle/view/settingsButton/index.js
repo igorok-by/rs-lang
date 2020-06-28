@@ -2,7 +2,7 @@ import SettingsButton from './SettingsButton.html';
 import './styles.scss';
 
 class SettingsButtonController {
-  constructor(view, model) {
+  constructor(view) {
     this.view = view;
   }
 

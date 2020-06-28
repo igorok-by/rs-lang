@@ -10,16 +10,21 @@ class EnglishPuzzle {
 
   init() {
     console.log( '@index.js init : ' );
-    this.gui.init({
-      onSettings: this.model.settingsChange.bind(this.model),
-      onLevel: this.model.levelChange.bind(this.model),
-      onPage: this.model.pageChange.bind(this.model),
+    this.gui.init();
+    this.gui.statusBar.init({
+      onChangeSettings: this.model.settingsChange.bind(this.model),
+      onChangeLevel: this.model.levelChange.bind(this.model),
+      onChangePage: this.model.pageChange.bind(this.model),
     });
+    this.gui.promptBar.init({
+      onSpeakerClick: this.model.pronounceExampleTranslate.bind(this.model),
+    });
+    this.gui.gameField.init();
 
-    // this.gui.bindTestField(this.model.updateWords.bind(this.model));
-    // this.
+
     this.model.bindDisplaySettings(this.gui.statusBar.displaySettings.bind(this.gui.statusBar));
     this.model.bindDisplayWords(this.gui.displayWords.bind(this.gui));
+    this.model.bindDisplayPromptMessage(this.gui.promptBar.displayMessage.bind(this.gui.promptBar));
   }
 
   /**
