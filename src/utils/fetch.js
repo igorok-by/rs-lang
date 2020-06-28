@@ -23,6 +23,7 @@ export const FetchRequire = async (url, data = {}) => {
   const ParentDataObject = ParentData[Method];
   if (ParentDataObject) {
     const Data = Object.assign(ParentDataObject, data);
+    console.log(url, Data);
     const response = await fetch(url, Data).catch();
 
     if (!response.ok) {

@@ -1,8 +1,8 @@
 import markup from './EnglishPuzzle.html';
 import StatusBar from './statusBar';
-import gameField from './gameField';
+import GameField from './gameField';
 import answerBar from './answerBar';
-import hintsBar from './hintsBar';
+import PromptBar from './promptBar';
 import controlButtonsBar from './controlButtonsBar';
 import './styles.scss';
 import View from '../../../services/view';
@@ -11,11 +11,12 @@ class GUI extends View {
   constructor() {
     super();
     this.statusBar = new StatusBar(this);
+    this.promptBar = new PromptBar(this);
+    this.gameField = new GameField(this);
   }
 
-  init({ onSettings, onLevel, onPage }) {
+  init() {
     this.testField = this.getElement('.english-puzzle__test-field');
-    this.statusBar.init({ onSettings, onLevel, onPage });
   }
 
   displayWords(words) {
@@ -30,11 +31,13 @@ class GUI extends View {
 
   getUI() {
     const statusBar = this.statusBar.render();
+    const promptBar = this.promptBar.render();
+    const gameField = this.gameField.render();
 
     return this.render(markup, {
       title: 'ENGLISH PUZZLE',
       statusBar,
-      hintsBar,
+      promptBar,
       gameField,
       answerBar,
       controlButtonsBar,

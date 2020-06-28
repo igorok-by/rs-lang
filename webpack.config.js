@@ -53,6 +53,21 @@ module.exports = {
         test: /\.html$/,
         loader: 'html-loader'
       },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[folder]/[name].[ext]',
+              outputPath: 'media',
+              esModule: false,
+              useRelativePath: true,
+
+            },
+          },
+        ],
+      },
     ],
   },
   plugins   : [
@@ -66,6 +81,7 @@ module.exports = {
     } ),
     new CopyWebpackPlugin( [
       {from : './src/assets/img/', to : './img/'},
+      {from : './src/games/english-puzle/assets/img', to : './img/english-puzle'},
     ] ),
   ],
   resolve   : {

@@ -1,13 +1,14 @@
 /* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
-import { REST_URL } from '../utils/urls';
+import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
-
+const synth = window.speechSynthesis;
 class Model {
   // TODO
   constructor() {
     this.token = '';
     this.userId = '';
+    this.utterance = new SpeechSynthesisUtterance();
   }
 
   async signIn(user) {
@@ -108,6 +109,32 @@ class Model {
     const result = await FetchRequire(url);
 
     return result;
+  }
+
+  speak(text, language) {
+    const voices = synth.getVoices();
+    const langVoice = voices.find(({ lang }) => lang === language);
+    this.utterance.text = text;
+
+    this.utterance.voice = langVoice;
+
+    synth.speak(this.utterance);
+  }
+
+  async getImageUrl(path) {
+    return UrlPath(MEDIA_CONTENT_URL, path);
+  }
+
+  playAudio(path) {
+    const url = UrlPath(MEDIA_CONTENT_URL, path);
+
+    const audio = new Audio(url);
+
+    audio.play();
+
+    return audio;
+
+    // return new Promise((resolve) => audio.addEventListener('ended', resolve, { once: true }));
   }
 }
 
