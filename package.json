@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "webpack-dev-server --open --mode development",
     "build": "webpack --mode production",
-    "deploy": "npm run build && netlify deploy --prod"
+    "deploy": "npm run build && netlify deploy --prod",
+    "lint": "node node_modules/eslint/bin/eslint.js ./src/components"
   },
   "browserslist": [
     "> 1%",

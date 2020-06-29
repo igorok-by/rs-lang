@@ -1,3 +1,10 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable comma-dangle */
+/* eslint-disable linebreak-style */
+/* eslint-disable object-curly-spacing */
+/* eslint-disable space-in-parens */
+/* eslint-disable linebreak-style */
+/* eslint-disable key-spacing */
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
@@ -28,7 +35,7 @@ module.exports = {
             options : {sourceMap : true},
           }, {
             loader  : 'postcss-loader',
-            options : {sourceMap : true, config : {path : 'src/config/postcss.config.js'}},
+            options : {sourceMap : true, config : {path : './src/config/postcss.config.js'}},
           },
         ],
       },
@@ -42,7 +49,7 @@ module.exports = {
             options : {sourceMap : true},
           }, {
             loader  : 'postcss-loader',
-            options : {sourceMap : true, config : {path : 'src/config/postcss.config.js'}},
+            options : {sourceMap : true, config : {path : './src/config/postcss.config.js'}},
           }, {
             loader  : 'sass-loader',
             options : {sourceMap : true},

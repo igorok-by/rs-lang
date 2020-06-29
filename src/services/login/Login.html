@@ -1,3 +1,14 @@
 <div class="login">
   <a href="/" class="login__close">Close</a>
+  <form action="" class="login__sign-up" method="POST">
+    <input type="text" class="login__text-field" placeholder="type your email..." name="email" required />
+    <br />
+    <p class="login__password-notice">The password must contain at least 8 characters, at least one uppercase letter, one uppercase letter, one number and one special character from: +-_@$!%*?&#.,;:[]{}</p>
+    <input type="text" class="login__text-field" placeholder="type your password..." name="password" required />
+    <br />
+    <label><input type="checkbox" id="sign-in" />Sign In?</label>
+    <br />
+    <button type="submit" class="login__submit-btn">Send</button>
+  </form>
+  <p id="error-output"></p>
 </div>
