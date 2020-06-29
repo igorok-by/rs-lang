@@ -65,10 +65,11 @@ class PuzzlePiece {
     return canvas;
   }
 
+  // TODO image background
+
   drawImage(piece, image, row, width){
     // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
 
-    //
       const ctx = piece.getContext('2d');
       ctx.drawImage(
         image,
