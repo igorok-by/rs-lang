@@ -1,3 +1,6 @@
+/* eslint-disable indent */
+/* eslint-disable spaced-comment */
+/* eslint-disable no-unreachable */
 const URL_DATA_SEPARATOR = '&';
 const ParentData = {
   GET: {
@@ -23,7 +26,6 @@ export const FetchRequire = async (url, data = {}) => {
   const ParentDataObject = ParentData[Method];
   if (ParentDataObject) {
     const Data = Object.assign(ParentDataObject, data);
-    console.log(url, Data);
     const response = await fetch(url, Data).catch();
 
     if (!response.ok) {
@@ -37,7 +39,6 @@ export const FetchRequire = async (url, data = {}) => {
 
     return result;
   }
-
   return null;
 };
 

@@ -1,3 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable indent */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable spaced-comment */
 /* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
@@ -26,6 +32,8 @@ class Model {
     if (result && result.message === messages.LOGIN_SUCCESS) {
       this.token = result.token;
       this.userId = result.userId;
+      localStorage.setItem('userToken', this.token);
+      console.log('ok');
     }
 
     return result;
@@ -37,9 +45,34 @@ class Model {
     const result = await FetchRequire(url, {
       method: 'POST',
       body: JSON.stringify(user),
+    }).catch((err) => {
+      const email = document.querySelector('input[name="email"]');
+      const password = document.querySelector('input[name="password"]');
+      if (!result.ok) {
+        console.log(result);
+        const errors = result.error.errors;
+        if (errors.length === 2) {
+          email.value = '';
+          email.placeholder = errors[0].message;
+          password.value = '';
+          password.placeholder = errors[1].message;
+        } else {
+        const validResult = errors[0].path === 'email' ? true : false;
+        console.log(validResult);
+          if (validResult) {
+            email.value = '';
+            email.placeholder = errors[0].message;
+          } else {
+            password.value = '';
+            password.placeholder = errors[0].message;
+          }
+        }
+        console.log(errors);
+        return false;
+      }
     });
+    if (!result) return false;
     console.log(result);
-
     return result;
   }
 
