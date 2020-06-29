@@ -57,13 +57,12 @@ class Puzzle extends PuzzlePiece {
     this.image = this.pictures[level];
   }
 
-  getRowPieces(rowN, sentence) {
-    const row = this.getRow(rowN);
-    const rowWidth = row.offsetWidth;
+  getRowPieces(sentence) {
+    const fieldWidth = this.puzzle.offsetWidth;
     const _sentence = sentence.replace(/<[^>]*>|\./g, '');
     const words = _sentence.split(/\s/);
     const allLettersCount = _sentence.replace(/\s/g, '').length;
-    const k = rowWidth / allLettersCount;
+    const k = fieldWidth / allLettersCount;
 
     const pieces = words.map((word, i, arr) => {
       const len = arr.length;
@@ -83,28 +82,41 @@ class Puzzle extends PuzzlePiece {
 
     console.log(pieces)
     return pieces;
+  }
+
+  addPieceToRow(piece, rowN){
+    const row = this.getRow(rowN);
+
+    row.append( piece );
+  }
+
+  displayBackgroundImage(){
 
   }
 
   displayPuzzle() {
     console.log('@displayPuzzleItem : ');
-    const row = this.getRow(0);
-    const row2 = this.getRow(1);
-    const row3 = this.getRow(2);
-
-    const pieces = this.getRowPieces(0, this.wordsList[0]);
-    const pieces2 = this.getRowPieces(1, this.wordsList[1]);
-    const pieces3 = this.getRowPieces(2, this.wordsList[2]);
-
-    pieces.forEach( (piece) => {
-      row.append( piece );
-    });
-    pieces2.forEach( (piece) => {
-      row2.append( piece );
-    });
-    pieces3.forEach( (piece) => {
-      row3.append( piece );
-    });
+    this.wordsList.forEach((sentence, i) => {
+      const pieces = this.getRowPieces(sentence);
+      pieces.forEach(this.addPieceToRow.bind(this))
+    })
+    // const row = this.getRow(0);
+    // const row2 = this.getRow(1);
+    // const row3 = this.getRow(2);
+    //
+    // const pieces = this.getRowPieces(0, this.wordsList[0]);
+    // const pieces2 = this.getRowPieces(1, this.wordsList[1]);
+    // const pieces3 = this.getRowPieces(2, this.wordsList[2]);
+    //
+    // pieces.forEach( (piece) => {
+    //   row.append( piece );
+    // });
+    // pieces2.forEach( (piece) => {
+    //   row2.append( piece );
+    // });
+    // pieces3.forEach( (piece) => {
+    //   row3.append( piece );
+    // });
     // const word = 'Test';
     // const url = 'https://gallerix.ru/pic/_EX/1016087178/713080393.jpeg';
 

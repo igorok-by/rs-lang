@@ -21,7 +21,6 @@ class EnglishPuzzle {
     });
     this.gui.gameField.init();
 
-
     this.model.bindDisplaySettings(this.gui.statusBar.displaySettings.bind(this.gui.statusBar));
     this.model.bindDisplayWords(this.gui.displayWords.bind(this.gui));
     this.model.bindDisplayPromptMessage(this.gui.promptBar.displayMessage.bind(this.gui.promptBar));
