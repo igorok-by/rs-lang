@@ -54,6 +54,7 @@ class Lingvist extends View {
     this.body.innerHTML = '';
     // console.log(word);
     this.body.append(input.createTemplate());
+    input.inputAnswer.focus();
   }
 
   insertElementsAfterRender() {

@@ -7,6 +7,7 @@ export default class Input {
     this.wrapper = create('div', 'input');
     this.inputAnswer = create('input', 'input__answer', null, null, ['type', 'text'], ['autocomplete', 'off'], ['autocorrect', 'off'], ['spellcheck', 'false']);
     this.wordHolder = create('span', 'input__word');
+    this.background = create('span', 'input__background');
   }
 
   insertWord() {
@@ -20,7 +21,7 @@ export default class Input {
 
   createTemplate() {
     this.insertWord();
-    this.wrapper.append(this.inputAnswer, this.wordHolder);
+    this.wrapper.append(this.wordHolder, this.background, this.inputAnswer);
 
     return this.wrapper;
   }
