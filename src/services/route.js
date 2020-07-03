@@ -13,11 +13,16 @@ class Router {
 
   static handleHash() {
     const { name, params } = Router.getRouteInfo();
+
     if (name === 'login') {
       Controller.login();
     } else if (name) {
       Controller.showGame(name);
     }
+  }
+
+  goTo(hash){
+    window.location.hash = hash;
   }
 
   init() {

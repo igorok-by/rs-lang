@@ -42,7 +42,8 @@ module.exports = {
             options: { sourceMap: true, config: { path: 'src/config/postcss.config.js' } },
           },
         ],
-      }, {
+      },
+      {
         test: /\.scss$/,
         use: [
           'style-loader',

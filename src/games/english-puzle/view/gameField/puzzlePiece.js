@@ -5,18 +5,20 @@ class PuzzlePiece {
       ENDING: 'end',
       INTERIM: 'interim',
     };
+    this.height = 52;
+    this.q = this.height / 4;
+    this.a = this.height / 2 - this.q / 2;
   }
 
   createPiece(width, type) {
     const canvas = this.view.createElement('canvas', 'puzzle__piece');
     const ctx = canvas.getContext('2d');
-    const height = 52;
-    const q = height / 4;
-    const a = height / 2 - q / 2; // upto circ
-    // const width = type === this.pieceTypes.ENDING ? Width - a : Width;
+    const { height, a } = this;
+    // const q = this.q;
+    // const a = this.a; // upto circ
 
     ctx.canvas.height = height;
-    ctx.canvas.width = width;
+    ctx.canvas.width = type === this.pieceTypes.ENDING ? width : width + a;
 
     ctx.beginPath();
     ctx.lineWidth = 1.2;
@@ -41,9 +43,10 @@ class PuzzlePiece {
 
     ctx.lineTo(width, height);
 
-    if (type !== this.pieceTypes.ENDING) {
-      ctx.lineTo(width, height - a);
+    ctx.lineTo(width, height - a);
 
+    if (type !== this.pieceTypes.ENDING) {
+      // console.log('@createPiece : >it\'s not ending');
       ctx.bezierCurveTo(
         width + 9, height - a + 4,
         width + 15, height - a + 2,
@@ -67,27 +70,46 @@ class PuzzlePiece {
 
   // TODO image background
 
-  drawImage(piece, image, row, width){
-    // void ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+  drawImage({
+    canvasElement, canvasImage, x, y, imageOffset = 0,
+  }) {
+    const ctx = canvasElement.getContext('2d');
 
-      const ctx = piece.getContext('2d');
-      ctx.drawImage(
-        image,
-        0,
-        0,
-        // startXPointCropImage,
-        // startYPointCropImage,
-        // canvasWidth + radius,
-        // canvasHeight,
-        // 0,
-        // 0,
-        // canvasWidth + radius,
-        // canvasHeight,
-      );
-    // }
+    ctx.clip();
+    ctx.drawImage(
+      canvasImage,
+      x - imageOffset,
+      y,
+      canvasElement.width + imageOffset,
+      canvasElement.height,
+      0,
+      0,
+      canvasElement.width + imageOffset,
+      canvasElement.height,
+    );
+    ctx.stroke();
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.fill();
+    ctx.globalCompositeOperation = 'source-over';
 
+    return canvasElement;
+  }
 
-    return piece;
+  fillText({ canvasElement, word }) {
+    const ctx = canvasElement.getContext('2d');
+    const { width, height } = canvasElement;
+    const fontSize = Math.round(height / 4);
+
+    ctx.beginPath();
+    ctx.shadowColor = '#505050';
+    ctx.shadowBlur = 10;
+    ctx.lineWidth = 1;
+    ctx.font = `bold ${fontSize}pt Arial`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#fff';
+    ctx.fillText(word, width / 2, height / 2 + fontSize / 3);
+
+    return canvasElement;
   }
 }
 

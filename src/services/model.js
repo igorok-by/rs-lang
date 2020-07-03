@@ -3,6 +3,8 @@ import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
 const synth = window.speechSynthesis;
+const STORAGE_NAME = 'rs-lang-token';
+
 class Model {
   // TODO
   constructor() {
@@ -10,7 +12,9 @@ class Model {
     this.userId = '';
     this.utterance = new SpeechSynthesisUtterance();
   }
-
+  // isSignIn(){
+  //   const string = localStorage.getItem(STORAGE_NAME);
+  // }
   async signIn(user) {
     console.log('login', user);
     const url = UrlPath(REST_URL, 'signin');
