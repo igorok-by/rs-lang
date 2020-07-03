@@ -13,9 +13,9 @@ class Lingvist extends View {
     this.hash = 'lingvist';
     this.mainModel = new MainModel();
     this.dataOfWords = [];
-    this.audioBtn = this.createElement('button', 'card__audio');
-    this.checkBtn = this.createElement('button', 'card__btn');
-    this.lookBtn = this.createElement('button', 'card__btn');
+    this.audioBtn = create('button', 'card__audio', null, null, ['type', 'button']);
+    this.checkBtn = create('button', 'card__btn', 'Проверить', null, ['type', 'submit']);
+    this.lookBtn = create('button', 'card__btn card__btn--light', 'Показать перевод', null, ['type', 'button']);
 
     this.image = create('img', 'card__image');
     this.translated = create('p', 'card__translated');
@@ -39,20 +39,12 @@ class Lingvist extends View {
   insertAudioBtn() {
     const iconAudio = '<svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>';
     this.audioBtn.innerHTML = iconAudio;
-    this.audioBtn.type = 'button';
 
     this.header = this.getElement('.card__header');
     this.header.append(this.audioBtn);
   }
 
   insertControlBtns() {
-    this.checkBtn.innerHTML = 'Проверить';
-    this.checkBtn.type = 'submit';
-
-    this.lookBtn.type = 'button';
-    this.lookBtn.classList.add('card__btn--light');
-    this.lookBtn.innerHTML = 'Показать перевод';
-
     this.footer = this.getElement('.card__footer');
     this.footer.append(this.lookBtn, this.checkBtn);
   }
@@ -61,8 +53,8 @@ class Lingvist extends View {
     const words = await this.getWords();
     const input = new Input(words[0].word);
     const inputTemplate = input.createTemplate();
-    this.inputWrapper.innerHTML = '';
 
+    this.inputWrapper.innerHTML = '';
     this.inputWrapper.append(...inputTemplate);
     this.translated.innerHTML = words[0].wordTranslate;
     this.transcript.innerHTML = words[0].transcription;
@@ -74,7 +66,7 @@ class Lingvist extends View {
     input.inputAnswer.focus();
   }
 
-  async insertElementsAfterRender() {
+  insertElementsAfterRender() {
     const cardRightColumn = create('div', 'card__body-right');
     this.form = this.getElement('#formCard');
     this.body = this.getElement('.card__body');
