@@ -28,6 +28,12 @@ class Controller {
   }
 
   login() {
+
+    Login.display();
+  }
+
+  settings() {
+
     Login.display();
   }
 }
