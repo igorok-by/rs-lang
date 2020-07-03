@@ -1,7 +1,10 @@
 import markup from './lingvist.html';
 import './styles.scss';
+
 import View from '../../services/view';
 import MainModel from '../../services/model';
+import * as constants from './js/utils/constants';
+import create from './js/utils/create';
 import Input from './js/Input';
 
 class Lingvist extends View {
@@ -13,7 +16,15 @@ class Lingvist extends View {
     this.audioBtn = this.createElement('button', 'card__audio');
     this.checkBtn = this.createElement('button', 'card__btn');
     this.lookBtn = this.createElement('button', 'card__btn');
-    this.answer = this.createElement('input', 'input__answer');
+
+    this.image = create('img', 'card__image');
+    this.translated = create('p', 'card__translated');
+    this.meaningEng = create('p', 'card__meaning');
+    this.meaningRu = create('p', 'card__meaning');
+    this.example = create('p', 'card__sentence');
+    this.transcript = create('p', 'card__transcript');
+    this.inputWrapper = create('div', 'input');
+
     this.form = '';
     this.header = '';
     this.body = '';
@@ -22,7 +33,6 @@ class Lingvist extends View {
 
   async getWords() {
     const words = await this.mainModel.getWords({ group: 0, page: 2 });
-    console.log(words);
     return words;
   }
 
@@ -50,26 +60,45 @@ class Lingvist extends View {
   async insertLearning() {
     const words = await this.getWords();
     const input = new Input(words[0].word);
+    const inputTemplate = input.createTemplate();
+    this.inputWrapper.innerHTML = '';
 
-    this.body.innerHTML = '';
-    // console.log(word);
-    this.body.append(input.createTemplate());
+    this.inputWrapper.append(...inputTemplate);
+    this.translated.innerHTML = words[0].wordTranslate;
+    this.transcript.innerHTML = words[0].transcription;
+    this.meaningEng.innerHTML = words[0].textMeaning;
+    this.meaningRu.innerHTML = words[0].textMeaningTranslate;
+    this.example.innerHTML = `<span>Пример:</span> "${words[0].textExample}" — ${words[0].textExampleTranslate}`;
+    this.image.src = `${constants.FOLDER_WITH_ASSETS}${words[0].image}`;
+
     input.inputAnswer.focus();
   }
 
-  insertElementsAfterRender() {
-    this.insertAudioBtn();
-    this.insertControlBtns();
+  async insertElementsAfterRender() {
+    const cardRightColumn = create('div', 'card__body-right');
     this.form = this.getElement('#formCard');
     this.body = this.getElement('.card__body');
+
+    this.insertAudioBtn();
+    this.insertControlBtns();
+
+    cardRightColumn.append(
+      this.inputWrapper,
+      this.translated,
+      this.transcript,
+      this.meaningEng,
+      this.meaningRu,
+      this.example,
+    );
+    this.body.append(this.image, cardRightColumn);
   }
 
   display(show) {
     const templateHTML = this.render(markup, { title: 'Lingvist' });
     show(templateHTML);
+
     this.insertElementsAfterRender();
     this.insertLearning();
-    // console.log(this.form);
   }
 }
 
