@@ -6,8 +6,6 @@ class EnglishPuzzle {
     this.gui = gui;
     this.model = model;
     this.hash = 'englishPuzzle';
-    this.inBasket = [];
-    this.puzzleElements = [];
   }
 
   init() {
@@ -35,7 +33,9 @@ class EnglishPuzzle {
     this.model.bindDisplaySettings(this.gui.settingsChange.bind(this.gui));
     this.model.bindDisplayPromptMessage(this.gui.promptBar.displayMessage.bind(this.gui.promptBar));
     this.model.bindDisplaySpeaker(this.gui.promptBar.displaySpeaker.bind(this.gui.promptBar));
-    this.model.bindDisplayTranslation(this.gui.promptBar.displayTranslation.bind(this.gui.promptBar));
+    this.model.bindDisplayTranslation(
+      this.gui.promptBar.displayTranslation.bind(this.gui.promptBar),
+    );
     this.model.bindDisplayLevel(this.gui.showLevel.bind(this.gui));
     this.model.bundDisplayRowPieces(this.gui.displayRowPieces.bind(this.gui));
     this.model.bindDisplayFinish(this.gui.finishLevel.bind(this.gui));
