@@ -153,7 +153,7 @@ const createCanvasElements = async (
     };
 
     img.onerror = (err) => {
-      console.log(err);
+      console.error(err);
       reject(err);
     };
   });

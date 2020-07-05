@@ -10,18 +10,20 @@ class PuzzlePiece {
     this.a = this.height / 2 - this.q / 2;
   }
 
-  createPiece(width, type) {
-    const canvas = this.view.createElement('canvas', 'puzzle__piece');
-    const ctx = canvas.getContext('2d');
+  createPiece({ width, type }) {
+    const canvasElement = this.view.createElement('canvas', 'puzzle__piece');
+    const ctx = canvasElement.getContext('2d');
     const { height, a } = this;
-    // const q = this.q;
-    // const a = this.a; // upto circ
+    const lineColor = '#0012ff';
 
     ctx.canvas.height = height;
     ctx.canvas.width = type === this.pieceTypes.ENDING ? width : width + a;
+    ctx.canvas.dataset.type = type;
 
     ctx.beginPath();
     ctx.lineWidth = 1.2;
+    ctx.strokeStyle = lineColor;
+    ctx.lineCap = 'round';
     ctx.moveTo(0, 0);
 
     ctx.lineTo(0, a);
@@ -46,7 +48,6 @@ class PuzzlePiece {
     ctx.lineTo(width, height - a);
 
     if (type !== this.pieceTypes.ENDING) {
-      // console.log('@createPiece : >it\'s not ending');
       ctx.bezierCurveTo(
         width + 9, height - a + 4,
         width + 15, height - a + 2,
@@ -65,7 +66,7 @@ class PuzzlePiece {
     ctx.closePath();
     ctx.stroke();
 
-    return canvas;
+    return canvasElement;
   }
 
   // TODO image background
@@ -80,11 +81,11 @@ class PuzzlePiece {
       canvasImage,
       x - imageOffset,
       y,
-      canvasElement.width + imageOffset,
+      canvasElement.width, // + imageOffset
       canvasElement.height,
       0,
       0,
-      canvasElement.width + imageOffset,
+      canvasElement.width, // + imageOffset
       canvasElement.height,
     );
     ctx.stroke();
@@ -110,6 +111,17 @@ class PuzzlePiece {
     ctx.fillText(word, width / 2, height / 2 + fontSize / 3);
 
     return canvasElement;
+  }
+
+  setBorderColor({ canvasElement, color }){
+    const ctx = canvasElement.getContext('2d');
+
+    // ctx.beginPath();
+    ctx.strokeStyle = '#ff0000';
+    ctx.stroke();
+    // ctx.shadowColor = color;
+    // ctx.shadowBlur = 4;
+    // ctx.lineWidth = 5;
   }
 }
 

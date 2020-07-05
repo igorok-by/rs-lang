@@ -5,3 +5,10 @@ export const messages = {
 export const httpCodes = {
   OK: 200,
 };
+
+export const settingsTypes = {
+  AUTO_PRONUNCIATION: 'autoPronunciation',
+  TRANSLATE: 'translate',
+  PHRASE_PRONUNCIATION: 'pronunciation',
+  BKG_PICTURE: 'picture',
+};
