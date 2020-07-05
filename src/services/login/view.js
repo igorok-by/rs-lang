@@ -36,6 +36,7 @@ class LoginView extends View {
       }
     };
 
+
       const model = new Model();
       const signIn = document.querySelector('.login__sign-in');
       const signUp = document.querySelector('.login__sign-up');

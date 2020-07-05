@@ -8,8 +8,12 @@
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
+<<<<<<< HEAD
 const synth = window.speechSynthesis;
 const STORAGE_NAME = 'rs-lang-token';
+=======
+import View from './view';
+>>>>>>> feat: change login
 
 class Model {
   // TODO
@@ -28,11 +32,13 @@ class Model {
       method: 'POST',
       body: JSON.stringify(user),
     });
-
+    const view = new View();
     if (result && result.message === messages.LOGIN_SUCCESS) {
       this.token = result.token;
       this.userId = result.userId;
       localStorage.setItem('userToken', this.token);
+      view.hideModal();
+      location = '/';
       console.log('ok');
     }
 
@@ -48,7 +54,8 @@ class Model {
     }).catch((err) => {
       const email = document.querySelector('input[name="email"]');
       const password = document.querySelector('input[name="password"]');
-      if (!result.ok) {
+      console.log(err);
+      /* if (!result.ok) {
         console.log(result);
         const errors = result.error.errors;
         if (errors.length === 2) {
@@ -69,10 +76,10 @@ class Model {
         }
         console.log(errors);
         return false;
-      }
+      } */
     });
     if (!result) return false;
-    console.log(result);
+    this.signIn(user);
     return result;
   }
 
@@ -89,7 +96,6 @@ class Model {
       },
       body: JSON.stringify(word),
     });
-
     return result;
   }
 
