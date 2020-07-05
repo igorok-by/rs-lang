@@ -1,3 +1,9 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable padded-blocks */
+/* eslint-disable spaced-comment */
 /* eslint-disable indent */
 /* eslint-disable lines-between-class-members */
 /* eslint-disable consistent-return */
@@ -12,9 +18,10 @@ class LoginView extends View {
     this.showInModal(markup);
 
     this.closeElement = this.getElement('.login__close');
-    this.formWindow = this.getElement('.login__sign-up');
+    this.formWindow = this.getElement('.login__form');
     this.closeElement.addEventListener('click', this.hideModal.bind(this));
-    this.formWindow.addEventListener('submit', this.sendData);
+    this.formWindow.addEventListener('click', this.sendData);
+    this.formWindow.addEventListener('input', this.validField);
   }
   sendData(e) {
     e.preventDefault();
@@ -38,22 +45,61 @@ class LoginView extends View {
         break;
       }
     };
+
+    //^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.*[+-@$!%*?&#.,;:[]{}]).{8,32}$
       const model = new Model();
+      const signIn = document.querySelector('.login__sign-in');
+      const signUp = document.querySelector('.login__sign-up');
       this.signIn = document.getElementById('sign-in');
       const emailValue = document.querySelector('input[name="email"]').value;
       const passwordValue = document.querySelector('input[name="password"]').value;
-      if (this.signIn.checked) {
+      if (e.target === signIn) {
         model.signIn({ 'email': emailValue, 'password': passwordValue }).catch((err) => {
           errorStatus(err.response.status);
         });
         this.errorOutput.textContent = '';
-      } else {
+      } else if (e.target === signUp) {
         model.createUser({ 'email': emailValue, 'password': passwordValue }).catch((err) => {
           errorStatus(err.response.status);
         });
         this.errorOutput.textContent = '';
       }
   }
+
+  validField(e) {
+    const emailField = document.querySelector('.email');
+    const passwrodField = document.querySelector('.password');
+    const regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regPassword = /(?=^.{8,30}$)(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[\+\-\_\@\$\!\%\*\?\&\#\.\,\;\:\[\]\{\}]).*/;
+    const buttons = [...document.querySelectorAll('.login-btn')];
+    if (e.target === emailField) {
+      if (regEmail.test(emailField.value)) {
+        emailField.classList.remove('invalid');
+      } else if (!regEmail.test(emailField.value) && !emailField.classList.contains('invalid')) {
+        emailField.classList.add('invalid');
+      }
+    }
+
+    if (e.target === passwrodField) {
+      if (regPassword.test(passwrodField.value)) {
+        passwrodField.classList.remove('invalid');
+      } else if (!regPassword.test(passwrodField.value) && !passwrodField.classList.contains('invalid')) {
+        passwrodField.classList.add('invalid');
+      }
+    }
+    
+    if (!emailField.classList.contains('invalid') && !passwrodField.classList.contains('invalid')) {
+      buttons.forEach((btn) => {
+        btn.removeAttribute('disabled');
+      });
+    } else {
+      buttons.forEach((btn) => {
+        btn.setAttribute('disabled', true);
+      });
+    }
+
+  }
+
 }
 
 export default new LoginView();

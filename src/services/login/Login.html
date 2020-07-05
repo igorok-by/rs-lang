@@ -1,14 +1,16 @@
 <div class="login">
   <a href="/" class="login__close">Close</a>
-  <form action="" class="login__sign-up" method="POST">
-    <input type="text" class="login__text-field" placeholder="type your email..." name="email" required />
+  <form action="" class="login__form" method="POST">
+    <input type="text" class="login__text-field email invalid" placeholder="type your email..." name="email" autocomplete="off" required title='Email must contain at least 6 characters, at least 4 letters, the characters "@" and "."' />
     <br />
-    <p class="login__password-notice">The password must contain at least 8 characters, at least one uppercase letter, one uppercase letter, one number and one special character from: +-_@$!%*?&#.,;:[]{}</p>
-    <input type="text" class="login__text-field" placeholder="type your password..." name="password" required />
+    <input type="password" class="login__text-field password invalid" autocomplete="off" placeholder="type your password..." name="password" required title='The password must contain at least 8 characters, at least one uppercase letter, one number and one special character from + -_ @ $!% *? & #.,;: [] {}'/>
     <br />
-    <label><input type="checkbox" id="sign-in" />Sign In?</label>
-    <br />
-    <button type="submit" class="login__submit-btn">Send</button>
+    <p id="error-output"></p>
+    <div class="login__btn-container">
+      <button class="login__sign-in login-btn" disabled>Sign in</button>
+      <button class="login__sign-up login-btn" disabled>Sign up</button>
+    </div>
+    
   </form>
-  <p id="error-output"></p>
+  
 </div>
