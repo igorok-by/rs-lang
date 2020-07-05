@@ -3,18 +3,20 @@ import StatusBar from './statusBar';
 import GameField from './gameField';
 import PiecesBar from './piecesBar';
 import PromptBar from './promptBar';
-import controlButtonsBar from './controlButtonsBar';
+import ControlButtonsBar from './controlButtonsBar';
 import './styles.scss';
 import View from '../../../services/view';
+import { settingsTypes } from '../../../constants';
 
 const PICTURE_SOURCES = [
+  'img/english-puzle/artGallery/HouseInTheRuse.jpg',
+  'img/english-puzle/artGallery/Berkhem_Mountain.jpeg',
   'img/english-puzle/artGallery/Aivazovski_Mountains.jpeg',
   'img/english-puzle/artGallery/Aivazovski_Sunset.jpeg',
-  'img/english-puzle/artGallery/Berkhem_Mountain.jpeg',
   'img/english-puzle/artGallery/BirshtadtTropicalSunset.jpeg',
   'img/english-puzle/artGallery/Birshtadt_CountryFerm.jpeg',
   'img/english-puzle/artGallery/Devjaty_val.jpg',
-  'img/english-puzle/artGallery/HouseInTheRuse.jpg',
+
   'img/english-puzle/artGallery/MorningInTheWood.jpg',
   'img/english-puzle/artGallery/VanGog_Field.jpg',
   'img/english-puzle/artGallery/VillasAtTrouville.jpeg',
@@ -27,9 +29,10 @@ class GUI extends View {
     this.promptBar = new PromptBar(this);
     this.gameField = new GameField(this);
     this.piecesBar = new PiecesBar(this);
+    this.controlButtonsBar = new ControlButtonsBar(this);
 
     this.currentRow = NaN;
-    this.inBasket = [];
+    this.picture = '';
   }
 
   getElementIndex(element) {
@@ -48,23 +51,42 @@ class GUI extends View {
     this.currentRow = rowNumber;
   }
 
-  async createPuzzle(level, sentences) {
-    const imageSource = PICTURE_SOURCES[level];
-    await this.gameField.createPuzzle(imageSource, sentences);
-  }
-
   init() {
-    this.testField = this.getElement('.english-puzzle__test-field');
+    // this.testField = this.getElement('.english-puzzle__test-field');
   }
 
-  displayWords(words) {
-    this.testField.innerHTML = words.map((word, i) => `<p>${i}. ${word}</p>`).join('');
+  readyToNext() {
+    this.controlButtonsBar.changeToContinue();
   }
 
-  bindTestField(handle) {
-    this.testField.addEventListener('click', () => {
-      handle();
-    });
+  async showLevel(level, sentences) {
+    this.picture = PICTURE_SOURCES[level];
+
+    await this.gameField.createPuzzle(this.picture, sentences);
+
+    this.gameField.hidePicture();
+
+    this.promptBar.showAll();
+
+    this.piecesBar.clear();
+
+    this.controlButtonsBar.changeToCheck();
+
+    this.controlButtonsBar.showDontKnowButton();
+
+    // this.gameField.showBackgroundPicture(picture);
+  }
+
+  finishLevel() {
+    this.gameField.showPicture(this.picture);
+
+    this.piecesBar.showText('some name of picture');
+
+    this.promptBar.hideAll();
+
+    this.controlButtonsBar.hideDontKnowButton();
+
+    this.controlButtonsBar.changeToNextLevel();
   }
 
   getUI() {
@@ -72,6 +94,7 @@ class GUI extends View {
     const promptBar = this.promptBar.render();
     const gameField = this.gameField.render();
     const piecesBar = this.piecesBar.render();
+    const controlButtonsBar = this.controlButtonsBar.render();
 
     return this.render(markup, {
       title: 'ENGLISH PUZZLE',
@@ -84,25 +107,48 @@ class GUI extends View {
   }
 
   addPieceToFieldRow(element) {
-    const isCorrect = this.gameField
-      .addPieceToRow(this.currentRow, element)
-      .isCorrect(this.currentRow);
-
-    console.log(isCorrect);
-  }
-
-  isCorrect(){
-    // const
-    const isCorrectSentence = this.inBasket
-      .map((element) => this.getElementIndex(element))
-      .every((el, i) => el === i);
-
-    // return this.inBasket.length ===
-    console.log(isCorrectSentence);
+    this.gameField.addPieceToRow(this.currentRow, element);
   }
 
   removePieceFromGameField(element) {
-    this.piecesBar.append(element);
+    const rowPieces = this.gameField.getPiecesByRow(this.currentRow);
+    const isPieceOfCurrentRow = rowPieces.find((el) => el === element);
+
+    if (isPieceOfCurrentRow) {
+      this.piecesBar.append(element);
+    }
+  }
+
+  checkCurrentRow() {
+    // this.gameField.checkRow(this.currentRow);
+    this.gameField.showWrong(this.currentRow);
+  }
+
+  setInCorrectOrder() {
+    this.gameField.setInCorrectOrder(this.currentRow);
+  }
+
+  settingsChange(type, activate) {
+    this.statusBar.displaySettings(type, activate);
+
+    switch (type) {
+      case settingsTypes.AUTO_PRONUNCIATION:
+        break;
+      case settingsTypes.TRANSLATE:
+        this.promptBar.displayTranslation(activate);
+        break;
+      case settingsTypes.PHRASE_PRONUNCIATION:
+        this.promptBar.displaySpeaker(activate);
+        break;
+      case settingsTypes.BKG_PICTURE:
+        if (activate) {
+          this.gameField.showBackgroundPicture(this.picture);
+        } else {
+          this.gameField.hideBackgroundPicture();
+        }
+        break;
+      default:
+    }
   }
 
   static shake(array) {

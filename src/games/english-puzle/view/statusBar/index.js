@@ -1,10 +1,18 @@
 // import View from '../view';
-import Html from './StatusBar.html';
+import StatusBar from './StatusBar.html';
+import SettingsButton from './settingsButton';
 import './styles.scss';
+import { settingsTypes } from '../../../../constants';
 
-class StatusBar {
+class StatusBarView {
   constructor(view) {
     this.view = view;
+    this.settingsButtonsTypes = [
+      [settingsTypes.AUTO_PRONUNCIATION, 'play_circle_filled'],
+      [settingsTypes.TRANSLATE, 'speaker_notes'],
+      [settingsTypes.PHRASE_PRONUNCIATION, 'volume_up'],
+      [settingsTypes.BKG_PICTURE, 'image'],
+    ];
   }
 
   init({ onChangeSettings, onChangeLevel, onChangePage }) {
@@ -19,14 +27,21 @@ class StatusBar {
 
   bindSettingsButtons(handler) {
     this.settings.addEventListener('click', ({ target }) => {
-      const { type } = target.dataset;
+      const { tagName } = target;
+      let { type } = target.dataset;
+
+      if (tagName === 'I') {
+        const element = target.closest('.status-bar__button');
+
+        type = element.dataset.type;
+      }
 
       handler(type);
     });
   }
 
   bindLevel(handler) {
-    this.levels.addEventListener('change', ({target}) => {
+    this.levels.addEventListener('change', ({ target }) => {
       const { selectedIndex } = target;
 
       handler(selectedIndex);
@@ -52,8 +67,15 @@ class StatusBar {
   }
 
   render() {
-    return this.view.render(Html);
+    const settingsButtons = this.settingsButtonsTypes.map((el) => this.view.render(SettingsButton, {
+      // text: i,
+      activeClass: '',
+      type: el[0],
+      icon: el[1],
+    }));
+
+    return this.view.render(StatusBar, { settingsButtons });
   }
 }
 
-export default StatusBar;
+export default StatusBarView;

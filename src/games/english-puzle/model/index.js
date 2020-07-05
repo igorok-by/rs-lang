@@ -1,24 +1,25 @@
 import Model from '../../../services/model';
+import { settingsTypes } from '../../../constants';
+
+const s = settingsTypes;
 
 class EnglishPuzzleModel extends Model {
   constructor() {
     super();
     this.words = [];
+    this.wordsOnPage = 10;
     this.count = 0;
     this.settings = {
-      autoPronunciation: true,
-      translate: true,
-      pronunciation: true,
-      picture: false,
+      [s.AUTO_PRONUNCIATION]: true,
+      [s.TRANSLATE]: true,
+      [s.PHRASE_PRONUNCIATION]: true,
+      [s.BKG_PICTURE]: false,
     };
-    this.inBasket = [];
     this.word = null;
     this.level = 0;
+    this.pagesLimit = 30;
+    this.levelsLimit = 5;
     this.play = null;
-  }
-
-  bindDisplayWords(cb) {
-    this.displayWords = cb;
   }
 
   bindDisplaySettings(cb) {
@@ -29,82 +30,131 @@ class EnglishPuzzleModel extends Model {
     this.displayPromptMessage = cb;
   }
 
-  bindCreatePuzzleElements(cb) {
-    this.createPuzzleElements = cb;
+  bindDisplaySpeaker(cb) {
+    this.displaySpeaker = cb;
+  }
+
+  bindDisplayTranslation(cb) {
+    this.displayTranslation = cb;
+  }
+
+  bindDisplayLevel(cb) {
+    this.displayLevel = cb;
   }
 
   bundDisplayRowPieces(cb) {
     this.displayRowPieces = cb;
   }
 
-  async getNextWords() {
-    const words = await this.getWords();
+  bindDisplayFinish(cb) {
+    this.displayFinish = cb;
+  }
 
-    this.words = words.slice(0, 10);
+  async getNextWords() {
+    const group = this.level;
+    const page = Math.floor(Math.random() * Math.floor(this.pagesLimit));
+    const words = await this.getWords({ group, page });
+
+    this.words = words
+      .filter((word) => word.textExample.split(' ').length <= 10)
+      .slice(0, this.wordsOnPage)
+      .sort(() => Math.random() - 0.5);
 
     return this.words;
   }
 
-  showNextWord() {
+  async showNextWord() {
+    const isAutoPronunciation = this.getSetting(s.AUTO_PRONUNCIATION);
+    const isTranslate = this.getSetting(s.TRANSLATE);
     const index = this.getCurrentWordIndex();
     const newIndex = index + 1;
-    this.word = this.words[newIndex];
 
-    this.displayRowPieces(newIndex);
+    if (!isTranslate) {
+      this.displayTranslation();
+    }
+
+    if (!isAutoPronunciation) {
+      await this.pronounceMeaningTranslate();
+    }
+
+    if (newIndex < this.wordsOnPage) {
+      this.word = this.words[newIndex];
+      this.displayRowPieces(newIndex);
+      this.displayPromptMessage(this.word.textExampleTranslate);
+
+      if (isAutoPronunciation) {
+        await this.pronounceMeaningTranslate();
+      }
+
+      this.settingsInit();
+    } else {
+      this.theEndOfLevel();
+    }
   }
 
-  getLevel() {
-    return Math.round(Math.random() * 10);
+  async nextLevel() {
+    if (this.level < this.levelsLimit) {
+      this.level += 1;
+      await this.startGame();
+    }
+    console.log('nextLevel', this.level);
+  }
+
+  async theEndOfLevel() {
+    this.displayFinish(this.level);
   }
 
   async startGame() {
     this.words = await this.getNextWords();
-    const sentences = this.words.map((word) => word.textMeaning);
 
-    await this.createPuzzleElements(this.level, sentences);
+    const sentences = this.words.map((word) => word.textExample);
+
+    await this.displayLevel(this.level, sentences);
 
     this.showNextWord();
+
+    this.settingsInit();
   }
 
-  settingsChange(setting) {
+  settingsInit() {
+    const settings = Object.entries(this.settings);
+
+    settings.forEach(([type, value]) => this.settingsChange(type, value));
+  }
+
+  settingsChange(type, value) {
     const hasOwn = Object.prototype.hasOwnProperty;
 
-    if (hasOwn.call(this.settings, setting)) {
-      this.settings[setting] = !this.settings[setting];
-      this.displaySettings(setting, this.settings[setting]);
-
-      console.log('#model, @set setting ', setting, this.settings[setting]);
+    if (hasOwn.call(this.settings, type)) {
+      const valueToSet = typeof value === 'boolean' ? value : !this.settings[type];
+      this.settings[type] = valueToSet;
+      this.displaySettings(type, valueToSet);
     }
   }
 
-  levelChange(level) {
-    console.log('#model, @levelChange: ', level);
+  getSetting(type) {
+    return this.settings[type];
   }
 
-  pageChange(page) {
-    console.log('#model, @pageChange : ', page);
+  levelChange() {
+    console.log(this.level);
   }
 
-  getCurrentWordIndex(){
+  pageChange() {
+    console.log(this.page);
+  }
+
+  getCurrentWordIndex() {
     return this.words.findIndex((el) => el === this.word);
   }
 
-  pronounceMeaningTranslate() {
-    this.displayPromptMessage(this.word.textMeaningTranslate);
+  async pronounceMeaningTranslate() {
     if (this.play) {
-      this.play.pause();
+      await this.play.pause();
     }
+    this.play = this.playAudio(this.word.audioExample);
 
-    this.play = this.playAudio(this.word.audioMeaning);
-  }
-
-  isCorrect(){
-
-  }
-  async updateWords() {
-    const words = await this.getWords();
-
-    this.displayWords(words.map(({ word }) => word));
+    return new Promise((resolve) => this.play.addEventListener('ended', resolve));
   }
 }
 
