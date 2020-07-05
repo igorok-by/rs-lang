@@ -60,6 +60,10 @@ class EnglishPuzzleModel extends Model {
       .slice(0, this.wordsOnPage)
       .sort(() => Math.random() - 0.5);
 
+    if (this.words < 10) {
+      return this.getNextWords();
+    }
+
     return this.words;
   }
 
@@ -152,7 +156,7 @@ class EnglishPuzzleModel extends Model {
     if (this.play) {
       await this.play.pause();
     }
-    this.play = this.playAudio(this.word.audioExample);
+    this.play = await this.playAudio(this.word.audioExample);
 
     return new Promise((resolve) => this.play.addEventListener('ended', resolve));
   }
