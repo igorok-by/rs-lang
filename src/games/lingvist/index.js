@@ -13,10 +13,11 @@ class Lingvist extends View {
     this.hash = 'lingvist';
     this.mainModel = new MainModel();
     this.dataOfWords = [];
+    this.cardIndex = 0;
+
     this.audioBtn = create('button', 'card__audio', null, null, ['type', 'button']);
     this.checkBtn = create('button', 'card__btn', 'Проверить', null, ['type', 'submit']);
     this.lookBtn = create('button', 'card__btn card__btn--light', 'Показать перевод', null, ['type', 'button']);
-
     this.image = create('img', 'card__image');
     this.translated = create('p', 'card__translated');
     this.meaningEng = create('p', 'card__meaning');
@@ -49,24 +50,32 @@ class Lingvist extends View {
     this.footer.append(this.lookBtn, this.checkBtn);
   }
 
-  async insertLearning() {
-    const words = await this.getWords();
-    const input = new Input(words[0].word);
+  static hideWordInPhrase(word, phrase) {
+    const replacedWord = ''.padEnd(word.length, constants.REPLACING_SYMBOL);
+
+    return phrase.replace(word, replacedWord);
+  }
+
+  insertLearning() {
+    const dataOfWord = this.dataOfWords[this.cardIndex];
+    const input = new Input(dataOfWord.word);
     const inputTemplate = input.createTemplate();
+    const meaningEng = Lingvist.hideWordInPhrase(dataOfWord.word, dataOfWord.textMeaning);
+    const exampleEng = Lingvist.hideWordInPhrase(dataOfWord.word, dataOfWord.textExample);
 
     this.inputWrapper.innerHTML = '';
     this.inputWrapper.append(...inputTemplate);
-    this.translated.innerHTML = words[0].wordTranslate;
-    this.transcript.innerHTML = words[0].transcription;
-    this.meaningEng.innerHTML = words[0].textMeaning;
-    this.meaningRu.innerHTML = words[0].textMeaningTranslate;
-    this.example.innerHTML = `<span>Пример:</span> "${words[0].textExample}" — ${words[0].textExampleTranslate}`;
-    this.image.src = `${constants.FOLDER_WITH_ASSETS}${words[0].image}`;
+    this.translated.innerHTML = dataOfWord.wordTranslate;
+    this.transcript.innerHTML = dataOfWord.transcription;
+    this.meaningEng.innerHTML = meaningEng;
+    this.meaningRu.innerHTML = dataOfWord.textMeaningTranslate;
+    this.example.innerHTML = `<span>Пример:</span> "${exampleEng}" — ${dataOfWord.textExampleTranslate}`;
+    this.image.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
 
     input.inputAnswer.focus();
   }
 
-  insertElementsAfterRender() {
+  async insertElementsAfterRender() {
     const cardRightColumn = create('div', 'card__body-right');
     this.form = this.getElement('#formCard');
     this.body = this.getElement('.card__body');
@@ -83,6 +92,9 @@ class Lingvist extends View {
       this.example,
     );
     this.body.append(this.image, cardRightColumn);
+
+    this.dataOfWords = await this.getWords();
+    this.insertLearning();
   }
 
   display(show) {
@@ -90,7 +102,6 @@ class Lingvist extends View {
     show(templateHTML);
 
     this.insertElementsAfterRender();
-    this.insertLearning();
   }
 }
 
