@@ -21,7 +21,7 @@ class Lingvist extends View {
     this.image = create('img', 'card__image');
     this.translated = create('p', 'card__translated');
     this.meaningEng = create('p', 'card__meaning');
-    this.meaningRu = create('p', 'card__meaning');
+    this.meaningRu = create('p', 'card__meaning card__meaning--primary');
     this.example = create('p', 'card__sentence');
     this.transcript = create('p', 'card__transcript');
     this.inputWrapper = create('div', 'input');
@@ -50,28 +50,21 @@ class Lingvist extends View {
     this.footer.append(this.lookBtn, this.checkBtn);
   }
 
-  static playAudio(fileName) {
-    const audio = new Audio(`${constants.FOLDER_WITH_ASSETS}${fileName}`);
-
-    audio.play();
-
-    return new Promise((resolve) => audio.addEventListener('ended', resolve, { once: true }));
-  }
-
   replaceWord(howToToggle) {
-    let word;
+    const { word } = this.dataOfWords[this.cardIndex];
+    let beReplaced;
     let replacedBy;
 
     if (howToToggle === 'hide') {
-      word = this.dataOfWords[this.cardIndex].word;
+      beReplaced = new RegExp(`${word}`, 'i');
       replacedBy = ''.padEnd(word.length, constants.REPLACING_SYMBOL);
     } else {
-      replacedBy = this.dataOfWords[this.cardIndex].word;
-      word = ''.padEnd(replacedBy.length, constants.REPLACING_SYMBOL);
+      replacedBy = word;
+      beReplaced = ''.padEnd(replacedBy.length, constants.REPLACING_SYMBOL);
     }
 
-    this.meaningEng.innerHTML = this.meaningEng.innerHTML.replace(word, replacedBy);
-    this.example.innerHTML = this.example.innerHTML.replace(word, replacedBy);
+    this.meaningEng.innerHTML = this.meaningEng.innerHTML.replace(beReplaced, replacedBy);
+    this.example.innerHTML = this.example.innerHTML.replace(beReplaced, replacedBy);
   }
 
   goNextCard() {
@@ -109,7 +102,7 @@ class Lingvist extends View {
     this.transcript.innerHTML = dataOfWord.transcription;
     this.meaningEng.innerHTML = dataOfWord.textMeaning;
     this.meaningRu.innerHTML = dataOfWord.textMeaningTranslate;
-    this.example.innerHTML = `<span>Пример:</span> "${dataOfWord.textExample}" — ${dataOfWord.textExampleTranslate}`;
+    this.example.innerHTML = `<span>Пример:</span> "${dataOfWord.textExample}" <span>— ${dataOfWord.textExampleTranslate}</span>`;
     this.image.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
 
     this.replaceWord('hide');

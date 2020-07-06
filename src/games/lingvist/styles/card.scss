@@ -60,8 +60,10 @@
 
   font-size: 22px;
 
-  & + & {
+  &--primary {
     margin-bottom: 20px;
+
+    color: $primary-dark;
   }
 
   i {
@@ -74,6 +76,7 @@
 
   span {
     font-style: italic;
+    color: $primary-dark;
   }
 
   b {
