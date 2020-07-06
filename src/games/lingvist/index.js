@@ -50,28 +50,69 @@ class Lingvist extends View {
     this.footer.append(this.lookBtn, this.checkBtn);
   }
 
-  static hideWordInPhrase(word, phrase) {
-    const replacedWord = ''.padEnd(word.length, constants.REPLACING_SYMBOL);
+  static playAudio(fileName) {
+    const audio = new Audio(`${constants.FOLDER_WITH_ASSETS}${fileName}`);
 
-    return phrase.replace(word, replacedWord);
+    audio.play();
+
+    return new Promise((resolve) => audio.addEventListener('ended', resolve, { once: true }));
+  }
+
+  replaceWord(howToToggle) {
+    let word;
+    let replacedBy;
+
+    if (howToToggle === 'hide') {
+      word = this.dataOfWords[this.cardIndex].word;
+      replacedBy = ''.padEnd(word.length, constants.REPLACING_SYMBOL);
+    } else {
+      replacedBy = this.dataOfWords[this.cardIndex].word;
+      word = ''.padEnd(replacedBy.length, constants.REPLACING_SYMBOL);
+    }
+
+    this.meaningEng.innerHTML = this.meaningEng.innerHTML.replace(word, replacedBy);
+    this.example.innerHTML = this.example.innerHTML.replace(word, replacedBy);
+  }
+
+  goNextCard() {
+    this.audioBtn.classList.remove('card__audio--active');
+    this.cardIndex += 1;
+    this.insertLearning();
+  }
+
+  handleCorrectAnswer() {
+    this.audioBtn.classList.add('card__audio--active');
+    this.replaceWord();
+  }
+
+  handleSubmitAnswer(evt) {
+    evt.preventDefault();
+    const inputField = this.inputWrapper.querySelector('input');
+    const dataOfWord = this.dataOfWords[this.cardIndex];
+    const audio = new Audio(`${constants.FOLDER_WITH_ASSETS}${dataOfWord.audio}`);
+    audio.addEventListener('ended', () => setTimeout(this.goNextCard.bind(this), constants.TIME_BETWEEN_CARDS));
+
+    if (inputField.value === dataOfWord.word) {
+      this.handleCorrectAnswer();
+      audio.play();
+    }
   }
 
   insertLearning() {
     const dataOfWord = this.dataOfWords[this.cardIndex];
     const input = new Input(dataOfWord.word);
     const inputTemplate = input.createTemplate();
-    const meaningEng = Lingvist.hideWordInPhrase(dataOfWord.word, dataOfWord.textMeaning);
-    const exampleEng = Lingvist.hideWordInPhrase(dataOfWord.word, dataOfWord.textExample);
 
     this.inputWrapper.innerHTML = '';
     this.inputWrapper.append(...inputTemplate);
     this.translated.innerHTML = dataOfWord.wordTranslate;
     this.transcript.innerHTML = dataOfWord.transcription;
-    this.meaningEng.innerHTML = meaningEng;
+    this.meaningEng.innerHTML = dataOfWord.textMeaning;
     this.meaningRu.innerHTML = dataOfWord.textMeaningTranslate;
-    this.example.innerHTML = `<span>Пример:</span> "${exampleEng}" — ${dataOfWord.textExampleTranslate}`;
+    this.example.innerHTML = `<span>Пример:</span> "${dataOfWord.textExample}" — ${dataOfWord.textExampleTranslate}`;
     this.image.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
 
+    this.replaceWord('hide');
     input.inputAnswer.focus();
   }
 
@@ -97,11 +138,16 @@ class Lingvist extends View {
     this.insertLearning();
   }
 
+  bindEventListeners() {
+    this.form.addEventListener('submit', (event) => this.handleSubmitAnswer(event));
+  }
+
   display(show) {
     const templateHTML = this.render(markup, { title: 'Lingvist' });
     show(templateHTML);
 
     this.insertElementsAfterRender();
+    this.bindEventListeners();
   }
 }
 
