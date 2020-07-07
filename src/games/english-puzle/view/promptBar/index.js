@@ -1,7 +1,7 @@
 import PromptBar from './PromptBar.html';
 import './styles.scss';
 import speakerIcon from '../../assets/img/speaker.png';
-
+ //
 class HintsController {
   constructor(view) {
     this.view = view;
