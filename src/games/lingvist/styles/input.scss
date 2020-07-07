@@ -10,13 +10,13 @@ $padding: 3px 6px;
   font-size: 30px;
 
   &--frozen {
-
     .input__answer {
       display: none;
     }
 
     .input__word .hidden {
       visibility: visible;
+      opacity: 1;
     }
   }
 
@@ -28,10 +28,26 @@ $padding: 3px 6px;
 .input__word {
   display: inline-block;
   padding: $padding;
+
   color: $primary-hover;
+
+  transition: $def-transition;
+
+  &--transparent {
+    opacity: 0.5;
+  }
+
+  span {
+    transition: $long-transition;
+  }
 
   .hidden {
     visibility: hidden;
+    opacity: 0;
+  }
+
+  .warning {
+    color: $warning;
   }
 }
 

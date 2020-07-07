@@ -26,10 +26,11 @@ class Lingvist extends View {
     this.transcript = create('p', 'card__transcript');
     this.inputWrapper = create('div', 'input');
 
-    this.form = '';
     this.header = '';
     this.body = '';
     this.footer = '';
+    this.form = '';
+    this.input = '';
     this.holderBindFunc = '';
   }
 
@@ -89,13 +90,14 @@ class Lingvist extends View {
   }
 
   getReadyForNextCard() {
-    const inputField = this.inputWrapper.querySelector('input');
     this.holderBindFunc = this.sayWordAloud.bind(this);
 
     this.replaceLearnWord();
     this.sayWordAloud();
 
-    inputField.value = '';
+    this.input.inputAnswer.value = '';
+    this.input.wordHolder.classList.remove('input__word--transparent');
+    this.input.letters.map((letterHolder) => letterHolder.classList.remove('warning'));
     this.inputWrapper.classList.add('input--frozen');
 
     this.checkBtn.innerHTML = 'Далее';
@@ -106,26 +108,45 @@ class Lingvist extends View {
     this.audioBtn.addEventListener('click', this.holderBindFunc);
   }
 
-  handleIncorrectAnswer() {
-    // console.log(this.input);
+  hideHint() {
+    this.input.wordHolder.classList.remove('input__word--transparent');
+    this.input.letters.map((letterHolder) => letterHolder.classList.add('hidden'));
+  }
+
+  handleIncorrectAnswer(answer) {
+    const answerLetters = answer.split('');
+
+    this.input.letters.map((letterHolder) => letterHolder.classList.remove('warning'));
+    answerLetters.map((letter) => {
+      this.input.letters.map((letterHolder) => {
+        if (letterHolder.innerHTML === letter) {
+          letterHolder.classList.add('warning');
+        }
+      });
+    });
+    this.input.inputAnswer.value = '';
+    this.input.letters.map((letterHolder) => letterHolder.classList.remove('hidden'));
+    setTimeout(() => this.input.wordHolder.classList.add('input__word--transparent'), constants.FULL_OPACITY_TIME);
+
+    this.input.inputAnswer.addEventListener('input', this.hideHint.bind(this), { once: true });
   }
 
   handleSubmitAnswer(evt) {
     evt.preventDefault();
     const dataOfWord = this.dataOfWords[this.cardIndex];
-    const inputField = this.inputWrapper.querySelector('input');
+    const inputValue = this.input.inputAnswer.value.toLowerCase();
 
-    if (inputField.value.toLowerCase() === dataOfWord.word) {
+    if (inputValue === dataOfWord.word) {
       this.getReadyForNextCard();
-    } else {
-      this.handleIncorrectAnswer();
+    } else if (inputValue.length) {
+      this.handleIncorrectAnswer(inputValue);
     }
   }
 
   insertLearning() {
     const dataOfWord = this.dataOfWords[this.cardIndex];
-    const input = new Input(dataOfWord.word);
-    const inputTemplate = input.createTemplate();
+    this.input = new Input(dataOfWord.word);
+    const inputTemplate = this.input.createTemplate();
 
     this.inputWrapper.innerHTML = '';
     this.inputWrapper.append(...inputTemplate);
@@ -137,7 +158,7 @@ class Lingvist extends View {
     this.image.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
 
     this.replaceLearnWord('hide');
-    input.inputAnswer.focus();
+    this.input.inputAnswer.focus();
   }
 
   async insertElementsAfterRender() {

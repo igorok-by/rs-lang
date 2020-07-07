@@ -7,3 +7,13 @@
     transform: scale(1.2);
   }
 }
+
+@keyframes showUp {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

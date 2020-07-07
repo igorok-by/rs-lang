@@ -11,11 +11,11 @@ export default class Input {
 
   insertWord() {
     this.wordHolder.innerHTML = '';
-    const letters = this.letters.map((letter, index) => create(
+    this.letters = this.letters.map((letter, index) => create(
       'span', 'hidden', letter, null, ['index', index],
     ));
 
-    this.wordHolder.append(...letters);
+    this.wordHolder.append(...this.letters);
   }
 
   createTemplate() {

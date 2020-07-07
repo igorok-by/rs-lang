@@ -2,4 +2,4 @@ export const FOLDER_WITH_ASSETS = 'https://raw.githubusercontent.com/igorok-by/r
 
 export const REPLACING_SYMBOL = '_';
 
-export const TIME_BETWEEN_CARDS = 1000;
+export const FULL_OPACITY_TIME = 2000;
