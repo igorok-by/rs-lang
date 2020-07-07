@@ -1,8 +1,8 @@
 export default class ButtonResult{
     constructor(){
         this.description = 'Result';
-        this.buttonHTML = null
-        this.sound = null
+        this.buttonHTML = null;
+        this.sound = null;
     }
     renderHtmlElement(parent, tag, className, id, innerHtml, src) {
         const element = document.createElement(tag);    
