@@ -9,6 +9,17 @@ $padding: 3px 6px;
 
   font-size: 30px;
 
+  &--frozen {
+
+    .input__answer {
+      display: none;
+    }
+
+    .input__word .hidden {
+      visibility: visible;
+    }
+  }
+
   * {
     box-sizing: border-box;
   }
@@ -17,6 +28,7 @@ $padding: 3px 6px;
 .input__word {
   display: inline-block;
   padding: $padding;
+  color: $primary-hover;
 
   .hidden {
     visibility: hidden;

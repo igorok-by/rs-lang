@@ -15,7 +15,7 @@ class Lingvist extends View {
     this.dataOfWords = [];
     this.cardIndex = 0;
 
-    this.audioBtn = create('button', 'card__audio', null, null, ['type', 'button']);
+    this.audioBtn = create('button', 'card__audio card__audio--inactive', null, null, ['type', 'button']);
     this.checkBtn = create('button', 'card__btn', 'Проверить', null, ['type', 'submit']);
     this.lookBtn = create('button', 'card__btn card__btn--light', 'Показать перевод', null, ['type', 'button']);
     this.image = create('img', 'card__image');
@@ -30,6 +30,7 @@ class Lingvist extends View {
     this.header = '';
     this.body = '';
     this.footer = '';
+    this.holderBindFunc = '';
   }
 
   async getWords() {
@@ -50,7 +51,7 @@ class Lingvist extends View {
     this.footer.append(this.lookBtn, this.checkBtn);
   }
 
-  replaceWord(howToToggle) {
+  replaceLearnWord(howToToggle) {
     const { word } = this.dataOfWords[this.cardIndex];
     let beReplaced;
     let replacedBy;
@@ -67,27 +68,57 @@ class Lingvist extends View {
     this.example.innerHTML = this.example.innerHTML.replace(beReplaced, replacedBy);
   }
 
+  sayWordAloud() {
+    const audio = new Audio(`${constants.FOLDER_WITH_ASSETS}${this.dataOfWords[this.cardIndex].audio}`);
+
+    this.audioBtn.classList.add('card__audio--active');
+    audio.play();
+    audio.addEventListener('ended', () => this.audioBtn.classList.remove('card__audio--active'));
+  }
+
   goNextCard() {
-    this.audioBtn.classList.remove('card__audio--active');
+    this.inputWrapper.classList.remove('input--frozen');
+
+    this.checkBtn.innerHTML = 'Проверить';
+    this.lookBtn.classList.remove('card__btn--hidden');
+    this.audioBtn.classList.add('card__audio--inactive');
+    this.audioBtn.removeEventListener('click', this.holderBindFunc);
+
     this.cardIndex += 1;
     this.insertLearning();
   }
 
-  handleCorrectAnswer() {
-    this.audioBtn.classList.add('card__audio--active');
-    this.replaceWord();
+  getReadyForNextCard() {
+    const inputField = this.inputWrapper.querySelector('input');
+    this.holderBindFunc = this.sayWordAloud.bind(this);
+
+    this.replaceLearnWord();
+    this.sayWordAloud();
+
+    inputField.value = '';
+    this.inputWrapper.classList.add('input--frozen');
+
+    this.checkBtn.innerHTML = 'Далее';
+    this.lookBtn.classList.add('card__btn--hidden');
+    this.audioBtn.classList.remove('card__audio--inactive');
+
+    this.checkBtn.addEventListener('click', this.goNextCard.bind(this), { once: true });
+    this.audioBtn.addEventListener('click', this.holderBindFunc);
+  }
+
+  handleIncorrectAnswer() {
+    // console.log(this.input);
   }
 
   handleSubmitAnswer(evt) {
     evt.preventDefault();
-    const inputField = this.inputWrapper.querySelector('input');
     const dataOfWord = this.dataOfWords[this.cardIndex];
-    const audio = new Audio(`${constants.FOLDER_WITH_ASSETS}${dataOfWord.audio}`);
-    audio.addEventListener('ended', () => setTimeout(this.goNextCard.bind(this), constants.TIME_BETWEEN_CARDS));
+    const inputField = this.inputWrapper.querySelector('input');
 
-    if (inputField.value === dataOfWord.word) {
-      this.handleCorrectAnswer();
-      audio.play();
+    if (inputField.value.toLowerCase() === dataOfWord.word) {
+      this.getReadyForNextCard();
+    } else {
+      this.handleIncorrectAnswer();
     }
   }
 
@@ -105,7 +136,7 @@ class Lingvist extends View {
     this.example.innerHTML = `<span>Пример:</span> "${dataOfWord.textExample}" <span>— ${dataOfWord.textExampleTranslate}</span>`;
     this.image.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
 
-    this.replaceWord('hide');
+    this.replaceLearnWord('hide');
     input.inputAnswer.focus();
   }
 
@@ -133,6 +164,7 @@ class Lingvist extends View {
 
   bindEventListeners() {
     this.form.addEventListener('submit', (event) => this.handleSubmitAnswer(event));
+    this.lookBtn.addEventListener('click', this.getReadyForNextCard.bind(this));
   }
 
   display(show) {

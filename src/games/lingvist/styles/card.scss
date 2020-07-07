@@ -110,7 +110,11 @@
   &--active svg {
     animation: scaleUp 0.5s ease-in-out infinite alternate;
 
-    fill: $warning;
+    fill: $warning !important;
+  }
+
+  &--inactive {
+    visibility: hidden;
   }
 }
 
@@ -146,5 +150,9 @@
       background: $primary;
       border-color: $primary;
     }
+  }
+
+  &--hidden {
+    display: none;
   }
 }
