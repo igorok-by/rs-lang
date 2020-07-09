@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import markup from './lingvist.html';
 import './styles.scss';
 
@@ -33,11 +34,12 @@ class Lingvist extends View {
     this.form = null;
     this.input = null;
     this.progressBar = null;
+    this.continueBtn = null;
     this.holderBindFunc = null;
   }
 
   async getWords() {
-    const words = await this.mainModel.getWords({ group: 0, page: 2 });
+    const words = await this.mainModel.getWords({ group: 0, page: 1 });
     return words;
   }
 
@@ -79,16 +81,33 @@ class Lingvist extends View {
     audio.addEventListener('ended', () => this.audioBtn.classList.remove('card__audio--active'));
   }
 
-  goNextCard() {
-    this.inputWrapper.classList.remove('input--frozen');
+  async continueLearning() {
+    const card = document.querySelector('.card');
 
+    card.classList.remove('card--finished');
+    this.progressBar.container.remove();
+
+    this.cardIndex = -1;
+    this.dataOfWords = await this.mainModel.getWords({ group: 0, page: 2 });
+    this.goNextCard();
+    this.insertProgressBar();
+  }
+
+  handleReachEnd() {
+    const card = document.querySelector('.card');
+
+    card.classList.add('card--finished');
+    this.progressBar.container.remove();
+    this.continueBtn.addEventListener('click', this.continueLearning.bind(this), { once: true });
+  }
+
+  goNextCard() {
     this.checkBtn.innerHTML = 'Проверить';
     this.lookBtn.classList.remove('card__btn--hidden');
+    this.inputWrapper.classList.remove('input--frozen');
     this.audioBtn.classList.add('card__audio--inactive');
     this.audioBtn.removeEventListener('click', this.holderBindFunc);
 
-    this.progressBar.increaseProgress();
-    console.log(this.progressBar.counter);
     this.cardIndex += 1;
     this.insertLearning();
   }
@@ -98,6 +117,7 @@ class Lingvist extends View {
 
     this.replaceLearnWord();
     this.sayWordAloud();
+    this.progressBar.increaseProgress();
 
     this.input.inputAnswer.value = '';
     this.input.wordHolder.classList.remove('input__word--transparent');
@@ -108,7 +128,11 @@ class Lingvist extends View {
     this.lookBtn.classList.add('card__btn--hidden');
     this.audioBtn.classList.remove('card__audio--inactive');
 
-    this.checkBtn.addEventListener('click', this.goNextCard.bind(this), { once: true });
+    if (this.cardIndex + 1 === this.dataOfWords.length) {
+      this.checkBtn.addEventListener('click', this.handleReachEnd.bind(this), { once: true });
+    } else {
+      this.checkBtn.addEventListener('click', this.goNextCard.bind(this), { once: true });
+    }
     this.audioBtn.addEventListener('click', this.holderBindFunc);
   }
 
@@ -175,6 +199,7 @@ class Lingvist extends View {
     const cardRightColumn = create('div', 'card__body-right');
     this.form = this.getElement('#formCard');
     this.body = this.getElement('.card__body');
+    this.continueBtn = this.getElement('#btnContinue');
 
     this.insertAudioBtn();
     this.insertControlBtns();

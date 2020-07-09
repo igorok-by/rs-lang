@@ -5,6 +5,7 @@ export default class ProgressBar {
     this.sumOfCards = sumOfCards;
     this.counter = 0;
     this.barWidth = 0;
+    this.container = create('div', 'progress');
     this.maxValue = create('span', 'progress__numb', `${sumOfCards}`);
     this.currentValue = create('span', 'progress__numb', `${this.counter}`);
     this.bar = create('div', 'progress__bar');
@@ -12,10 +13,10 @@ export default class ProgressBar {
 
   renderBar() {
     const background = create('div', 'progress__background', this.bar);
-    const container = create('div', 'progress', [this.currentValue, background, this.maxValue]);
+    this.container.append(this.currentValue, background, this.maxValue);
 
     this.bar.style.width = `${this.barWidth}%`;
-    return container;
+    return this.container;
   }
 
   increaseProgress() {
