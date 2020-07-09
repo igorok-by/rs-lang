@@ -1,11 +1,12 @@
 import markup from './lingvist.html';
 import './styles.scss';
 
-import View from '../../services/view';
-import MainModel from '../../services/model';
 import * as constants from './js/utils/constants';
 import create from './js/utils/create';
+import View from '../../services/view';
+import MainModel from '../../services/model';
 import Input from './js/Input';
+import ProgressBar from './js/ProgressBar';
 
 class Lingvist extends View {
   constructor() {
@@ -26,12 +27,13 @@ class Lingvist extends View {
     this.transcript = create('p', 'card__transcript');
     this.inputWrapper = create('div', 'input');
 
-    this.header = '';
-    this.body = '';
-    this.footer = '';
-    this.form = '';
-    this.input = '';
-    this.holderBindFunc = '';
+    this.header = null;
+    this.body = null;
+    this.footer = null;
+    this.form = null;
+    this.input = null;
+    this.progressBar = null;
+    this.holderBindFunc = null;
   }
 
   async getWords() {
@@ -85,6 +87,8 @@ class Lingvist extends View {
     this.audioBtn.classList.add('card__audio--inactive');
     this.audioBtn.removeEventListener('click', this.holderBindFunc);
 
+    this.progressBar.increaseProgress();
+    console.log(this.progressBar.counter);
     this.cardIndex += 1;
     this.insertLearning();
   }
@@ -143,6 +147,12 @@ class Lingvist extends View {
     }
   }
 
+  insertProgressBar() {
+    const main = document.querySelector('main.game-body');
+    this.progressBar = new ProgressBar(this.dataOfWords.length);
+    main.append(this.progressBar.renderBar());
+  }
+
   insertLearning() {
     const dataOfWord = this.dataOfWords[this.cardIndex];
     this.input = new Input(dataOfWord.word);
@@ -181,6 +191,7 @@ class Lingvist extends View {
 
     this.dataOfWords = await this.getWords();
     this.insertLearning();
+    this.insertProgressBar();
   }
 
   bindEventListeners() {
