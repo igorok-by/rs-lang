@@ -1,5 +1,5 @@
 {
-  "name": "rs_lang",
+  "name": "rs-lang",
   "version": "1.0.0",
   "description": "final task",
   "main": "index.js",
@@ -14,14 +14,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Persik3221/rs_lang.git"
+    "url": "git+https://github.com/rgovin/rs-lang.git"
   },
   "author": "73 group",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Persik3221/rs_lang/issues"
+    "url": "https://github.com/rgovin/rs-lang/issues"
   },
-  "homepage": "https://github.com/Persik3221/rs_lang#readme",
+  "homepage": "https://github.com/rgovin/rs-lang#readme",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
