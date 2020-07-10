@@ -19,7 +19,7 @@ const item = document.querySelectorAll('.item')
             word.innerHTML = commits[i].word
             transcription.innerHTML = commits[i].transcription
             
-            // getTranslation(commits[i].word,i)
+            
         })
     }
 

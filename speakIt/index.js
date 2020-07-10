@@ -11,7 +11,6 @@ import ButtonRestart from './js/buttonRestart'
 import ButtonSpeak from './js/buttonSpeak'
 import ButtonResult from './js/buttonResult'
 
-// const model = new Model();
 
 class SpeakIt extends View {
   constructor() {
@@ -19,14 +18,6 @@ class SpeakIt extends View {
     this.hash = 'speakIt';
   }
 
-  // async init() {
-  //   const testItem = this.getElement('.speak__btn');
-  //   console.log(testItem);
-  //   const words = await model.getWords(0,1);
-
-  //   console.log(words);
-  //   // getWord(0,1)
-  // }
   init() {
     document.querySelector('.speak__btn').addEventListener('click', ()=>{
       const mainImage = new ItemImage();
@@ -57,7 +48,6 @@ class SpeakIt extends View {
       })
 
       document.querySelector('.speak__newGame').addEventListener('click', ()=>{
-          // document.querySelector('.main-img .translate').innerHTML = ''
           document.querySelectorAll('.speak__item').forEach(el=>{
               el.classList.remove('speak__activeItem');
               el.classList.remove('speak__stopHover')

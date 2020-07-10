@@ -55,6 +55,6 @@ export default class Difficult{
     render(i) {
         const wrapperHTML = document.querySelector('.speak_ul')
         this.dot = i==0 ? this.renderHtmlElement(wrapperHTML, 'li', 'speak__dif speak__active') : this.renderHtmlElement(wrapperHTML, 'li', 'speak__dif' );
-        // console.log(i)
+        
     }
 }
