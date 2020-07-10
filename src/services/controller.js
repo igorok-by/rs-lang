@@ -17,6 +17,8 @@ class Controller {
     this.games = [
       SpeakIt,
       EnglishPuzzle,
+      AudioCall,
+      Sprint,
     ];
   }
 

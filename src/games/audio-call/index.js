@@ -1,4 +1,4 @@
-import markup from './AudioCall.html';
+import markup from './audioCall.html';
 import View from '../../services/view';
 import Model from '../../services/model';
 import './styles.scss';
@@ -9,6 +9,7 @@ import start from './js/scripts';
 class AudioCall extends View {
   constructor() {
     super();
+    this.name = 'audioCall';
     this.hash = 'Audio-Call';
   }
 
