@@ -66,6 +66,10 @@ module.exports = {
     } ),
     new CopyWebpackPlugin( [
       {from : './src/assets/img/', to : './img/'},
+      { from: './src/games/english-puzle/assets/img', to: './img/english-puzle' },
+      { from: './src/games/speakIt/assets/img', to: './img/speakIt' },
+      { from: './src/games/audio-call/assets/img', to: './img/audio-call' },
+      { from: './src/games/sprint/assets/img', to: './img/sprint' },
     ] ),
   ],
   resolve   : {

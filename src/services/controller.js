@@ -3,6 +3,8 @@ import Model from './model';
 import View from './view';
 import SpeakIt from '../games/speakIt/index';
 import EnglishPuzzle from '../games/english-puzle/index';
+import AudioCall from '../games/audio-call';
+import Sprint from '../games/sprint';
 import Login from './login/index';
 
 // USER для теста
@@ -15,6 +17,8 @@ class Controller {
     this.games = [
       SpeakIt,
       EnglishPuzzle,
+      AudioCall,
+      Sprint,
     ];
   }
 
