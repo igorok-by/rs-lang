@@ -147,9 +147,7 @@ export default function start(isTimer = true){
 
                             const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20200422T141128Z.dd52065382ad8a96.75a601c4137245008380fc26f2e31d94eaa0a27c&text= ${word} &lang=en-ru`
 
-                            fetch(url)
-                            .then(res => res.json())
-                            .then(data => {
+                            
 
                                 document.querySelector('.sprint__game').classList.add('sprint__red')
                                 errorAudio.play();
