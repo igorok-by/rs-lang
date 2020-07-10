@@ -1,4 +1,4 @@
-
+// import 'babel-polyfill'
 
 
 export default class ItemWord{

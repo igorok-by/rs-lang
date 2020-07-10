@@ -9,7 +9,6 @@ import start from './js/scripts';
 class AudioCall extends View {
   constructor() {
     super();
-    this.name = 'audioCall';
     this.hash = 'Audio-Call';
   }
 

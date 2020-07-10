@@ -48,7 +48,7 @@ export default class ButtonSpeak{
         this.mainImage = mainImage
     }
     correctItem(transcript){
-
+        // console.log(transcript)
         const item = document.querySelectorAll('.speak__item')
         item.forEach((el,i)=>{
             if(el.querySelector('.speak__word').innerText.toLowerCase() == transcript){
@@ -70,7 +70,18 @@ export default class ButtonSpeak{
             }
         })
     }
+    // addStar(){
+    //     if(this.star){
+    //     let div = document.createElement('div')
+    //     div.className = 'star'
+    //     document.querySelector('.score').append(div)
+    //     this.star = false;
+    //     }
+    // }
     recognitionSpeak(){
+        // document.querySelectorAll('.item-info .word').forEach(el => {
+        //     console.log(el.innerHTML)
+        // })
         document.querySelectorAll('.speak__item').forEach(el=>el.classList.remove('speak__activeItem'))
         document.querySelectorAll('.speak__item').forEach(el=>el.classList.add('speak__stopHover'))
         if(this.inputText != null && document.querySelector('.speak__main-img input')){document.querySelector('.speak__main-img input').remove()}
@@ -80,6 +91,9 @@ export default class ButtonSpeak{
         const recognition = new SpeechRecognition()
         recognition.interimResults = true;
         recognition.lang = 'en-US';
+        
+        // let p = document.createElement('p');
+        // document.body.append(p);
 
         recognition.onresult =  e => {
             const transcript = Array.from(e.results)
