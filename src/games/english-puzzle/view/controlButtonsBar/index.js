@@ -64,6 +64,7 @@ class ControlButtons {
       switch (type) {
         case 'continue':
           this.changeToCheck();
+          this.showDontKnowButton();
           onContinueClick();
           break;
         case 'check':

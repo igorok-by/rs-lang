@@ -15,16 +15,45 @@ export const settingsTypes = {
 
 export const imagesPath = 'img/english-puzzle/';
 
-export const PICTURE_SOURCES = (() => [
-  'artGallery/HouseInTheRuse.jpg',
-  'artGallery/Berkhem_Mountain.jpeg',
-  'artGallery/Aivazovski_Mountains.jpeg',
-  'artGallery/Aivazovski_Sunset.jpeg',
-  'artGallery/BirshtadtTropicalSunset.jpeg',
-  'artGallery/Birshtadt_CountryFerm.jpeg',
-  'artGallery/Devjaty_val.jpg',
-
-  'artGallery/MorningInTheWood.jpg',
-  'artGallery/VanGog_Field.jpg',
-  'artGallery/VillasAtTrouville.jpeg',
-].map((source) => imagesPath + source))();
+export const PICTURE_SOURCES = [
+  [
+    'img/english-puzzle/artGallery/HouseInTheRuse.jpg',
+    '"Дом в Рюэе" Эдуард Мане (1832-1883)',
+  ],
+  [
+    'img/english-puzzle/artGallery/Berkhem_Mountain.jpeg',
+    '"Горный пейзаж с караваном" Николас Питерс Берхем (1620-1683)',
+  ],
+  [
+    'img/english-puzzle/artGallery/Aivazovski_Mountains.jpeg',
+    '"Аул Гуниб в Дагестане.Вид с восточной стороны 1869" Иван Константинович Айвазовский (1817-1900)',
+  ],
+  [
+    'img/english-puzzle/artGallery/Aivazovski_Sunset.jpeg',
+    '"Закат 1866" Иван Константинович Айвазовский (1817-1900)',
+  ],
+  [
+    'img/english-puzzle/artGallery/BirshtadtTropicalSunset.jpeg',
+    '"Тропический пейзаж с рыболовных судов в заливе" Альберт Бирштадт (1830-1902)',
+  ],
+  [
+    'img/english-puzzle/artGallery/Birshtadt_CountryFerm.jpeg',
+    '"Сельская фабрика" Альберт Бирштадт (1830-1902)',
+  ],
+  [
+    'img/english-puzzle/artGallery/Devjaty_val.jpg',
+    '"Девятый вал" Иван Константинович Айвазовский (1817-1900)',
+  ],
+  [
+    'img/english-puzzle/artGallery/MorningInTheWood.jpg',
+    '"Утро в сосновом лесу", Иван Иванович Шишкин (1832-1898)',
+  ],
+  [
+    'img/english-puzzle/artGallery/VanGog_Field.jpg',
+    '"Пшеничное поле со снопами" Винсент Ван Гог (1853-1890)',
+  ],
+  [
+    'img/english-puzzle/artGallery/VillasAtTrouville.jpeg',
+    '"Розовая вилла в Трувиле" Гюстав Кайботт (1848-1894)',
+  ],
+];

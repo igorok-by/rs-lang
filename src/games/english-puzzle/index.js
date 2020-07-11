@@ -30,6 +30,8 @@ class EnglishPuzzle {
       onNextLevelClick: this.model.nextLevel.bind(this.model),
     });
 
+    this.gui.startWindow.init({ onStartClick: this.model.startGame.bind(this.model) });
+
     this.model.bindDisplaySettings(this.gui.settingsChange.bind(this.gui));
     this.model.bindDisplayPromptMessage(this.gui.promptBar.displayMessage.bind(this.gui.promptBar));
     this.model.bindDisplaySpeaker(this.gui.promptBar.displaySpeaker.bind(this.gui.promptBar));
@@ -40,7 +42,6 @@ class EnglishPuzzle {
     this.model.bundDisplayRowPieces(this.gui.displayRowPieces.bind(this.gui));
     this.model.bindDisplayFinish(this.gui.finishLevel.bind(this.gui));
 
-    this.model.startGame();
   }
 
   /**

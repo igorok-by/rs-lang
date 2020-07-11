@@ -109,6 +109,7 @@ class EnglishPuzzleModel extends Model {
   }
 
   async startGame() {
+    console.log('startGame');
     this.words = await this.getNextWords();
 
     const sentences = this.words.map((word) => word.textExample);

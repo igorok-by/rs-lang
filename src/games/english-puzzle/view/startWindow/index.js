@@ -6,8 +6,21 @@ class StartWindow {
     this.view = view;
   }
 
-  init(){
-    // this.results = this.view.getElement('.english-puzzle__results');
+  init({ onStartClick }) {
+    this.startWindow = this.view.getElement('.english-puzzle__start-window');
+    this.startButton = this.view.getElement('.start-window__start-button');
+    this.bindStartClick(onStartClick);
+  }
+
+  bindStartClick(handler) {
+    this.startButton.addEventListener('click', () => {
+      this.hideWindow();
+      handler();
+    });
+  }
+
+  hideWindow() {
+    this.startWindow.classList.add('english-puzzle__start-window_hide');
   }
 
   render() {

@@ -3,8 +3,8 @@ import StatusBar from './statusBar';
 import GameField from './gameField';
 import PiecesBar from './piecesBar';
 import PromptBar from './promptBar';
-import StartWindow from './startWindow';
 import ControlButtonsBar from './controlButtonsBar';
+import StartWindow from './startWindow';
 import './styles.scss';
 import View from '../../../services/view';
 import { settingsTypes, PICTURE_SOURCES } from '../../../constants';
@@ -44,11 +44,12 @@ class GUI extends View {
   }
 
   readyToNext() {
+    this.controlButtonsBar.hideDontKnowButton();
     this.controlButtonsBar.changeToContinue();
   }
 
   async showLevel(level, sentences) {
-    this.picture = PICTURE_SOURCES[level];
+    [this.picture] = PICTURE_SOURCES[level];
 
     await this.gameField.createPuzzle(this.picture, sentences);
 
@@ -62,13 +63,17 @@ class GUI extends View {
 
     this.controlButtonsBar.showDontKnowButton();
 
+    this.startWindow.hideWindow();
+
     // this.gameField.showBackgroundPicture(picture);
   }
 
-  finishLevel() {
+  finishLevel(level) {
+    const [, describe] = PICTURE_SOURCES[level];
+
     this.gameField.showPicture(this.picture);
 
-    this.piecesBar.showText('some name of picture');
+    this.piecesBar.showText(describe);
 
     this.promptBar.hideAll();
 
@@ -84,7 +89,7 @@ class GUI extends View {
     const piecesBar = this.piecesBar.render();
     const controlButtonsBar = this.controlButtonsBar.render();
     const startWindow = this.startWindow.render();
-    //
+
     return this.render(markup, {
       title: 'ENGLISH PUZZLE',
       startWindow,
@@ -131,6 +136,7 @@ class GUI extends View {
         this.promptBar.displaySpeaker(activate);
         break;
       case settingsTypes.BKG_PICTURE:
+        console.log('settingsChange', settingsTypes.BKG_PICTURE, activate);
         if (activate) {
           this.gameField.showBackgroundPicture(this.picture);
         } else {
