@@ -1,6 +1,6 @@
 /* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
-import { REST_URL } from '../utils/urls';
+import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
 
 class Model {
@@ -108,6 +108,20 @@ class Model {
     const result = await FetchRequire(url);
 
     return result;
+  }
+
+  async getImageUrl(path) {
+    return UrlPath(MEDIA_CONTENT_URL, path);
+  }
+
+  playAudio(path) {
+    const url = UrlPath(MEDIA_CONTENT_URL, path);
+
+    const audio = new Audio(url);
+
+    audio.play();
+
+    return audio;
   }
 }
 

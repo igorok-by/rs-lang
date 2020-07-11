@@ -7,9 +7,11 @@
 //@import "./fonts.scss";
 
 .wr-header {
-  height: 40px;
   position: relative;
+
+  height: 40px;
   padding: 10px 0;
+
   background-color: #158fef;
   .container {
     text-align: center;
@@ -17,68 +19,87 @@
   h2 {
     display: inline-block;
     margin: 10px auto 0;
-    font-family: "Roboto-Bold";
+
     font-size: 23px;
+    font-family: "Roboto-Bold";
     text-transform: uppercase;
+
     cursor: pointer;
   }
 }
 
-.wr-main{
+.wr-main {
   position: relative;
+
   display: grid;
+
+  grid-template-areas: "app-panel-header app-header"
+  "app-panel        app-main"
+  "app-panel        app-footer";
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
-  grid-template-areas:
-          "app-panel-header app-header"
-          "app-panel        app-main"
-          "app-panel        app-footer";
   .container {
     display: flex;
   }
 }
+
 .app-panel {
-  grid-area: app-panel;
   height: calc(100vh - 60px);
+
   background-color: #b3d4fc;
-  .menuItem{
+
+  grid-area: app-panel;
+  .menuItem {
     width: 150px;
   }
 }
+
 .app-header {
-  grid-area: app-header;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: #fccd86;
-  height: 60px;
   box-sizing: border-box;
+  height: 60px;
   padding: 15px;
+
   text-align: center;
+
+  background-color: #fccd86;
+
+  grid-area: app-header;
 }
+
 .app-main {
-  grid-area: app-main;
   background-color: #6593fc;
-  .menuItem{
+
+  grid-area: app-main;
+  .menuItem {
     width: 150px;
   }
 }
-.app-menu-header{
-  grid-area: app-panel-header;
+
+.app-menu-header {
   background-color: #91fc65;
+
+  grid-area: app-panel-header;
 }
 
-.root-content{
+.root-content {
   width: 100%;
+
   background-color: #b293fc;
 }
-.show{
+
+.show {
   display: block;
 }
-footer{
-  height: 40px;
+
+footer {
   position: relative;
+
+  height: 40px;
   padding: 15px 0;
+
   background-color: #ef6eb0;
   .container {
     text-align: center;
