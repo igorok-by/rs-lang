@@ -1,5 +1,4 @@
 const URL_DATA_SEPARATOR = '&';
-
 const ParentData = {
   GET: {
     method: 'GET',
@@ -24,20 +23,18 @@ export const FetchRequire = async (url, data = {}) => {
   const ParentDataObject = ParentData[Method];
   if (ParentDataObject) {
     const Data = Object.assign(ParentDataObject, data);
-    const { method, headers, body } = Data;
+    const response = await fetch(url, Data).catch();
 
-    console.log('FetchRequire', url, method, headers, body);
-
-    try {
-      const response = await fetch(url, Data);
-      const result = await response.json();
-
-      return result;
-    } catch (e) {
-      console.error(e.message);
-      return null;
-      // throw new Error();
+    if (!response.ok) {
+      const error = Object.assign(Error.prototype, {
+        response,
+      });
+      throw error;
     }
+
+    const result = await response.json();
+
+    return result;
   }
 
   return null;
