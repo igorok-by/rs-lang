@@ -3,24 +3,11 @@ import StatusBar from './statusBar';
 import GameField from './gameField';
 import PiecesBar from './piecesBar';
 import PromptBar from './promptBar';
+import StartWindow from './startWindow';
 import ControlButtonsBar from './controlButtonsBar';
 import './styles.scss';
 import View from '../../../services/view';
-import { settingsTypes } from '../../../constants';
-
-const PICTURE_SOURCES = [
-  'img/english-puzle/artGallery/HouseInTheRuse.jpg',
-  'img/english-puzle/artGallery/Berkhem_Mountain.jpeg',
-  'img/english-puzle/artGallery/Aivazovski_Mountains.jpeg',
-  'img/english-puzle/artGallery/Aivazovski_Sunset.jpeg',
-  'img/english-puzle/artGallery/BirshtadtTropicalSunset.jpeg',
-  'img/english-puzle/artGallery/Birshtadt_CountryFerm.jpeg',
-  'img/english-puzle/artGallery/Devjaty_val.jpg',
-
-  'img/english-puzle/artGallery/MorningInTheWood.jpg',
-  'img/english-puzle/artGallery/VanGog_Field.jpg',
-  'img/english-puzle/artGallery/VillasAtTrouville.jpeg',
-];
+import { settingsTypes, PICTURE_SOURCES } from '../../../constants';
 
 class GUI extends View {
   constructor() {
@@ -30,6 +17,7 @@ class GUI extends View {
     this.gameField = new GameField(this);
     this.piecesBar = new PiecesBar(this);
     this.controlButtonsBar = new ControlButtonsBar(this);
+    this.startWindow = new StartWindow(this);
 
     this.currentRow = NaN;
     this.picture = '';
@@ -95,9 +83,11 @@ class GUI extends View {
     const gameField = this.gameField.render();
     const piecesBar = this.piecesBar.render();
     const controlButtonsBar = this.controlButtonsBar.render();
-
+    const startWindow = this.startWindow.render();
+    //
     return this.render(markup, {
       title: 'ENGLISH PUZZLE',
+      startWindow,
       statusBar,
       promptBar,
       gameField,

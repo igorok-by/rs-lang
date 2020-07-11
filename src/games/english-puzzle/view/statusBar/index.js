@@ -41,19 +41,19 @@ class StatusBarView {
   }
 
   bindLevel(handler) {
-    this.levels.addEventListener('change', ({ target }) => {
-      const { selectedIndex } = target;
-
-      handler(selectedIndex);
-    });
+    // this.levels.addEventListener('change', ({ target }) => {
+    //   const { selectedIndex } = target;
+    //
+    //   handler(selectedIndex);
+    // });
   }
 
   bindPage(handler) {
-    this.pages.addEventListener('change', ({ target }) => {
-      const { selectedIndex } = target;
-
-      handler(selectedIndex);
-    });
+    // this.pages.addEventListener('change', ({ target }) => {
+    //   const { selectedIndex } = target;
+    //
+    //   handler(selectedIndex);
+    // });
   }
 
   displaySettings(type, value) {

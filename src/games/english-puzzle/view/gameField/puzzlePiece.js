@@ -14,7 +14,8 @@ class PuzzlePiece {
     const canvasElement = this.view.createElement('canvas', 'puzzle__piece');
     const ctx = canvasElement.getContext('2d');
     const { height, a } = this;
-    const lineColor = '#0012ff';
+    const lineColor = '#ffffff';
+    // const lineColor = '#135e6e';
 
     ctx.canvas.height = height;
     ctx.canvas.width = type === this.pieceTypes.ENDING ? width : width + a;

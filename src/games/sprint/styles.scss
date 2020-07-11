@@ -1,6 +1,13 @@
+.sprint.game-section{
+  position: relative;
+}
 .sprint__main{
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
   background: #135E6E;
   display: flex;
   align-items: center;

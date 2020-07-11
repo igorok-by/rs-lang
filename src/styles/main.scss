@@ -4,7 +4,7 @@
 @import "animate";
 @import "modal";
 
-//@import "fonts";
+@import "fonts";
 
 .wr-header {
   position: relative;
@@ -29,18 +29,15 @@
 }
 
 .wr-main {
+  //height: 100vh;
   position: relative;
-
   display: grid;
-
   grid-template-areas: "app-panel-header app-header"
   "app-panel        app-main"
   "app-panel        app-footer";
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
-  .container {
-    //display: flex;
-  }
+  overflow: hidden;
 }
 
 .app-panel {

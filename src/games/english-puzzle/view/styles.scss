@@ -1,17 +1,16 @@
 @import "../../../styles/variables";
 
 .english-puzzle.game-section {
-  background-color: $color_success;
+  background-color: $primary-dark;
   text-align: center;
   padding: 0;
 }
 .english-puzzle .container{
   height: 100%;
+  padding: 15px;
 }
-.english-puzzle__header{
-  margin: 15px auto;
-}
-.english-puzzle__component{
+
+.english-puzzle__component:not(:first-of-type){
   margin: 15px 0;
 }
 
@@ -26,4 +25,9 @@
 }
 .english-puzzle__words{
   font-size: 30px;
+}
+
+.english-puzzle__game-container{
+  height: 100%;
+  background-color: $success;
 }

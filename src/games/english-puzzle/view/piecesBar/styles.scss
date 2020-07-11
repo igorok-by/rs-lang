@@ -1,13 +1,14 @@
 .english-puzzle__pieces-bar {
-  width: 100%;
+  //width: 100%;
+  position: relative;
   min-height: 62px;
+  margin-left: 40px !important;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-color: #fffef6;
-  box-shadow: 0 0 10px 9px rgba(0,0,0,0.3);
-  border-radius: 3px;
+  background-color: #2a6e7c;;
+  box-shadow: 0 0 10px 9px rgba(67, 69, 68, 0.3);;
 }
 
 .puzzle__piece {

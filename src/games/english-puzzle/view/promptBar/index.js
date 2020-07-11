@@ -1,7 +1,7 @@
 import PromptBar from './PromptBar.html';
 import './styles.scss';
-import speakerIcon from '../../assets/img/speaker.png';
- //
+import speakerIcon from '../../assets/img/speaker.svg';
+
 class HintsController {
   constructor(view) {
     this.view = view;
@@ -17,8 +17,12 @@ class HintsController {
   }
 
   bindSpeakerIcon(handler) {
-    this.speaker.addEventListener('click', () => {
-      handler();
+    this.speaker.addEventListener('click', async () => {
+      this.displayAudioProcess(true);
+
+      await handler();
+
+      this.displayAudioProcess();
     });
   }
 
@@ -34,6 +38,15 @@ class HintsController {
   showAll() {
     this.displaySpeaker();
     this.displayTranslation();
+  }
+
+  displayAudioProcess(isShow) {
+    const activeClass = 'prompt-bar__speaker-icon_active';
+    if (isShow) {
+      this.speaker.classList.add(activeClass);
+    } else {
+      this.speaker.classList.remove(activeClass);
+    }
   }
 
   displaySpeaker(isShow) {

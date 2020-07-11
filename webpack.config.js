@@ -17,19 +17,30 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: '/node_modules/',
-      }, {
+      },
+      {
         test: /\.(png|jpg|jpeg|gif|svg)$/,
         loader: 'file-loader',
         options: {
           name: './img/[name].[ext]',
         },
-      }, {
+      },
+      {
+        test: /\.(ttf|otf|webp|eot|woff|woff2)$/i, //
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: 'fonts',
+        },
+      },
+      {
         test: /\.mp3$/,
         loader: 'file-loader',
         options: {
           name: './audio/[name].[ext]',
         },
-      }, {
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -63,21 +74,6 @@ module.exports = {
         test: /\.html$/,
         loader: 'html-loader',
       },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[folder]/[name].[ext]',
-              outputPath: 'media',
-              esModule: false,
-              useRelativePath: true,
-
-            },
-          },
-        ],
-      },
     ],
   },
   plugins: [
@@ -87,14 +83,14 @@ module.exports = {
     }),
     new MiniCssExtractPlugin({
       filename: 'styles.css',
-    } ),
-    new CopyWebpackPlugin( [
-      { from : './src/assets/img/', to : './img/' },
-      { from: './src/games/english-puzle/assets/img', to: './img/english-puzle' },
+    }),
+    new CopyWebpackPlugin([
+      { from: './src/assets/img/', to: './img/' },
+      { from: './src/games/english-puzzle/assets/img', to: './img/english-puzzle' },
       { from: './src/games/speakIt/assets/img', to: './img/speakIt' },
       { from: './src/games/audio-call/assets/img', to: './img/audio-call' },
       { from: './src/games/sprint/assets/img', to: './img/sprint' },
-    ] ),
+    ]),
   ],
   resolve: {
     extensions: ['.js'],
