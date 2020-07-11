@@ -138,6 +138,7 @@ class Model {
     audio.play();
 
     return audio;
+  }
 }
 
 export default Model;
