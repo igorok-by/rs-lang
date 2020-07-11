@@ -1,1 +1,22 @@
 $color_success: #6f9987;
+
+// Colors
+$primary: #00c49d;
+$primary-dark: #135e6e;
+$primary-light: #6cffde;
+$primary-hover: #00856a;
+$warning: #de6e4b;
+$info: #7a6563;
+$success: #e5d4ce;
+$light: #ffffff;
+$dark: #0e1e25;
+
+// Border, shadow
+$border-radius: 5px;
+$border: 1px solid $primary;
+$box-shadow: 5px 5px 25px rgba(118, 118, 118, 0.25);
+$box-shadow-hover: 5px 5px 5px 0 #e3e3e3;
+
+// Transition
+$def-transition: 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+$long-transition: 1s cubic-bezier(0.25, 0.1, 0.25, 1);

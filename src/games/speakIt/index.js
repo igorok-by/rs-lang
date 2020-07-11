@@ -13,12 +13,13 @@ import ButtonResult from './js/buttonResult'
 
 // const model = new Model();
 
+const model = new Model();
+
 class SpeakIt extends View {
   constructor() {
     super();
     this.hash = 'speakIt';
   }
-
   // async init() {
   //   const testItem = this.getElement('.speak__btn');
   //   console.log(testItem);
