@@ -39,10 +39,6 @@ class GUI extends View {
     this.currentRow = rowNumber;
   }
 
-  init() {
-    // this.testField = this.getElement('.english-puzzle__test-field');
-  }
-
   readyToNext() {
     this.controlButtonsBar.hideDontKnowButton();
     this.controlButtonsBar.changeToContinue();
@@ -64,8 +60,6 @@ class GUI extends View {
     this.controlButtonsBar.showDontKnowButton();
 
     this.startWindow.hideWindow();
-
-    // this.gameField.showBackgroundPicture(picture);
   }
 
   finishLevel(level) {
@@ -115,7 +109,6 @@ class GUI extends View {
   }
 
   checkCurrentRow() {
-    // this.gameField.checkRow(this.currentRow);
     this.gameField.showWrong(this.currentRow);
   }
 

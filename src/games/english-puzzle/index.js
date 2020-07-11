@@ -9,7 +9,6 @@ class EnglishPuzzle {
   }
 
   init() {
-    this.gui.init();
     this.gui.statusBar.init({
       onChangeSettings: this.model.settingsChange.bind(this.model),
       onChangeLevel: this.model.levelChange.bind(this.model),

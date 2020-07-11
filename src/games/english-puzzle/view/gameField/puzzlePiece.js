@@ -15,7 +15,6 @@ class PuzzlePiece {
     const ctx = canvasElement.getContext('2d');
     const { height, a } = this;
     const lineColor = '#ffffff';
-    // const lineColor = '#135e6e';
 
     ctx.canvas.height = height;
     ctx.canvas.width = type === this.pieceTypes.ENDING ? width : width + a;
@@ -70,8 +69,7 @@ class PuzzlePiece {
     return canvasElement;
   }
 
-  // TODO image background
-
+  // eslint-disable-next-line class-methods-use-this
   drawImage({
     canvasElement, canvasImage, x, y, imageOffset = 0,
   }) {
@@ -82,11 +80,11 @@ class PuzzlePiece {
       canvasImage,
       x - imageOffset,
       y,
-      canvasElement.width, // + imageOffset
+      canvasElement.width,
       canvasElement.height,
       0,
       0,
-      canvasElement.width, // + imageOffset
+      canvasElement.width,
       canvasElement.height,
     );
     ctx.stroke();
@@ -114,15 +112,12 @@ class PuzzlePiece {
     return canvasElement;
   }
 
-  setBorderColor({ canvasElement, color }){
+  // eslint-disable-next-line class-methods-use-this
+  setBorderColor({ canvasElement, color }) {
     const ctx = canvasElement.getContext('2d');
 
-    // ctx.beginPath();
     ctx.strokeStyle = '#ff0000';
     ctx.stroke();
-    // ctx.shadowColor = color;
-    // ctx.shadowBlur = 4;
-    // ctx.lineWidth = 5;
   }
 }
 

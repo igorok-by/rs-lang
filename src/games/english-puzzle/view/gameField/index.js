@@ -22,7 +22,6 @@ class Puzzle extends PuzzlePiece {
     this.onCorrect = onCorrect;
 
     this.bindElementClick(onElementClick);
-    // this.puzzleElements = this.createPuzzle(this.imageSource);
     this.bindDropEvent();
   }
 

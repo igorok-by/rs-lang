@@ -1,4 +1,3 @@
-// import View from '../view';
 import StatusBar from './StatusBar.html';
 import SettingsButton from './settingsButton';
 import './styles.scss';

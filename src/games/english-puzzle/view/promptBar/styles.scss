@@ -7,9 +7,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  //background-color: rgba(255,255,255,0.2);
-
-  //box-shadow: 0 0 10px 9px rgba(0,0,0,0.3);
   border-radius: 3px;
   padding: 5px 0;
   color: #fff;
@@ -22,7 +19,6 @@
   cursor: pointer;
   fill: $speaker-nonactive;
   transition: fill 0.3s;
-  //animation: scaleUp 0.5s ease-in-out;
   &:hover{
     fill: $speaker-active;
   }
