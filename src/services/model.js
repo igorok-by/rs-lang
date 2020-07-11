@@ -115,7 +115,6 @@ class Model {
     return result;
   }
 
-
   speak(text, language) {
     const voices = synth.getVoices();
     const langVoice = voices.find(({ lang }) => lang === language);
