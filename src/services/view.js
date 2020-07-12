@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import baseView from '../utils/baseView';
 import Header from './header';
-import Login from './login';
+
 import Settings from './settings';
 import NavigationPanel from './aside-panel';
 
@@ -10,7 +10,7 @@ class View extends baseView {
     super();
     this.name = '';
     this.header = new Header(this);
-    this.login = new Login(this);
+
     this.settings = new Settings(this);
     this.asidePanel = new NavigationPanel(this);
     this.main = this.getElement('.app-main');

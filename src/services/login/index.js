@@ -7,7 +7,7 @@ import Model from '../model';
 const USER = { email: 'hello1111@user.com', password: 'Gfhjkm_123' };
 
 class Login {
-  constructor(view) {
+  constructor(view, model) {
     this.view = view;
     this.model = new Model();
   }

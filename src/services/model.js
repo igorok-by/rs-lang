@@ -1,10 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable indent */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable spaced-comment */
-/* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
@@ -28,6 +21,23 @@ class Model {
       difficulty: true,
       dayWordsCount: 20,
     };
+  }
+
+  init(){
+    this.SettingsInit();
+    this.userInit();
+  }
+
+  userInit(){
+    if (!this.userId) {
+      const user = this.load('user');
+
+      if (!user) {
+        this.displayLogin();
+      } else {
+        console.log('user создан');
+      }
+    }
   }
 
   SettingsInit() {
@@ -54,10 +64,13 @@ class Model {
     if (result && result.message === messages.LOGIN_SUCCESS) {
       this.token = result.token;
       this.userId = result.userId;
-      localStorage.setItem('userToken', this.token);
-      view.hideModal();
-      location = '/';
-      console.log('ok');
+
+      // localStorage.setItem('userToken', this.token);
+      // view.hideModal();
+      // location = '/';
+      // console.log('ok');
+
+      this.save('user', { token: this.token, userId: this.userId });
     }
 
     return result;
@@ -187,7 +200,7 @@ class Model {
   }
 
   save(key, value) {
-    const data = this.load('all') || {};
+    const data = this.load(key) || {};
 
     data[key] = value;
 
@@ -222,6 +235,10 @@ class Model {
 
   bindDisplayMainSettings(cb) {
     this.displayMainSettings = cb;
+  }
+
+  bindDisplayLogin(cb) {
+    this.displayLogin = cb;
   }
 
   mainSettingsChange(setting, value) {
