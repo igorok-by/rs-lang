@@ -6,7 +6,7 @@ import EnglishPuzzle from '../games/english-puzzle/index';
 import Lingvist from '../games/lingvist/index';
 import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
-
+import Tomfoolery from '../games/tomfoolery';
 // USER для теста
 const USER = { email: 'test_user_random@gmail.com', password: 'Gfhjkm_123' };
 //
@@ -20,6 +20,7 @@ class Controller {
       Lingvist,
       AudioCall,
       Sprint,
+      Tomfoolery,
     ];
 
     this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
@@ -43,6 +44,11 @@ class Controller {
   showGame(name) {
     const game = this.games.find((el) => el.hash === name);
     if (game) {
+      this.games.forEach((el) => {
+        if (typeof el.stop === 'function') {
+          el.stop();
+        }
+      });
       game.display(this.view.showInMain.bind(this.view));
     } else {
       throw new Error(`There is no game by name ${name}`);
