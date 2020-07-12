@@ -1,22 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-=======
-=======
->>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
-/* eslint-disable linebreak-style */
-/* eslint-disable comma-dangle */
-/* eslint-disable linebreak-style */
-/* eslint-disable object-curly-spacing */
-/* eslint-disable space-in-parens */
-/* eslint-disable linebreak-style */
-/* eslint-disable key-spacing */
-const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const CopyWebpackPlugin = require( 'copy-webpack-plugin' );
->>>>>>> feat: add login
 
 module.exports = {
   entry: ['@babel/polyfill', './src/index.js'],
@@ -65,16 +49,8 @@ module.exports = {
             loader: 'css-loader',
             options: { sourceMap: true },
           }, {
-<<<<<<< HEAD
             loader: 'postcss-loader',
             options: { sourceMap: true, config: { path: 'src/config/postcss.config.js' } },
-=======
-            loader  : 'postcss-loader',
-            options : {sourceMap : true, config : {path : './src/config/postcss.config.js'}},
-<<<<<<< HEAD
->>>>>>> feat: add login
-=======
->>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
           },
         ],
       },
@@ -87,16 +63,8 @@ module.exports = {
             loader: 'css-loader',
             options: { sourceMap: true },
           }, {
-<<<<<<< HEAD
             loader: 'postcss-loader',
             options: { sourceMap: true, config: { path: 'src/config/postcss.config.js' } },
-=======
-            loader  : 'postcss-loader',
-            options : {sourceMap : true, config : {path : './src/config/postcss.config.js'}},
-<<<<<<< HEAD
->>>>>>> feat: add login
-=======
->>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
           }, {
             loader: 'sass-loader',
             options: { sourceMap: true },

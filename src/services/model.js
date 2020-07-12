@@ -8,16 +8,11 @@
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 const synth = window.speechSynthesis;
 const STORAGE_NAME = 'rs-lang-token';
-=======
+
 import View from './view';
->>>>>>> feat: change login
-=======
-import View from './view';
->>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
 
 class Model {
   // TODO
