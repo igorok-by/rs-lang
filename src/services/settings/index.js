@@ -5,7 +5,6 @@ class SettingsHandler {
   constructor(view) {
     this.view = view;
     this.html = this.view.render(Settings);
-    this.settingsMem = null;
   }
 
   init({ onSettingChange }) {
@@ -13,7 +12,7 @@ class SettingsHandler {
   }
 
   display(settings) {
-    const settingsEntires = Object.entries(settings).map(([key, value]) => {
+    const settingsEntrires = Object.entries(settings).map(([key, value]) => {
       let newValue = value;
 
       if (typeof value === 'boolean') {
@@ -22,7 +21,7 @@ class SettingsHandler {
 
       return [key, newValue];
     });
-    const htmlSettings = Object.fromEntries(settingsEntires);
+    const htmlSettings = Object.fromEntries(settingsEntrires);
     const html = this.view.render(Settings, htmlSettings);
 
     this.view.showInModal(html);
@@ -30,33 +29,31 @@ class SettingsHandler {
     this.checkList = this.view.getElement('.app-settings__list');
     this.close = this.view.getElement('.settings__close');
 
+    this.close.addEventListener('click', () => {
+      this.view.hideModal();
+    });
+
+    this.bindSettingChange(this.onSettingChange);
+  }
+
+  bindSettingChange(handler) {
     this.checkList.addEventListener('change', ({
       target: {
         id, type, value, checked,
       },
     }) => {
-      if (typeof this.onSettingChange === 'function') {
+      if (typeof handler === 'function') {
         switch (type) {
           case 'number':
-            this.onSettingChange(id, value);
+            handler(id, value);
             break;
           case 'checkbox':
-            this.onSettingChange(id, checked);
+            handler(id, checked);
             break;
           default:
         }
       }
     });
-
-    this.close.addEventListener('click', () => {
-      this.view.hideModal();
-    });
-
-    this.settingsMem = settings;
-  }
-
-  bindSettingChange(onSettingChange) {
-    this.onSettingChange = onSettingChange;
   }
 
   render() {

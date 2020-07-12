@@ -10,7 +10,7 @@ import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
 
 const synth = window.speechSynthesis;
-const STORAGE_NAME = 'rs-lang-token';
+const STORAGE_NAME = 'rs-lang';
 
 import View from './view';
 
@@ -20,7 +20,7 @@ class Model {
     this.token = '';
     this.userId = '';
     this.utterance = new SpeechSynthesisUtterance();
-    this.settings = {
+    this.defaultSettings = {
       picture: true,
       transcription: false,
       translate: true,
@@ -28,6 +28,19 @@ class Model {
       difficulty: true,
       dayWordsCount: 20,
     };
+  }
+
+  SettingsInit() {
+    if (!this.settings) {
+      const settings = this.load('settings');
+
+      if (!settings) {
+        this.settings = this.defaultSettings;
+        this.save('settings', this.settings);
+      } else {
+        this.settings = settings;
+      }
+    }
   }
 
   async signIn(user) {
@@ -173,6 +186,30 @@ class Model {
     return UrlPath(MEDIA_CONTENT_URL, path);
   }
 
+  save(key, value) {
+    const data = this.load('all') || {};
+
+    data[key] = value;
+
+    localStorage.setItem(STORAGE_NAME, JSON.stringify(data));
+  }
+
+  load(key) {
+    const data = localStorage.getItem(STORAGE_NAME);
+
+    try {
+      const O = JSON.parse(data);
+
+      if (key === 'all') {
+        return O;
+      }
+
+      return O[key];
+    } catch (e) {
+      return null;
+    }
+  }
+
   playAudio(path) {
     const url = UrlPath(MEDIA_CONTENT_URL, path);
 
@@ -183,17 +220,19 @@ class Model {
     return audio;
   }
 
-  bindDisplayMainSettings(cb){
+  bindDisplayMainSettings(cb) {
     this.displayMainSettings = cb;
   }
 
   mainSettingsChange(setting, value) {
-    // console.log( '@mainSettingsChange : ', arguments );
+    console.log( '@mainSettingsChange : ', setting, value );
     const hasOwn = Object.prototype.hasOwnProperty;
 
     if (hasOwn.call(this.settings, setting)) {
+      console.log(this.settings);
       this.settings[setting] = value;
-
+      this.save('settings', this.settings);
+      console.log(this.settings);
       this.displayMainSettings(this.settings);
     }
   }

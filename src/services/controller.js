@@ -25,12 +25,16 @@ class Controller {
       Tomfoolery,
     ];
 
+    this.model.SettingsInit();
+
     this.view.header.init({
       onSettings: this.view.settings.display.bind(this.view.settings, this.model.settings),
       onLogin: () => { console.log('onLogin'); },
     });
 
-    this.view.settings.bindSettingChange(this.model.mainSettingsChange.bind(this.model));
+    this.view.settings.init({
+      onSettingChange: this.model.mainSettingsChange.bind(this.model),
+    });
 
     this.model.bindDisplayMainSettings(this.view.settings.display.bind(this.view.settings));
 
