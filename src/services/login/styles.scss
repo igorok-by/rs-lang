@@ -1,8 +1,19 @@
 .login{
   position: relative;
+<<<<<<< HEAD
   width: 100%;
   height: 100%;
   background-color: #fff;
+=======
+  width: 400px;
+  height: 300px;
+  background-color: #0ea29b;
+<<<<<<< HEAD
+>>>>>>> feat: change login
+=======
+>>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
+  padding: 10px;
+  border-radius: 10px;
 }
 
 .login__close{
@@ -13,4 +24,55 @@
   top: 20px;
   right: 0;
   cursor: pointer;
+}
+.invalid {
+  border: 1px solid red !important;
+}
+
+.login__form {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.login__password-notice {
+  margin-bottom: 10px;
+}
+
+.login__text-field {
+  margin-bottom: 10px;
+  width: 90%;
+  border-radius: 5px;
+  border: 1px solid green;
+  height: 35px;
+  padding-left: 10px;
+}
+
+.login-btn {
+  border: 1px solid #000;
+  outline: none;
+  padding: 8px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #6a9bf3;
+  transition: .2s all ease-in-out;
+}
+
+.login-btn[disabled] {
+  background-color: #4c6fae;
+  transition: .2s all ease-in-out;
+}
+
+.login__btn-container {
+  
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 10px;
+  transition: .2s all ease-in-out;
+}
+
+.error-output {
+  line-height: 100%;
 }

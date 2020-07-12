@@ -1,9 +1,23 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable indent */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable prefer-destructuring */
+/* eslint-disable spaced-comment */
 /* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
+<<<<<<< HEAD
+<<<<<<< HEAD
 const synth = window.speechSynthesis;
 const STORAGE_NAME = 'rs-lang-token';
+=======
+import View from './view';
+>>>>>>> feat: change login
+=======
+import View from './view';
+>>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
 
 class Model {
   // TODO
@@ -22,10 +36,14 @@ class Model {
       method: 'POST',
       body: JSON.stringify(user),
     });
-
+    const view = new View();
     if (result && result.message === messages.LOGIN_SUCCESS) {
       this.token = result.token;
       this.userId = result.userId;
+      localStorage.setItem('userToken', this.token);
+      view.hideModal();
+      location = '/';
+      console.log('ok');
     }
 
     return result;
@@ -37,9 +55,35 @@ class Model {
     const result = await FetchRequire(url, {
       method: 'POST',
       body: JSON.stringify(user),
+    }).catch((err) => {
+      const email = document.querySelector('input[name="email"]');
+      const password = document.querySelector('input[name="password"]');
+      console.log(err);
+      /* if (!result.ok) {
+        console.log(result);
+        const errors = result.error.errors;
+        if (errors.length === 2) {
+          email.value = '';
+          email.placeholder = errors[0].message;
+          password.value = '';
+          password.placeholder = errors[1].message;
+        } else {
+        const validResult = errors[0].path === 'email' ? true : false;
+        console.log(validResult);
+          if (validResult) {
+            email.value = '';
+            email.placeholder = errors[0].message;
+          } else {
+            password.value = '';
+            password.placeholder = errors[0].message;
+          }
+        }
+        console.log(errors);
+        return false;
+      } */
     });
-    console.log(result);
-
+    if (!result) return false;
+    this.signIn(user);
     return result;
   }
 
@@ -56,7 +100,6 @@ class Model {
       },
       body: JSON.stringify(word),
     });
-
     return result;
   }
 
