@@ -19,11 +19,6 @@ class View extends baseView {
     this.modal = this.getElement('.app-modal');
     this.modalContainer = this.getElement('.app-modal__container');
 
-    this.header.init({
-      onSettings: () => { console.log('onSettings'); },
-      onLogin: () => { console.log('onLogin'); },
-    });
-
     this.asidePanel.init();
   }
 

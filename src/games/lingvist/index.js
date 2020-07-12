@@ -12,7 +12,8 @@ import ProgressBar from './js/ProgressBar';
 class Lingvist extends View {
   constructor() {
     super();
-    this.hash = 'lingvist';
+    this.hash = ''; // lingvist
+    this.name = 'lingvist';
     this.mainModel = new MainModel();
     this.dataOfWords = [];
     this.cardIndex = 0;

@@ -20,10 +20,16 @@ class Model {
     this.token = '';
     this.userId = '';
     this.utterance = new SpeechSynthesisUtterance();
+    this.settings = {
+      picture: true,
+      transcription: false,
+      translate: true,
+      inComplicatedList: false,
+      difficulty: true,
+      dayWordsCount: 20,
+    };
   }
-  // isSignIn(){
-  //   const string = localStorage.getItem(STORAGE_NAME);
-  // }
+
   async signIn(user) {
     console.log('login', user);
     const url = UrlPath(REST_URL, 'signin');
@@ -175,6 +181,21 @@ class Model {
     audio.play();
 
     return audio;
+  }
+
+  bindDisplayMainSettings(cb){
+    this.displayMainSettings = cb;
+  }
+
+  mainSettingsChange(setting, value) {
+    // console.log( '@mainSettingsChange : ', arguments );
+    const hasOwn = Object.prototype.hasOwnProperty;
+
+    if (hasOwn.call(this.settings, setting)) {
+      this.settings[setting] = value;
+
+      this.displayMainSettings(this.settings);
+    }
   }
 }
 

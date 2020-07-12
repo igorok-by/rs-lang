@@ -6,30 +6,33 @@
         <h4>Отображать элементы:</h4>
       </li>
       <li>
-        <input type="checkbox" id="settings-picture" name="settings-picture" checked>
-        <label for="settings-picture">Картинка-ассоциация</label>
+        <label for="dayWordsCount">Количество слов в день</label>
+        <input type="number" id="dayWordsCount" value="{{dayWordsCount}}" name="dayWordsCount">
       </li>
       <li>
-        <input type="checkbox" id="transcription" name="transcription" checked>
+        <input type="checkbox" id="picture" name="settings-picture" {{picture}}>
+        <label for="picture">Картинка-ассоциация</label>
+      </li>
+      <li>
+        <input type="checkbox" id="transcription" name="transcription" {{transcription}}>
         <label for="transcription">Транскрипция</label>
       </li>
       <li>
-        <input type="checkbox" id="translate" name="translate" checked>
+        <input type="checkbox" id="translate" name="translate" {{translate}}>
         <label for="translate">Перевод</label>
       </li>
       <li>
-        <input type="checkbox" id="in-complicated" name="in-complicated" checked>
-        <label for="in-complicated">В сложные</label>
+        <input type="checkbox" id="inComplicatedList" name="in-complicated" {{inComplicatedList}}>
+        <label for="inComplicatedList">В сложные</label>
       </li>
       <li>
-        <input type="checkbox" id="complexity" name="complexity" checked>
-        <label for="complexity">"Снова", "Трудно", "Хорошо", "Легко"</label>
-        <!--"Снова", "Трудно", "Хорошо", "Легко"-->
+        <input type="checkbox" id="difficulty" name="difficulty" {{difficulty}}>
+        <label for="difficulty">"Снова", "Трудно", "Хорошо", "Легко"</label>
       </li>
     </ul>
 
     <div class="settings__close material-icons">
-      <a class="material-icons" href="/">close</a>
+      <span class="material-icons">close</span>
     </div>
 
   </div>

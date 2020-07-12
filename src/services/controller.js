@@ -2,9 +2,9 @@
 /* eslint-disable class-methods-use-this */
 import Model from './model';
 import View from './view';
-import SpeakIt from '../games/speakIt/index';
-import EnglishPuzzle from '../games/english-puzzle/index';
-import Lingvist from '../games/lingvist/index';
+import SpeakIt from '../games/speakIt';
+import EnglishPuzzle from '../games/english-puzzle';
+import Lingvist from '../games/lingvist';
 import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
 import Tomfoolery from '../games/tomfoolery';
@@ -13,47 +13,60 @@ const USER = { email: 'test_user_random@gmail.com', password: 'Gfhjkm_123' };
 //
 class Controller {
   constructor(view, model) {
+    this.mainGame = Lingvist;
     this.view = view;
     this.model = model;
     this.games = [
+      Lingvist,
       SpeakIt,
       EnglishPuzzle,
-      Lingvist,
       AudioCall,
       Sprint,
       Tomfoolery,
     ];
 
+    this.view.header.init({
+      onSettings: this.view.settings.display.bind(this.view.settings, this.model.settings),
+      onLogin: () => { console.log('onLogin'); },
+    });
+
+    this.view.settings.bindSettingChange(this.model.mainSettingsChange.bind(this.model));
+
+    this.model.bindDisplayMainSettings(this.view.settings.display.bind(this.view.settings));
+
     this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
   }
 
   show(hash, params) {
-    if (hash) {
-      switch (hash) {
-        case 'login':
-          this.view.login.display(params);
-          break;
-        case 'settings':
-          this.view.settings.display(params);
-          break;
-        default:
-          this.showGame(hash);
-      }
+    switch (hash) {
+      case 'login':
+        this.view.login.display(params);
+        break;
+      case 'settings':
+        this.view.settings.display(this.model.settings);
+        break;
+      default:
+        this.showGame(hash);
     }
   }
 
   showGame(name) {
-    const game = this.games.find((el) => el.hash === name);
-    if (game) {
-      this.games.forEach((el) => {
-        if (typeof el.stop === 'function') {
-          el.stop();
-        }
-      });
-      game.display(this.view.showInMain.bind(this.view));
-    } else {
-      throw new Error(`There is no game by name ${name}`);
+    let game = this.games.find((el) => el.hash === name);
+
+    if (!game) {
+      game = this.mainGame;
     }
+
+    this.games.forEach((el) => {
+      if (typeof el.stop === 'function') {
+        el.stop();
+      }
+    });
+    game.display(this.view.showInMain.bind(this.view));
+  }
+
+  settingsChange() {
+    // this.
   }
 }
 
