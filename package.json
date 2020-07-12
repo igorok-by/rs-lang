@@ -1,5 +1,5 @@
 {
-  "name": "rs_lang",
+  "name": "rs-lang",
   "version": "1.0.0",
   "description": "final task",
   "main": "index.js",
@@ -14,14 +14,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Persik3221/rs_lang.git"
+    "url": "git+https://github.com/rgovin/rs-lang.git"
   },
   "author": "73 group",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Persik3221/rs_lang/issues"
+    "url": "https://github.com/rgovin/rs-lang/issues"
   },
-  "homepage": "https://github.com/Persik3221/rs_lang#readme",
+  "homepage": "https://github.com/rgovin/rs-lang#readme",
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
@@ -43,6 +43,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.1",
+    "file-loader": "^6.0.0",
     "html-loader": "^1.1.0",
     "html-webpack-plugin": "^4.2.0",
     "mini-css-extract-plugin": "^0.9.0",
@@ -56,6 +57,8 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.7",
-    "core-js": "^3.6.5"
+    "core-js": "^3.6.5",
+    "file-loader": "^6.0.0",
+    "animate.css": "^4.1.0"
   }
 }
