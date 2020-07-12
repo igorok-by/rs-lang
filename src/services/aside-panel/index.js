@@ -1,15 +1,24 @@
 import Markup from './AsidePanel.html';
-import NavigationItem from './navigation-item/index';
-import Controller from '../controller';
-import View from '../view';
+import NavigationItem from './navigation-item';
 
-class NavigationPanel extends View {
+class NavigationPanel {
+  constructor(view) {
+    this.view = view;
+    this.asidePanel = this.view.getElement('.app-panel');
+  }
+
+  addNavigationItem(game) {
+    console.log( '@addNavigationItem : ', game );
+    const itemHtml = this.view.render(NavigationItem, game);
+
+    this.asideElements.insertAdjacentHTML('beforeend', itemHtml);
+  }
+
   init() {
-    const elements = Controller.games.map((game) => this.render(NavigationItem, game));
-    const html = this.render(Markup, { elements });
+    this.view.showIn(this.asidePanel, Markup);
 
-    this.showIn('panel', html);
+    this.asideElements = this.view.getElement('.app-panel__elements');
   }
 }
 
-export default new NavigationPanel();
+export default NavigationPanel;

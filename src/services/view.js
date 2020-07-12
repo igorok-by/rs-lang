@@ -1,16 +1,30 @@
 /* eslint-disable class-methods-use-this */
 import baseView from '../utils/baseView';
+import Header from './header';
+import Login from './login';
+import Settings from './settings';
+import NavigationPanel from './aside-panel';
 
 class View extends baseView {
   constructor() {
     super();
     this.name = '';
-    this.header = this.getElement('.app-header');
+    this.header = new Header(this);
+    this.login = new Login(this);
+    this.settings = new Settings(this);
+    this.asidePanel = new NavigationPanel(this);
     this.main = this.getElement('.app-main');
-    this.panel = this.getElement('.app-panel');
+    // this.panel = this.getElement('.app-panel');
     this.panelHeader = this.getElement('.app-panel-header');
     this.modal = this.getElement('.app-modal');
     this.modalContainer = this.getElement('.app-modal__container');
+
+    this.header.init({
+      onSettings: () => { console.log('onSettings'); },
+      onLogin: () => { console.log('onLogin'); },
+    });
+
+    this.asidePanel.init();
   }
 
   render(template, data) {
@@ -32,10 +46,19 @@ class View extends baseView {
     return template;
   }
 
-  showIn(target, html) {
-    const targetElement = this[target];
+  showIn(targetElement, html) {
+    // const targetElement = this[targetElement];
+    if (targetElement instanceof HTMLElement) {
+      targetElement.innerHTML = html;
+    }
+  }
 
-    targetElement.innerHTML = html;
+  showInMain(html) {
+    this.showIn(this.main, html);
+  }
+
+  displaySettings() {
+
   }
 
   showInModal(html) {

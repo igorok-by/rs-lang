@@ -1,6 +1,3 @@
-// import 'babel-polyfill'
-
-
 export default class ItemWord{
     constructor(item,mainImage,buttonResult){
         this.parent =  document.querySelector('.speak__words')
@@ -69,5 +66,3 @@ export default class ItemWord{
         }
     }
 }
-
-

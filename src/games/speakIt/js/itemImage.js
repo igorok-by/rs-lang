@@ -1,4 +1,3 @@
-// import blank from '../img/speakit/blank.jpg'
 export default class ItemImage{
     constructor(){
         this.img = 'img/speakIt/blank.jpg';

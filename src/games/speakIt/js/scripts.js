@@ -111,5 +111,3 @@ export default function start(page,group,isDot,buttonResult,buttonSpeak,mainImag
 //     document.querySelector('.suc').innerHTML = 'Не знаю: '+ document.querySelector('.sucess').childNodes.length
 //     document.querySelector('.error').innerHTML = 'Ошибок: '+ document.querySelector('.wrong').childNodes.length
 // })
-
-

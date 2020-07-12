@@ -3,8 +3,7 @@
 @import "settings";
 @import "animate";
 @import "modal";
-
-//@import "./fonts.scss";
+@import "fonts";
 
 .wr-header {
   position: relative;
@@ -29,18 +28,15 @@
 }
 
 .wr-main {
+  //height: 100vh;
   position: relative;
-
   display: grid;
-
   grid-template-areas: "app-panel-header app-header"
   "app-panel        app-main"
   "app-panel        app-footer";
   grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr auto;
-  .container {
-    display: flex;
-  }
+  overflow: hidden;
 }
 
 .app-panel {
@@ -55,17 +51,7 @@
 }
 
 .app-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  box-sizing: border-box;
   height: 60px;
-  padding: 15px;
-
-  text-align: center;
-
-  background-color: #fccd86;
-
   grid-area: app-header;
 }
 
@@ -75,6 +61,9 @@
   grid-area: app-main;
   .menuItem {
     width: 150px;
+  }
+  .game-section{
+    padding: 1px;
   }
 }
 
