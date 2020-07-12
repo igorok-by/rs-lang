@@ -1,0 +1,11 @@
+/**
+SOME CSS CODE
+ */
+
+/* EXAMPLE */
+.english-puzzle__example-css-styled{
+    height: 300px;
+    width: 300px;
+    margin: 0 auto;
+    background-color: #fff;
+}
