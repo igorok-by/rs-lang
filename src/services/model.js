@@ -110,7 +110,9 @@ class Model {
       } */
     });
     if (!result) return false;
+
     this.signIn(user);
+
     return result;
   }
 

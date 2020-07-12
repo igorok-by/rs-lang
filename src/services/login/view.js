@@ -1,13 +1,3 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-trailing-spaces */
-/* eslint-disable padded-blocks */
-/* eslint-disable spaced-comment */
-/* eslint-disable indent */
-/* eslint-disable lines-between-class-members */
-/* eslint-disable consistent-return */
-/* eslint-disable quote-props */
 import markup from './Login.html';
 import View from '../view';
 import Model from '../model';
@@ -23,6 +13,7 @@ class LoginView extends View {
     this.formWindow.addEventListener('click', this.sendData);
     this.formWindow.addEventListener('input', this.validField);
   }
+
   sendData(e) {
     e.preventDefault();
     this.errorOutput = document.getElementById('error-output');
@@ -42,27 +33,27 @@ class LoginView extends View {
           return false;
         default:
           this.errorOutput.textContent = '';
-        break;
+          break;
       }
     };
 
-      const model = new Model();
-      const signIn = document.querySelector('.login__sign-in');
-      const signUp = document.querySelector('.login__sign-up');
-      this.signIn = document.getElementById('sign-in');
-      const emailValue = document.querySelector('input[name="email"]').value;
-      const passwordValue = document.querySelector('input[name="password"]').value;
-      if (e.target === signIn) {
-        model.signIn({ 'email': emailValue, 'password': passwordValue }).catch((err) => {
-          errorStatus(err.response.status);
-        });
-        this.errorOutput.textContent = '';
-      } else if (e.target === signUp) {
-        model.createUser({ 'email': emailValue, 'password': passwordValue }).catch((err) => {
-          errorStatus(err.response.status);
-        });
-        this.errorOutput.textContent = '';
-      }
+    const model = new Model();
+    const signIn = document.querySelector('.login__sign-in');
+    const signUp = document.querySelector('.login__sign-up');
+    this.signIn = document.getElementById('sign-in');
+    const emailValue = document.querySelector('input[name="email"]').value;
+    const passwordValue = document.querySelector('input[name="password"]').value;
+    if (e.target === signIn) {
+      model.signIn({ email: emailValue, password: passwordValue }).catch((err) => {
+        errorStatus(err.response.status);
+      });
+      this.errorOutput.textContent = '';
+    } else if (e.target === signUp) {
+      model.createUser({ email: emailValue, password: passwordValue }).catch((err) => {
+        errorStatus(err.response.status);
+      });
+      this.errorOutput.textContent = '';
+    }
   }
 
   validField(e) {
@@ -86,7 +77,7 @@ class LoginView extends View {
         passwrodField.classList.add('invalid');
       }
     }
-    
+
     if (!emailField.classList.contains('invalid') && !passwrodField.classList.contains('invalid')) {
       buttons.forEach((btn) => {
         btn.removeAttribute('disabled');
@@ -96,9 +87,7 @@ class LoginView extends View {
         btn.setAttribute('disabled', true);
       });
     }
-
   }
-
 }
 
 export default new LoginView();

@@ -28,6 +28,11 @@ class Controller {
       Tomfoolery,
     ];
 
+    this.model.bindDisplayMainSettings(this.view.settings.display.bind(this.view.settings));
+    this.model.bindDisplayLogin(this.login.show.bind(this.login));
+    this.model.SettingsInit();
+    // this.model.userInit();
+
     this.view.header.init({
       onSettings: this.view.settings.display.bind(this.view.settings, this.model.settings),
       onLogin: () => { console.log('onLogin'); },
@@ -38,11 +43,6 @@ class Controller {
     });
 
     this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
-
-    this.model.bindDisplayMainSettings(this.view.settings.display.bind(this.view.settings));
-    this.model.bindDisplayLogin(this.login.show.bind(this.login));
-    this.model.SettingsInit();
-    this.model.userInit();
   }
 
   show(hash, params) {
