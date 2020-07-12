@@ -6,15 +6,14 @@ import EnglishPuzzle from '../games/english-puzzle/index';
 import Lingvist from '../games/lingvist/index';
 import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
-import Login from './login/index';
 
 // USER для теста
 const USER = { email: 'test_user_random@gmail.com', password: 'Gfhjkm_123' };
-const view = new View();
-const model = new Model();
-
+//
 class Controller {
-  constructor() {
+  constructor(view, model) {
+    this.view = view;
+    this.model = model;
     this.games = [
       SpeakIt,
       EnglishPuzzle,
@@ -22,26 +21,33 @@ class Controller {
       AudioCall,
       Sprint,
     ];
+
+    this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
   }
 
-  showGame(hash, params) {
-    const game = this.games.find((el) => el.hash === hash);
-    if (game) {
-      game.display(view.showIn.bind(view, 'main'));
-    } else {
-      throw new Error(`There is no game by name ${hash}`);
+  show(hash, params) {
+    if (hash) {
+      switch (hash) {
+        case 'login':
+          this.view.login.display(params);
+          break;
+        case 'settings':
+          this.view.settings.display(params);
+          break;
+        default:
+          this.showGame(hash);
+      }
     }
   }
 
-  login() {
-
-    Login.display();
-  }
-
-  settings() {
-
-    Login.display();
+  showGame(name) {
+    const game = this.games.find((el) => el.hash === name);
+    if (game) {
+      game.display(this.view.showInMain.bind(this.view));
+    } else {
+      throw new Error(`There is no game by name ${name}`);
+    }
   }
 }
 
-export default new Controller();
+export default new Controller(new View(), new Model());

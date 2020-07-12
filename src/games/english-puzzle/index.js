@@ -41,6 +41,7 @@ class EnglishPuzzle {
     this.model.bundDisplayRowPieces(this.gui.displayRowPieces.bind(this.gui));
     this.model.bindDisplayFinish(this.gui.finishLevel.bind(this.gui));
 
+    this.gui.startWindow.showWindow();
   }
 
   /**

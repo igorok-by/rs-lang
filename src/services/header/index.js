@@ -1,14 +1,39 @@
-import Markup from './Header.html';
-import Controller from '../controller';
-import View from '../view';
+import Header from './Header.html';
+import './styles.scss';
 
-class NavigationPanel extends View {
-  init() {
-    const elements = Controller.games.map((game) => this.render(NavigationItem, game));
-    const html = this.render(Markup, { elements });
+class HeaderHandler {
+  constructor(view) {
+    this.view = view;
+    this.header = this.view.getElement('.app-header');
+  }
 
-    this.showIn('panel', html);
+  init({ onSettings, onLogin }) {
+    console.log( '@header init : ' );
+    this.view.showIn(this.header, Header);
+
+    this.container = this.view.getElement('.app-header__container');
+    this.loginButton = this.view.getElement('.app-header__button_login');
+    this.settingsButton = this.view.getElement('.app-header__button_settings');
+
+    this.bindLoginClick(onLogin);
+    this.bindSettingsClick(onSettings);
+  }
+
+  bindSettingsClick(handler) {
+    this.settingsButton.addEventListener('click', () => {
+      handler();
+    });
+  }
+
+  bindLoginClick(handler) {
+    this.loginButton.addEventListener('click', () => {
+      handler();
+    });
+  }
+
+  render() {
+    return this.view.render(Header);
   }
 }
 
-export default new NavigationPanel();
+export default HeaderHandler;

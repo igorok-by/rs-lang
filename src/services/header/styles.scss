@@ -1,0 +1,30 @@
+.app-header__container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  box-sizing: border-box;
+
+  padding: 15px;
+
+  text-align: center;
+
+  background-color: #fccd86;
+}
+
+.app-header__button{
+  display: inline-block;
+  height: 100%;
+  padding: 5px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin: 0 10px;
+  font-family: "Lato";
+  font-size: 15px;
+  background-color: #fff;
+}
+
+.app-header__button_settings{
+
+}

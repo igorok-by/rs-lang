@@ -14,14 +14,10 @@ class Router {
   static handleHash() {
     const { name, params } = Router.getRouteInfo();
 
-    if (name === 'login') {
-      Controller.login();
-    } else if (name) {
-      Controller.showGame(name);
-    }
+    Controller.show(name, params);
   }
 
-  goTo(hash){
+  goTo(hash) {
     window.location.hash = hash;
   }
 
@@ -32,4 +28,4 @@ class Router {
   }
 }
 
-export default new Router();
+export default Router;

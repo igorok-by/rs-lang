@@ -51,17 +51,7 @@
 }
 
 .app-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  box-sizing: border-box;
   height: 60px;
-  padding: 15px;
-
-  text-align: center;
-
-  background-color: #fccd86;
-
   grid-area: app-header;
 }
 
@@ -71,6 +61,9 @@
   grid-area: app-main;
   .menuItem {
     width: 150px;
+  }
+  .game-section{
+    padding: 1px;
   }
 }
 
