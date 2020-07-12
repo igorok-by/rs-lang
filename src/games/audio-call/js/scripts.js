@@ -1,9 +1,8 @@
 import Model from '../../../services/model';
 const model = new Model();
 
-const errorAudio = new Audio('./img/audio-call/error.mp3')
-const correctAudio = new Audio('./img/audio-call/correct.mp3')
-
+const errorAudio = new Audio('../assets/img/audio-call/error.mp3');
+const correctAudio = new Audio('../assets/img/audio-call/correct.mp3');
 
 export default function start(){
 
@@ -17,7 +16,7 @@ export default function start(){
         start(true)
     }
     
-    let page = Math.floor(Math.random() * (5 - 0) + 0)
+    let page = Math.floor(Math.random() * (5 - 0) + 0);
     let group = Math.floor(Math.random() * (29 - 0) + 0);
 
     getWord(page,group)

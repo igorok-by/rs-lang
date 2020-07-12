@@ -6,6 +6,7 @@ import EnglishPuzzle from '../games/english-puzle/index';
 import Lingvist from '../games/lingvist/index';
 import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
+import Savanna from '../games/savanna'
 import Login from './login/index';
 
 // USER для теста
@@ -21,6 +22,7 @@ class Controller {
       Lingvist,
       AudioCall,
       Sprint,
+      Savanna
     ];
   }
 
