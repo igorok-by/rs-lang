@@ -27,16 +27,23 @@ export const FetchRequire = async (url, data = {}) => {
   if (ParentDataObject) {
     const Data = Object.assign(ParentDataObject, data);
     const response = await fetch(url, Data).catch();
+<<<<<<< HEAD
 
+=======
+>>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
     if (!response.ok) {
       const error = Object.assign(Error.prototype, {
         response,
       });
       throw error;
     }
+<<<<<<< HEAD
 
     const result = await response.json();
 
+=======
+    const result = await response.json();
+>>>>>>> e06543c94e93e270f7377116ac87ff4527f07ec3
     return result;
   }
   return null;

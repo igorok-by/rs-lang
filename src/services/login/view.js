@@ -1,3 +1,13 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable padded-blocks */
+/* eslint-disable spaced-comment */
+/* eslint-disable indent */
+/* eslint-disable lines-between-class-members */
+/* eslint-disable consistent-return */
+/* eslint-disable quote-props */
 import markup from './Login.html';
 import View from '../view';
 import Model from '../model';
@@ -35,7 +45,6 @@ class LoginView extends View {
         break;
       }
     };
-
 
       const model = new Model();
       const signIn = document.querySelector('.login__sign-in');
