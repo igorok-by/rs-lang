@@ -44,6 +44,9 @@ class EnglishPuzzle {
     this.gui.startWindow.showWindow();
   }
 
+  stop(){
+    console.log('STOP');
+  }
   /**
    *
    * @param show Function to insert HTML to main section

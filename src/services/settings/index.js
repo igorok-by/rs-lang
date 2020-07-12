@@ -1,11 +1,12 @@
 import Settings from './Settings.html';
+import './styles.scss';
 
 class SettingsHandler {
-  constructor(view){
+  constructor(view) {
     this.view = view;
   }
 
-  init(){
+  init() {
 
   }
 
@@ -13,6 +14,7 @@ class SettingsHandler {
     const html = this.view.render(Settings);
 
     this.view.showInModal(html);
+    // this.view.showInMain(html);
   }
 
   render() {

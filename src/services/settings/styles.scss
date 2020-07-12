@@ -1,0 +1,60 @@
+.app-settings {
+  position: relative;
+  max-width: 650px;
+  width: 90%;
+  //height: 400px;
+  mergin: 0 auto;
+  background-color: #fff;
+  border-radius: 20px;
+  .container{
+    padding: 20px;
+  }
+}
+.app-settings__list{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 25px;
+  h4{
+    font-family: "Roboto-Bold";
+    font-size: 25px;
+  }
+  li{
+    font-family: "Roboto-Light";
+    margin: 10px 0;
+
+    label {
+      cursor: pointer;
+    }
+  }
+  input{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+}
+.settings__close{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px;
+  //background: #d7d7d7;
+  border-radius: 50%;
+  transition: all 0.3s;
+  .material-icons{
+    transition: all 0.3s;
+    &:hover{
+      font-size: 35px;
+    }
+  }
+
+}
