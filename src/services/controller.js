@@ -25,6 +25,7 @@ class Controller {
     this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
   }
 
+<<<<<<< HEAD
   show(hash, params) {
     if (hash) {
       switch (hash) {
@@ -37,6 +38,19 @@ class Controller {
         default:
           this.showGame(hash);
       }
+=======
+  showGame(hash, params) {
+    const game = this.games.find((el) => el.hash === hash);
+    if (game) {
+      this.games.forEach((el) => {
+        if (typeof el.stop === 'function') {
+          el.stop();
+        }
+      });
+      game.display(view.showIn.bind(view, 'main'));
+    } else {
+      throw new Error(`There is no game by name ${hash}`);
+>>>>>>> feat: add something
     }
   }
 
