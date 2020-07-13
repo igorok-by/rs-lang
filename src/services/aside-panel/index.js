@@ -8,7 +8,6 @@ class NavigationPanel {
   }
 
   addNavigationItem(game) {
-    console.log( '@addNavigationItem : ', game );
     const itemHtml = this.view.render(NavigationItem, game);
 
     this.asideElements.insertAdjacentHTML('beforeend', itemHtml);

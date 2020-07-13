@@ -19,27 +19,39 @@ const ParentData = {
     body: '',
     withCredentials: false,
   },
+  PUT: {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: '',
+    withCredentials: false,
+  },
 };
 
 export const FetchRequire = async (url, data = {}) => {
-  const { method: Method = 'GET' } = data;
+  console.log('fetch', data);
+  let Data = data;
+  const { method: Method = 'GET' } = Data;
   const ParentDataObject = ParentData[Method];
   if (ParentDataObject) {
-    const Data = Object.assign(ParentDataObject, data);
-    const response = await fetch(url, Data).catch();
-
-    if (!response.ok) {
-      const error = Object.assign(Error.prototype, {
-        response,
-      });
-      throw error;
-    }
-
-    const result = await response.json();
-
-    return result;
+    Data = Object.assign(ParentDataObject, Data);
   }
-  return null;
+
+  const response = await fetch(url, Data).catch();
+
+  if (!response.ok) {
+    const error = Object.assign(Error.prototype, {
+      response,
+    });
+
+    throw error;
+  }
+
+  const result = await response.json();
+
+  return result;
 };
 
 export const UrlConstructor = (url, params, options = {}) => {
@@ -49,7 +61,7 @@ export const UrlConstructor = (url, params, options = {}) => {
     Object.entries(params)
       .map((el) => el.join(equalSign))
       .join(separator)
-  }`;
+    }`;
 };
 
 export const UrlPath = (...args) => args.join('/');

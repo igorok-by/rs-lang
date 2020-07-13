@@ -1,7 +1,9 @@
 /* eslint-disable class-methods-use-this */
-import Controller from './controller';
-
 class Router {
+  constructor(controller) {
+    this.controller = controller;
+  }
+
   static getRouteInfo() {
     const hash = window.location.hash ? window.location.hash.slice(1) : '';
     const [name, id] = hash.split('/');
@@ -11,10 +13,10 @@ class Router {
     return { name, params: { id } };
   }
 
-  static handleHash() {
+  handleHash() {
     const { name, params } = Router.getRouteInfo();
 
-    Controller.show(name, params);
+    this.controller.show(name, params);
   }
 
   goTo(hash) {
@@ -23,8 +25,8 @@ class Router {
 
   init() {
     console.log('router init');
-    window.addEventListener('hashchange', Router.handleHash);
-    Router.handleHash();
+    window.addEventListener('hashchange', this.handleHash.bind(this));
+    // this.handleHash();
   }
 }
 

@@ -10,7 +10,6 @@ class View extends baseView {
     super();
     this.name = '';
     this.header = new Header(this);
-
     this.settings = new Settings(this);
     this.asidePanel = new NavigationPanel(this);
     this.main = this.getElement('.app-main');
