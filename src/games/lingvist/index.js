@@ -59,15 +59,15 @@ class Lingvist extends View {
   }
 
   checkSettings(settings) {
-    settings.picture
+    settings.optional.picture
       ? this.image.classList.remove('card--hidden')
       : this.image.classList.add('card--hidden');
-    settings.transcription
+    settings.optional.transcription
       ? this.transcript.classList.remove('card--hidden')
       : this.transcript.classList.add('card--hidden');
-    settings.translate
-      ? this.transcript.classList.remove('card--hidden')
-      : this.transcript.classList.add('card--hidden');
+    settings.optional.translate
+      ? this.translated.classList.remove('card--hidden')
+      : this.translated.classList.add('card--hidden');
   }
 
   replaceLearnWord(howToToggle) {

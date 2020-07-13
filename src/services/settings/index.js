@@ -11,17 +11,13 @@ class SettingsHandler {
     this.onSettingChange = onSettingChange;
   }
 
-  display(settings) {
-    const settingsEntrires = Object.entries(settings).map(([key, value]) => {
-      let newValue = value;
+  display(data) {
+    const { wordsPerDay, optional } = data;
+    const optionalEntries = Object.entries(optional).map(([key, value]) => [key, value ? 'checked' : '']);
 
-      if (typeof value === 'boolean') {
-        newValue = value ? 'checked' : '';
-      }
+    optionalEntries.push(['wordsPerDay', wordsPerDay]);
 
-      return [key, newValue];
-    });
-    const htmlSettings = Object.fromEntries(settingsEntrires);
+    const htmlSettings = Object.fromEntries(optionalEntries);
     const html = this.view.render(Settings, htmlSettings);
 
     this.view.showInModal(html);
