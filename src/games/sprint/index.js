@@ -5,27 +5,29 @@ import start from './js/scripts';
 import './styles.scss';
 
 
-class Sprint extends View {
-  constructor() {
-    super();
+class Sprint { //extends View
+  constructor(view, model) {
+    // super();
+    this.view = view;
+    this.model = model;
     this.hash = 'Sprint';
   }
 
   init() {
     document.querySelector('.sprint__img').src = './img/sprint/speaker.png'
     document.querySelector('.sprint__btn').addEventListener('click', ()=>{
-      start();
+      start({ model: this.model });
       document.querySelector('.sprint__container').style.display = 'flex';
       document.querySelector('.sprint__main').style.display = 'none'
     })
   }
 
   display(show) {
-    const html = this.render(markup, { title: 'Sprint!' });
+    const html = this.view.render(markup, { title: 'Sprint!' });
 
     show(html);
     this.init();
   }
 }
 
-export default new Sprint();
+export default Sprint;

@@ -22,9 +22,13 @@ class HeaderHandler {
     this.loginButton.textContent = value ? 'Logout' : 'Login';
   }
 
+  displaySettingsButton(value) {
+    const method = value ? 'remove' : 'add';
+    this.settingsButton.classList[method]('app-header__button_settings_hide');
+  }
+
   bindSettingsClick(handler) {
     this.settingsButton.addEventListener('click', () => {
-      console.log('clik')
       handler();
     });
   }
