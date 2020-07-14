@@ -1,34 +1,37 @@
+/* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
 
+import View from './view';
+
 const synth = window.speechSynthesis;
 const STORAGE_NAME = 'rs-lang';
-
-import View from './view';
 
 class Model {
   // TODO
   constructor() {
     this.token = '';
     this.userId = '';
+    this.games = [];
     this.utterance = new SpeechSynthesisUtterance();
     this.defaultSettings = {
       picture: true,
       transcription: false,
       translate: true,
+      meaning: false,
       inComplicatedList: false,
       difficulty: true,
       dayWordsCount: 20,
     };
   }
 
-  init(){
+  init() {
     this.SettingsInit();
     this.userInit();
   }
 
-  userInit(){
+  userInit() {
     if (!this.userId) {
       const user = this.load('user');
 
@@ -50,6 +53,7 @@ class Model {
       } else {
         this.settings = settings;
       }
+      this.games.map((game) => game.checkSettings(this.settings));
     }
   }
 
@@ -243,8 +247,12 @@ class Model {
     this.displayLogin = cb;
   }
 
+  bindGameSettings(game) {
+    this.games.push(game);
+  }
+
   mainSettingsChange(setting, value) {
-    console.log( '@mainSettingsChange : ', setting, value );
+    console.log('@mainSettingsChange : ', setting, value);
     const hasOwn = Object.prototype.hasOwnProperty;
 
     if (hasOwn.call(this.settings, setting)) {
@@ -253,6 +261,7 @@ class Model {
       this.save('settings', this.settings);
       console.log(this.settings);
       this.displayMainSettings(this.settings);
+      this.games.map((game) => game.checkSettings(this.settings));
     }
   }
 }

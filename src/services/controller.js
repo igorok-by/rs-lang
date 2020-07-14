@@ -28,6 +28,7 @@ class Controller {
       Tomfoolery,
     ];
 
+    this.model.bindGameSettings(Lingvist);
     this.model.bindDisplayMainSettings(this.view.settings.display.bind(this.view.settings));
     this.model.bindDisplayLogin(this.login.show.bind(this.login));
     this.model.SettingsInit();

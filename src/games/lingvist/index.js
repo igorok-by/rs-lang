@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable array-callback-return */
 import markup from './lingvist.html';
 import './styles.scss';
@@ -55,6 +56,18 @@ class Lingvist extends View {
   insertControlBtns() {
     this.footer = this.getElement('.card__footer');
     this.footer.append(this.lookBtn, this.checkBtn);
+  }
+
+  checkSettings(settings) {
+    settings.picture
+      ? this.image.classList.remove('card--hidden')
+      : this.image.classList.add('card--hidden');
+    settings.transcription
+      ? this.transcript.classList.remove('card--hidden')
+      : this.transcript.classList.add('card--hidden');
+    settings.translate
+      ? this.transcript.classList.remove('card--hidden')
+      : this.transcript.classList.add('card--hidden');
   }
 
   replaceLearnWord(howToToggle) {
