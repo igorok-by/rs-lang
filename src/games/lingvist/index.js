@@ -1,3 +1,4 @@
+/* eslint-disable dot-notation */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable array-callback-return */
 import markup from './lingvist.html';
@@ -22,12 +23,12 @@ class Lingvist extends View {
     this.audioBtn = create('button', 'card__audio card__audio--inactive', null, null, ['type', 'button']);
     this.checkBtn = create('button', 'card__btn', 'Проверить', null, ['type', 'submit']);
     this.lookBtn = create('button', 'card__btn card__btn--light', 'Показать перевод', null, ['type', 'button']);
-    this.image = create('img', 'card__image');
-    this.translated = create('p', 'card__translated');
+    this.picture = create('img', 'card__image');
+    this.translate = create('p', 'card__translated');
     this.meaningEng = create('p', 'card__meaning');
     this.meaningRu = create('p', 'card__meaning card__meaning--primary');
     this.example = create('p', 'card__sentence');
-    this.transcript = create('p', 'card__transcript');
+    this.transcription = create('p', 'card__transcript');
     this.inputWrapper = create('div', 'input');
 
     this.header = null;
@@ -59,15 +60,21 @@ class Lingvist extends View {
   }
 
   checkSettings(settings) {
-    settings.optional.picture
-      ? this.image.classList.remove('card--hidden')
-      : this.image.classList.add('card--hidden');
-    settings.optional.transcription
-      ? this.transcript.classList.remove('card--hidden')
-      : this.transcript.classList.add('card--hidden');
-    settings.optional.translate
-      ? this.translated.classList.remove('card--hidden')
-      : this.translated.classList.add('card--hidden');
+    const options = [
+      'picture',
+      'transcription',
+      'translate',
+      'meaningEng',
+      'meaningRu',
+      'example',
+      'lookBtn',
+    ];
+
+    options.map((option) => {
+      settings.optional[option]
+        ? this[option].classList.remove('card--hidden')
+        : this[option].classList.add('card--hidden');
+    });
   }
 
   replaceLearnWord(howToToggle) {
@@ -198,12 +205,12 @@ class Lingvist extends View {
 
     this.inputWrapper.innerHTML = '';
     this.inputWrapper.append(...inputTemplate);
-    this.translated.innerHTML = dataOfWord.wordTranslate;
-    this.transcript.innerHTML = dataOfWord.transcription;
+    this.translate.innerHTML = dataOfWord.wordTranslate;
+    this.transcription.innerHTML = dataOfWord.transcription;
     this.meaningEng.innerHTML = dataOfWord.textMeaning;
     this.meaningRu.innerHTML = dataOfWord.textMeaningTranslate;
     this.example.innerHTML = `<span>Пример:</span> "${dataOfWord.textExample}" <span>— ${dataOfWord.textExampleTranslate}</span>`;
-    this.image.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
+    this.picture.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
 
     this.replaceLearnWord('hide');
     this.input.inputAnswer.focus();
@@ -220,13 +227,13 @@ class Lingvist extends View {
 
     cardRightColumn.append(
       this.inputWrapper,
-      this.translated,
-      this.transcript,
+      this.translate,
+      this.transcription,
       this.meaningEng,
       this.meaningRu,
       this.example,
     );
-    this.body.append(this.image, cardRightColumn);
+    this.body.append(this.picture, cardRightColumn);
 
     this.dataOfWords = await this.getWords();
     this.insertLearning();
