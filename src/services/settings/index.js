@@ -14,12 +14,22 @@ class SettingsHandler {
 
   display(data) {
     const { wordsPerDay, optional } = data;
-    const optionalEntries = Object.entries(optional).map(([key, value]) => [key, value ? 'checked' : '']);
+    const optionalEntries = Object.entries(optional).map(([key, value]) => {
+      let insert = value;
+
+      if (typeof value === 'boolean') {
+        insert = value ? 'checked' : '';
+      }
+
+      return [key, insert];
+    });
 
     optionalEntries.push(['wordsPerDay', wordsPerDay]);
 
     const htmlSettings = Object.fromEntries(optionalEntries);
     const html = this.view.render(Settings, htmlSettings);
+
+    console.log(html, htmlSettings)
 
     this.view.showInModal(html);
 

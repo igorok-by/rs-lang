@@ -19,8 +19,8 @@ class Model {
         translate: true,
         inComplicatedList: false,
         difficulty: true,
+        repeatCount: 4,
       },
-      // dayWordsCount: 20,
     };
     this.saveSettingsTimeout = null;
   }
