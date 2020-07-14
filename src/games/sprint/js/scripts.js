@@ -1,11 +1,11 @@
 import Model from '../../../services/model';
-const model = new Model();
+// const model = new Model();
 
 const errorAudio = new Audio('./img/sprint/error.mp3')
 const correctAudio = new Audio('./img/sprint/correct.mp3')
 
 
-export default function start(isTimer = true){
+export default function start({ model, isTimer = true }){
     
     document.querySelector('.sprint__new').onclick = () => {
         document.querySelector('.sprint__result').style.display = 'none'
@@ -17,8 +17,8 @@ export default function start(isTimer = true){
         document.querySelector('.sprint__en').innerHTML = ''
         document.querySelector('.sprint__ru').innerHTML = ''
         document.querySelectorAll('.sprint__res_word').forEach((el)=>{el.remove()})
-        
-        start(true)
+
+        start({ model, isTimer: true });
     }
 
     const timerBlock = document.querySelector('.sprint__timer');

@@ -1,60 +1,84 @@
-import start from './scripts'
+import start from './scripts';
 
+export default class Difficult {
+  constructor(model) {
+    this.model = model;
+    this.dot = null;
+    this.mainImage = null;
+    this.point = 0;
+    this.buttonResult = null;
+    this.buttonSpeak = null;
+    this.buttonRestart = null;
+  }
 
-export default class Difficult{
-    construcor(){
-        this.dot = null
-        this.mainImage = null
-        this.point = 0
-        this.buttonResult = null
-        this.buttonSpeak = null
-        this.buttonRestart = null
+  renderHtmlElement(parent, tag, className, id, innerHtml, src) {
+    const element = document.createElement(tag);
+    if (id) {
+      element.id = id;
     }
-    renderHtmlElement(parent, tag, className, id, innerHtml, src) {
-        const element = document.createElement(tag);    
-        if (id) {
-          element.id = id;
-        }
-        if (innerHtml) {
-          element.innerText = innerHtml;
-        }
-        if(className) {
-           element.className = className; 
-        }
-        
-        if(src) {
-            element.src = src
-        }
-        parent.appendChild(element);    
-        return element;
+    if (innerHtml) {
+      element.innerText = innerHtml;
     }
-    init(i,mainImage,buttonResult,buttonSpeak,buttonRestart){
-        this.render(i);
-        this.setHandler(i);
-        this.mainImage = mainImage;
-        this.buttonResult = buttonResult
-        this.buttonSpeak = buttonSpeak
-        this.buttonRestart = buttonRestart
+    if (className) {
+      element.className = className;
     }
-    setHandler(i){
-        this.dot.addEventListener('click', (el)=>{
-            let dots = document.querySelectorAll('.speak__dif')
-            dots.forEach(el => {
-                el.classList.remove('speak__active')
-            });
-            this.dot.classList.add('speak__active')
-            let isDot = false;
-            let point = Math.floor(Math.random() * (29 - 0) + 0)
-            start(i, point,  isDot, this.buttonResult, this.buttonSpeak, this.mainImage, this.buttonRestart)
-            this.mainImage.updateState('img/speakIt/blank.jpg','')
-            document.querySelectorAll('.speak__item').forEach(el=>el.classList.remove('speak__stopHover'))
-            if(document.querySelector('.speak__main-img input')){document.querySelector('.speak__main-img input').remove()}
-            document.querySelector('.speak__wrong').innerHTML = ''
-        })
+
+    if (src) {
+      element.src = src;
     }
-    render(i) {
-        const wrapperHTML = document.querySelector('.speak_ul')
-        this.dot = i==0 ? this.renderHtmlElement(wrapperHTML, 'li', 'speak__dif speak__active') : this.renderHtmlElement(wrapperHTML, 'li', 'speak__dif' );
-        // console.log(i)
-    }
+    parent.appendChild(element);
+    return element;
+  }
+
+  init(i, mainImage, buttonResult, buttonSpeak, buttonRestart) {
+    this.render(i);
+    this.setHandler(i);
+    this.mainImage = mainImage;
+    this.buttonResult = buttonResult;
+    this.buttonSpeak = buttonSpeak;
+    this.buttonRestart = buttonRestart;
+  }
+
+  setHandler(i) {
+    this.dot.addEventListener('click', (el) => {
+      const dots = document.querySelectorAll('.speak__dif');
+      dots.forEach((el) => {
+        el.classList.remove('speak__active');
+      });
+      this.dot.classList.add('speak__active');
+      const isDot = false;
+      const point = Math.floor(Math.random() * (29 - 0) + 0);
+
+      const page = i;
+      const group = point;
+
+      // page,group,isDot,buttonResult,buttonSpeak,mainImage,buttonRestart
+      // start(1, 2, true, buttonResult, buttonSpeak, mainImage, buttonRestart);
+      // start({ model: this.model, page, group, isDot, buttonResult, buttonSpeak, mainImage, buttonRestart });
+
+      // start(i, point,  isDot, buttonResult: this.buttonResult, buttonSpeak: this.buttonSpeak, mainImage: this.mainImage, buttonRestart: this.buttonRestart )
+      console.log('difficult start', this.model);
+      start({
+        model: this.model,
+        page,
+        group,
+        isDot,
+        buttonResult: this.buttonResult,
+        buttonSpeak: this.buttonSpeak,
+        mainImage: this.mainImage,
+        buttonRestart: this.buttonRestart,
+      });
+
+      this.mainImage.updateState('img/speakIt/blank.jpg', '');
+      document.querySelectorAll('.speak__item').forEach((el) => el.classList.remove('speak__stopHover'));
+      if (document.querySelector('.speak__main-img input')) { document.querySelector('.speak__main-img input').remove(); }
+      document.querySelector('.speak__wrong').innerHTML = '';
+    });
+  }
+
+  render(i) {
+    const wrapperHTML = document.querySelector('.speak_ul');
+    this.dot = i == 0 ? this.renderHtmlElement(wrapperHTML, 'li', 'speak__dif speak__active') : this.renderHtmlElement(wrapperHTML, 'li', 'speak__dif');
+    // console.log(i)
+  }
 }

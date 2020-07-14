@@ -6,18 +6,17 @@ import PromptBar from './promptBar';
 import ControlButtonsBar from './controlButtonsBar';
 import StartWindow from './startWindow';
 import './styles.scss';
-import View from '../../../services/view';
 import { settingsTypes, PICTURE_SOURCES } from '../../../constants';
 
-class GUI extends View {
-  constructor() {
-    super();
-    this.statusBar = new StatusBar(this);
-    this.promptBar = new PromptBar(this);
-    this.gameField = new GameField(this);
-    this.piecesBar = new PiecesBar(this);
-    this.controlButtonsBar = new ControlButtonsBar(this);
-    this.startWindow = new StartWindow(this);
+class GUI {
+  constructor(view) {
+    this.view = view;
+    this.statusBar = new StatusBar(view);
+    this.promptBar = new PromptBar(view);
+    this.gameField = new GameField(view);
+    this.piecesBar = new PiecesBar(view);
+    this.controlButtonsBar = new ControlButtonsBar(view);
+    this.startWindow = new StartWindow(view);
 
     this.currentRow = NaN;
     this.picture = '';
@@ -84,7 +83,7 @@ class GUI extends View {
     const controlButtonsBar = this.controlButtonsBar.render();
     const startWindow = this.startWindow.render();
 
-    return this.render(markup, {
+    return this.view.render(markup, {
       title: 'ENGLISH PUZZLE',
       startWindow,
       statusBar,
@@ -129,7 +128,6 @@ class GUI extends View {
         this.promptBar.displaySpeaker(activate);
         break;
       case settingsTypes.BKG_PICTURE:
-        console.log('settingsChange', settingsTypes.BKG_PICTURE, activate);
         if (activate) {
           this.gameField.showBackgroundPicture(this.picture);
         } else {

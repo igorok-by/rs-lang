@@ -11,12 +11,12 @@ import MainModel from '../../services/model';
 import Input from './js/Input';
 import ProgressBar from './js/ProgressBar';
 
-class Lingvist extends View {
-  constructor() {
-    super();
-    this.hash = ''; // lingvist
+class Lingvist {
+  constructor(view, model) {
+    this.view = view;
+    this.mainModel = model;
+    this.hash = 'lingvist';
     this.name = 'lingvist';
-    this.mainModel = new MainModel();
     this.dataOfWords = [];
     this.cardIndex = 0;
 
@@ -50,12 +50,12 @@ class Lingvist extends View {
     const iconAudio = '<svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>';
     this.audioBtn.innerHTML = iconAudio;
 
-    this.header = this.getElement('.card__header');
+    this.header = this.view.getElement('.card__header');
     this.header.append(this.audioBtn);
   }
 
   insertControlBtns() {
-    this.footer = this.getElement('.card__footer');
+    this.footer = this.view.getElement('.card__footer');
     this.footer.append(this.lookBtn, this.checkBtn);
   }
 
@@ -218,9 +218,9 @@ class Lingvist extends View {
 
   async insertElementsAfterRender() {
     const cardRightColumn = create('div', 'card__body-right');
-    this.form = this.getElement('#formCard');
-    this.body = this.getElement('.card__body');
-    this.continueBtn = this.getElement('#btnContinue');
+    this.form = this.view.getElement('#formCard');
+    this.body = this.view.getElement('.card__body');
+    this.continueBtn = this.view.getElement('#btnContinue');
 
     this.insertAudioBtn();
     this.insertControlBtns();
@@ -246,7 +246,7 @@ class Lingvist extends View {
   }
 
   display(show) {
-    const templateHTML = this.render(markup, { title: 'Lingvist' });
+    const templateHTML = this.view.render(markup, { title: 'Lingvist' });
     show(templateHTML);
 
     this.insertElementsAfterRender();
@@ -254,4 +254,4 @@ class Lingvist extends View {
   }
 }
 
-export default new Lingvist();
+export default Lingvist;

@@ -301,7 +301,7 @@ class Model {
   }
 
   async mainSettingsChange(setting, value) {
-    // console.log('@mainSettingsChange : ', setting, value);
+    console.log('@mainSettingsChange : ', setting, value);
     const hasOwn = Object.prototype.hasOwnProperty;
 
     if (setting === 'wordsPerDay') {
@@ -314,11 +314,10 @@ class Model {
 
     this.displayMainSettings(this.settings);
 
-    clearTimeout(this.saveSettingsTimeout);
-    this.saveSettingsTimeout = setTimeout(async () => {
-      await this.setUserSettings(this.settings);
-    }, 5000);
-    this.games.map((game) => game.checkSettings(this.settings));
+    // clearTimeout(this.saveSettingsTimeout);
+    // this.saveSettingsTimeout = setTimeout(async () => {
+    //   await this.setUserSettings(this.settings);
+    // }, 5000);
   }
 }
 

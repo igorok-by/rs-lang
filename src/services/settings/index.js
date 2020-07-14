@@ -7,8 +7,9 @@ class SettingsHandler {
     this.html = this.view.render(Settings);
   }
 
-  init({ onSettingChange }) {
+  init({ onSettingChange, onClose }) {
     this.onSettingChange = onSettingChange;
+    this.onClose = onClose;
   }
 
   display(data) {
@@ -27,6 +28,7 @@ class SettingsHandler {
 
     this.close.addEventListener('click', () => {
       this.view.hideModal();
+      this.onClose();
     });
 
     this.bindSettingChange(this.onSettingChange);
