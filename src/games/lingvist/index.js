@@ -8,6 +8,7 @@ import * as constants from './js/utils/constants';
 import create from './js/utils/create';
 import Input from './js/Input';
 import ProgressBar from './js/ProgressBar';
+import { Promise } from 'core-js';
 
 class Lingvist {
   constructor(view, model) {
@@ -41,6 +42,12 @@ class Lingvist {
     this.holderBindFunc = null;
   }
 
+  async getWords() {
+    const words = await this.model.getWords({ group: this.groupCount, page: this.pageCount });
+
+    return words;
+  }
+
   shuffleWords() {
     for (let i = this.dataOfWords.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -49,33 +56,49 @@ class Lingvist {
   }
 
   async correctWordsData() {
-    const difference = this.model.settings.wordsPerDay - this.dataOfWords.length;
+    const newAmountOfCards = this.model.settings.wordsPerDay;
+    const difference = newAmountOfCards - this.dataOfWords.length;
 
     if (difference < 0) {
       this.dataOfWords = this.dataOfWords.slice(0, difference);
     }
+
     if (difference > 0) {
-      this.pageCount += 1;
-      const additionalWords = await this.model.getWords({
-        group: this.groupCount,
-        page: this.pageCount,
-      });
+      if (newAmountOfCards <= constants.WORDS_PER_PAGE) {
+        this.dataOfWords = await this.model.getWords({
+          group: this.groupCount,
+          page: this.pageCount,
+        });
 
-      this.dataOfWords = this.dataOfWords.concat(additionalWords);
-      this.correctWordsData();
+        this.correctWordsData();
+      } else {
+        let amountOfPages = Math.ceil(newAmountOfCards / constants.WORDS_PER_PAGE);
+        this.dataOfWords = [];
+        let additionalWords = [];
+
+        while (amountOfPages > 0) {
+          additionalWords.push(this.model.getWords({
+            group: this.groupCount,
+            page: this.pageCount,
+          }));
+          this.pageCount += 1;
+          amountOfPages -= 1;
+        }
+
+        additionalWords = await Promise.all(additionalWords);
+        this.dataOfWords = additionalWords.flat();
+
+        this.correctWordsData();
+      }
     }
-  }
 
-  async getWords() {
-    const words = await this.model.getWords({ group: this.groupCount, page: this.pageCount });
-
-    return words;
+    return this.dataOfWords;
   }
 
   async correctCardsAmount() {
+    this.pageCount = 0;
     await this.correctWordsData();
     this.shuffleWords();
-    console.log('22222222222', this.dataOfWords);
 
     if (this.progressBar) this.progressBar.container.remove();
     this.insertProgressBar();
@@ -270,6 +293,7 @@ class Lingvist {
     );
     this.body.append(this.picture, cardRightColumn);
 
+    this.pageCount = 0;
     this.dataOfWords = await this.getWords();
     await this.checkSettings();
   }
