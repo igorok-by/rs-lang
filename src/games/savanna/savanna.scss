@@ -1,3 +1,9 @@
+.game-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .savanna_game-wrapper {
     width: 100%;
     height: 100vh;
@@ -7,7 +13,7 @@
     transition: all 1s ease;
     background-image: url('./assets/img/savanna_bg.svg');
     position: relative;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     overflow: hidden;
@@ -110,8 +116,6 @@
     width: 100%;
     transform: translate(0);
     transition: transform 5s ease-in;
-    // transform: translateY(50%);
-    // transition: all 5s linear;
 }
 
 .savanna__train-word {
