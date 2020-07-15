@@ -26,7 +26,7 @@ export default async function start(model) {
         document.querySelectorAll('.savanna__res_word').forEach((el)=> { 
             el.remove();
         });
-        start(true);
+        start(model);
     }
     
     let page = Math.floor(Math.random() * (5 - 0) + 0);

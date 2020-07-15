@@ -176,8 +176,8 @@
   }
 
 .savanna__result{
-    height: 500px;
-    width: 500px;
+    height: auto;
+    width: 90%;
     border:1px solid #37383c;
     border-radius: 15px;
     box-shadow: 5px 5px 25px hsla(0,0%,46.3%,.25);
@@ -185,6 +185,8 @@
     justify-content: space-around;
     font-size: 20px;
     display: none;
+    position: relative;
+    margin: 10px 0;
   }
   
   .savanna__point{
@@ -194,8 +196,9 @@
   
   .savanna__res{
     height: 300px;
-    width: 400px;
+    width: 100%;
     overflow: auto;
+    text-align: left;
   }
   .savanna__res p{
     margin: 5px 10px;
@@ -221,4 +224,29 @@
   
   .savanna__res_word img {
     margin-left: 10px;
+  }
+
+  @media screen and (max-width: 650px){
+
+    .savanna__train-words {
+      display: flex;
+      flex-direction: column;
+    }
+    .savanna__title {
+      font-size: 350%;
+    }
+
+    .savanna__intro-text {
+      font-size: 175%;
+    }
+
+    .savanna__train-word, .savanna__train-word-question {
+      font-size: 30px;
+    }
+  }
+  
+  @media screen and (max-width: 380px){
+    .savanna__title {
+      font-size: 275%;
+    }
   }

@@ -7,7 +7,7 @@ export default class Savanna extends View {
     constructor(view, model) {
         super();
         this.view = view;
-        this.model - model;
+        this.model = model;
         this.hash = 'Savanna';
       }
 
