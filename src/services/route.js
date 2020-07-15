@@ -8,8 +8,6 @@ class Router {
     const hash = window.location.hash ? window.location.hash.slice(1) : '';
     const [name, id] = hash.split('/');
 
-    console.log('hash', hash);
-
     return { name, params: { id } };
   }
 
@@ -19,12 +17,7 @@ class Router {
     this.controller.show(name, params);
   }
 
-  goTo(hash) {
-    window.location.hash = hash;
-  }
-
   init() {
-    console.log('router init');
     window.addEventListener('hashchange', this.handleHash.bind(this));
     // this.handleHash();
   }
