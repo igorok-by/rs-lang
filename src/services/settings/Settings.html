@@ -1,3 +1,48 @@
-<div class="settings">
-  <a href="/" class="settings__close">Close</a>
+<div class="app-settings">
+  <div class="container">
+
+    <ul class="app-settings__list">
+      <li>
+        <label for="wordsPerDay">Количество слов в день</label>
+        <input type="number" id="wordsPerDay" value="{{wordsPerDay}}" name="wordsPerDay">
+      </li>
+      <li>
+        <h4>Отображать элементы:</h4>
+      </li>
+      <li>
+        <input type="checkbox" id="picture" name="settings-picture" {{picture}}>
+        <label for="picture">Картинка-ассоциация</label>
+      </li>
+      <li>
+        <input type="checkbox" id="transcription" name="transcription" {{transcription}}>
+        <label for="transcription">Транскрипция</label>
+      </li>
+      <li>
+        <input type="checkbox" id="translate" name="translate" {{translate}}>
+        <label for="translate">Перевод</label>
+      </li>
+      <li>
+        <input type="checkbox" id="inComplicatedList" name="in-complicated" {{inComplicatedList}}>
+        <label for="inComplicatedList">В сложные</label>
+      </li>
+      <li>
+        <input type="checkbox" id="difficulty" name="difficulty" {{difficulty}}>
+        <label for="difficulty">"Снова", "Трудно", "Хорошо", "Легко"</label>
+      </li>
+    </ul>
+
+    <div class="settings__close material-icons">
+      <span class="material-icons">close</span>
+    </div>
+
+  </div>
 </div>
+
+
+<!--1. количество новых слов-->
+<!--2. какая информация выводится-->
+<!--1) картинка-->
+<!--2) транскрипция-->
+<!--3) перевод-->
+<!--3. Наличие на странице кнопки, помещающей слово в сложные-->
+<!--4. Наличие кнопок "Снова", Трудно, Хорошо, Легко-->

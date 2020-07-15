@@ -1,10 +1,10 @@
 import GUI from './view';
-import Model from './model';
+import EnglishPuzzleModel from './model';
 
 class EnglishPuzzle {
-  constructor(gui, model) {
-    this.gui = gui;
-    this.model = model;
+  constructor(view, model) {
+    this.gui = new GUI(view);
+    this.model = new EnglishPuzzleModel(model);
     this.hash = 'englishPuzzle';
   }
 
@@ -44,11 +44,15 @@ class EnglishPuzzle {
     this.gui.startWindow.showWindow();
   }
 
+  stop(){
+    console.log('STOP');
+  }
   /**
    *
    * @param show Function to insert HTML to main section
    */
   display(show) {
+    console.log('eng puzzle display')
     const html = this.gui.getUI();
 
     show(html);
@@ -57,4 +61,4 @@ class EnglishPuzzle {
   }
 }
 
-export default new EnglishPuzzle(new GUI(), new Model());
+export default EnglishPuzzle;

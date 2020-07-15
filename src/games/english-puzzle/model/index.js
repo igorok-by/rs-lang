@@ -3,9 +3,10 @@ import { settingsTypes } from '../../../constants';
 
 const s = settingsTypes;
 
-class EnglishPuzzleModel extends Model {
-  constructor() {
-    super();
+class EnglishPuzzleModel {
+  constructor(model) {
+    // super();
+    this.model = model;
     this.words = [];
     this.wordsOnPage = 10;
     this.count = 0;
@@ -53,7 +54,7 @@ class EnglishPuzzleModel extends Model {
   async getNextWords() {
     const group = this.level;
     const page = Math.floor(Math.random() * Math.floor(this.pagesLimit));
-    const words = await this.getWords({ group, page });
+    const words = await this.model.getWords({ group, page });
 
     this.words = words
       .filter((word) => word.textExample.split(' ').length <= 10)
@@ -157,7 +158,7 @@ class EnglishPuzzleModel extends Model {
     if (this.play) {
       await this.play.pause();
     }
-    this.play = await this.playAudio(this.word.audioExample);
+    this.play = await this.model.playAudio(this.word.audioExample);
 
     return new Promise((resolve) => this.play.addEventListener('ended', resolve));
   }

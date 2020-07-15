@@ -1,18 +1,57 @@
 import Settings from './Settings.html';
+import './styles.scss';
 
 class SettingsHandler {
-  constructor(view){
+  constructor(view) {
     this.view = view;
+    this.html = this.view.render(Settings);
   }
 
-  init(){
-
+  init({ onSettingChange, onClose }) {
+    this.onSettingChange = onSettingChange;
+    this.onClose = onClose;
   }
 
-  display() {
-    const html = this.view.render(Settings);
+  display(data) {
+    const { wordsPerDay, optional } = data;
+    const optionalEntries = Object.entries(optional).map(([key, value]) => [key, value ? 'checked' : '']);
+
+    optionalEntries.push(['wordsPerDay', wordsPerDay]);
+
+    const htmlSettings = Object.fromEntries(optionalEntries);
+    const html = this.view.render(Settings, htmlSettings);
 
     this.view.showInModal(html);
+
+    this.checkList = this.view.getElement('.app-settings__list');
+    this.close = this.view.getElement('.settings__close');
+
+    this.close.addEventListener('click', () => {
+      this.view.hideModal();
+      this.onClose();
+    });
+
+    this.bindSettingChange(this.onSettingChange);
+  }
+
+  bindSettingChange(handler) {
+    this.checkList.addEventListener('change', ({
+      target: {
+        id, type, value, checked,
+      },
+    }) => {
+      if (typeof handler === 'function') {
+        switch (type) {
+          case 'number':
+            handler(id, value);
+            break;
+          case 'checkbox':
+            handler(id, checked);
+            break;
+          default:
+        }
+      }
+    });
   }
 
   render() {

@@ -1,18 +1,9 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable indent */
-/* eslint-disable no-unused-expressions */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable spaced-comment */
-/* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
 
 const synth = window.speechSynthesis;
-const STORAGE_NAME = 'rs-lang-token';
-
-import View from './view';
+const STORAGE_NAME = 'rs-lang';
 
 class Model {
   // TODO
@@ -20,10 +11,69 @@ class Model {
     this.token = '';
     this.userId = '';
     this.utterance = new SpeechSynthesisUtterance();
+    this.defaultSettings = {
+      wordsPerDay: 20,
+      optional: {
+        picture: true,
+        transcription: false,
+        translate: true,
+        inComplicatedList: false,
+        difficulty: true,
+      },
+      // dayWordsCount: 20,
+    };
+    this.saveSettingsTimeout = null;
   }
-  // isSignIn(){
-  //   const string = localStorage.getItem(STORAGE_NAME);
+
+  // async init() {
+  //   console.log('model.init');
+  //   await this.userInit();
+  //   await this.SettingsInit();
   // }
+
+  userInit() {
+    if (!this.userId) {
+      const user = this.load('user');
+
+      if (!user || !user.userId || !user.token) {
+        this.displayLogin();
+      } else {
+        this.setUser(user);
+
+        this.signedFinish();
+      }
+    }
+  }
+
+  setUser({ token = '', userId = '' } = {}) {
+    console.log( '@setUser : ', userId );
+    this.token = token;
+    this.userId = userId;
+    this.save('user', { token, userId });
+  }
+
+  async SettingsInit() {
+    console.log('SettingsInit', this.token)
+    try {
+      console.log('SettingsInit', this.settings);
+      const settings = await this.getUserSettings();
+      console.log('SettingsInit cloud', settings);
+      if (!settings) {
+        this.setUserSettings(this.defaultSettings);
+        this.settings = this.defaultSettings;
+      } else {
+        this.settings = settings;
+        console.log('SettingsInit ok', settings);
+      }
+    } catch (e) {
+      if (e.response.status === 404) {
+        this.setUserSettings(this.defaultSettings);
+        this.settings = this.defaultSettings;
+      }
+      console.log(e.response);
+    }
+  }
+
   async signIn(user) {
     console.log('login', user);
     const url = UrlPath(REST_URL, 'signin');
@@ -31,54 +81,68 @@ class Model {
       method: 'POST',
       body: JSON.stringify(user),
     });
-    const view = new View();
+
     if (result && result.message === messages.LOGIN_SUCCESS) {
       this.token = result.token;
       this.userId = result.userId;
-      localStorage.setItem('userToken', this.token);
-      view.hideModal();
-      location = '/';
-      console.log('ok');
     }
 
     return result;
   }
 
+  logout() {
+    this.setUser();
+    // this.displayLogin();
+  }
+  // message: "Authenticated"
+  // refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMGNhMDBhZjI2ZGUyMDAxNzQ3YzYwYSIsInRva2VuSWQiOiIxMDE2MzkxMi00ZmExLTQyZWUtYmM4ZS1mZWU4YWU3ZDdhOGYiLCJpYXQiOjE1OTQ2NjMwMzgsImV4cCI6MTU5NDY3OTIzOH0.aawfeoMJftXVbk2J6F_wMH3ZAciK7aZWtNijAlljY5Y"
+  // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMGNhMDBhZjI2ZGUyMDAxNzQ3YzYwYSIsImlhdCI6MTU5NDY2MzAzOCwiZXhwIjoxNTk0Njc3NDM4fQ.DsrF0dyJDtG0lviibHQLLIFa_DN2YEM_Er8nIG4PpTI"
+  // userId: "5f0ca00af26de2001747c60a"
+
+  // email: "test23@rrr.by"
+  // id: "5f0ca0cbf26de2001747c647"
+
   async createUser(user) {
-    console.log('createUser', user);
     const url = UrlPath(REST_URL, 'users');
     const result = await FetchRequire(url, {
       method: 'POST',
       body: JSON.stringify(user),
-    }).catch((err) => {
-      const email = document.querySelector('input[name="email"]');
-      const password = document.querySelector('input[name="password"]');
-      console.log(err);
-      /* if (!result.ok) {
-        console.log(result);
-        const errors = result.error.errors;
-        if (errors.length === 2) {
-          email.value = '';
-          email.placeholder = errors[0].message;
-          password.value = '';
-          password.placeholder = errors[1].message;
-        } else {
-        const validResult = errors[0].path === 'email' ? true : false;
-        console.log(validResult);
-          if (validResult) {
-            email.value = '';
-            email.placeholder = errors[0].message;
-          } else {
-            password.value = '';
-            password.placeholder = errors[0].message;
-          }
-        }
-        console.log(errors);
-        return false;
-      } */
     });
-    if (!result) return false;
-    this.signIn(user);
+
+    // email: "test23@rrr.by"
+    // id: "5f0ca0cbf26de2001747c647"
+
+    return result;
+  }
+
+  async getUserSettings() {
+    const url = UrlPath(REST_URL, 'users', this.userId, 'settings');
+    const result = await FetchRequire(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return result;
+  }
+
+  async setUserSettings({ wordsPerDay, optional } = {}) {
+    const url = UrlPath(REST_URL, 'users', this.userId, 'settings');
+    console.log('setUserSettings', url, { token: this.token });
+
+    const result = await FetchRequire(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ wordsPerDay, optional }),
+    });
+    console.log('setUserSettings', result);
     return result;
   }
 
@@ -167,6 +231,30 @@ class Model {
     return UrlPath(MEDIA_CONTENT_URL, path);
   }
 
+  save(key, value) {
+    const data = this.load(key) || {};
+
+    data[key] = value;
+
+    localStorage.setItem(STORAGE_NAME, JSON.stringify(data));
+  }
+
+  load(key) {
+    const data = localStorage.getItem(STORAGE_NAME);
+
+    try {
+      const O = JSON.parse(data);
+
+      if (key === 'all') {
+        return O;
+      }
+
+      return O[key];
+    } catch (e) {
+      return null;
+    }
+  }
+
   playAudio(path) {
     const url = UrlPath(MEDIA_CONTENT_URL, path);
 
@@ -175,6 +263,48 @@ class Model {
     audio.play();
 
     return audio;
+  }
+
+  async signed({ token, userId }) {
+    this.setUser({ token, userId });
+
+    this.signedFinish();
+  }
+
+  bindSignedFinish(cb) {
+    this.signedFinish = cb;
+  }
+
+  bindDisplayMainSettings(cb) {
+    this.displayMainSettings = cb;
+  }
+
+  bindDisplayLogin(cb) {
+    this.displayLogin = cb;
+  }
+
+  bindDisplayMainPage(cb) {
+    this.displayMainPage = cb;
+  }
+
+  async mainSettingsChange(setting, value) {
+    console.log('@mainSettingsChange : ', setting, value);
+    const hasOwn = Object.prototype.hasOwnProperty;
+
+    if (setting === 'wordsPerDay') {
+      this.settings.wordsPerDay = value;
+    }
+
+    if (hasOwn.call(this.settings.optional, setting)) {
+      this.settings.optional[setting] = value;
+    }
+
+    this.displayMainSettings(this.settings);
+
+    // clearTimeout(this.saveSettingsTimeout);
+    // this.saveSettingsTimeout = setTimeout(async () => {
+    //   await this.setUserSettings(this.settings);
+    // }, 5000);
   }
 }
 

@@ -8,7 +8,6 @@ class HeaderHandler {
   }
 
   init({ onSettings, onLogin }) {
-    console.log( '@header init : ' );
     this.view.showIn(this.header, Header);
 
     this.container = this.view.getElement('.app-header__container');
@@ -17,6 +16,15 @@ class HeaderHandler {
 
     this.bindLoginClick(onLogin);
     this.bindSettingsClick(onSettings);
+  }
+
+  changeLoginedTo(value) {
+    this.loginButton.textContent = value ? 'Logout' : 'Login';
+  }
+
+  displaySettingsButton(value) {
+    const method = value ? 'remove' : 'add';
+    this.settingsButton.classList[method]('app-header__button_settings_hide');
   }
 
   bindSettingsClick(handler) {
