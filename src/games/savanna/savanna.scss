@@ -1,0 +1,252 @@
+.game-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.savanna_game-wrapper {
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position-y: 100%;
+    background-position-x: center;
+    transition: all 1s ease;
+    background-image: url('./assets/img/savanna_bg.svg');
+    position: relative;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.savanna__main {
+    width: 100%;
+    height: 100vh;
+    background: #135E6E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.savanna__title {
+    font-size: 40px;
+    margin: -100px auto 40px;
+    color: #6cffde;
+    opacity: .8;
+    text-transform: uppercase;
+    letter-spacing: 13px;
+    font-weight: 300;
+    padding-left: 20px;
+}
+
+.savanna__intro-text {
+    max-width: 600px;
+    margin: 0 auto 60px;
+    font-size: 18px;
+    line-height: 1.4;
+    font-weight: 300;
+    color: #fff;
+    opacity: .8;
+    text-align: center;
+}
+
+.savanna__btn {
+    display: inline-block;
+    margin: 0 auto;
+    appearance: none;
+    font-size: 24px;
+    text-align: center;
+    padding: 15px 25px;
+    text-decoration: none;
+    min-width: 200px;
+    color: #fff;
+    background: #00c49d;
+    border-radius: 4px;
+    visibility: visible;
+    cursor: pointer;
+    transition: .15s;
+    box-shadow: 0 0 0 1px hsla(0,0%,100%,.1), 0 2px 4px 0 rgba(14,30,37,.12);
+}
+
+.savanna__btn:hover{
+    background: hsl(168, 100%, 26%);
+  }
+
+.savanna__lives-container {
+    position: absolute;
+    right: 60px;
+    top: 29px;
+    height: 16px;
+    display: flex;
+    flex-direction: row;
+}
+
+.savanna__train-words {
+    position: absolute;
+    top: 30%;
+    margin-top: -30px;
+    right: 0;
+    left: 0;
+    text-align: center;
+    min-height: 50%;
+    padding-top: 100px;
+}
+
+.savanna__question-word {
+    position: absolute;
+    transform-origin: 50% bottom;
+    transition: all .3s ease;
+    transform: translate(-50%);
+    display: inline-block;
+    left: 50%;
+}
+
+.savanna__question-word-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 48px;
+    line-height: 1;
+    font-weight: 300;
+    white-space: nowrap;
+    color: #fff;
+    letter-spacing: 1px;
+    height: 100%;
+    width: 100%;
+    transform: translate(0);
+    transition: transform 5s ease-in;
+}
+
+.savanna__train-word {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 300;
+    max-width: 270px;
+    text-align: left;
+    position: relative;
+    padding: 20px 15px 20px 30px;
+    color: #fff;
+    transition: all .15s ease;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 0 20px;
+    user-select: none;
+}
+
+.savanna__train-word-question {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 300;
+    max-width: 270px;
+    text-align: left;
+    position: relative;
+    padding: 20px 15px 20px 30px;
+    color: #fff;
+    transition: all .15s ease;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 0 20px;
+    user-select: none;
+}
+
+.savanna__lives-item {
+    display: inline-block;
+    vertical-align: top;
+    background: url('./assets/img/full_heart.png') no-repeat;
+    width: 19px;
+    height: 16px;
+    margin-left: 2px;
+    transition: all .15s ease;
+}
+
+.savanna__lives-item.fail {
+    opacity: .2;
+}
+
+@mixin flex-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+.savanna__result{
+    height: auto;
+    width: 90%;
+    border:1px solid #37383c;
+    border-radius: 15px;
+    box-shadow: 5px 5px 25px hsla(0,0%,46.3%,.25);
+    @include flex-col;
+    justify-content: space-around;
+    font-size: 20px;
+    display: none;
+    position: relative;
+    margin: 10px 0;
+  }
+  
+  .savanna__point{
+    color:#37383c;
+    font-size: 30px;
+  }
+  
+  .savanna__res{
+    height: 300px;
+    width: 100%;
+    overflow: auto;
+    text-align: left;
+  }
+  .savanna__res p{
+    margin: 5px 10px;
+  }
+  .savanna__res img{
+    cursor:pointer;
+  }
+  
+  .savanna__correct{
+    border-bottom: 1px solid #37383c;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  .savanna__cor{
+    color:#28c38a;
+    font-size: 25px;
+  }
+  
+  .savanna__er{
+    color:#ed593b;
+    font-size: 25px;
+  }
+  
+  .savanna__res_word img {
+    margin-left: 10px;
+  }
+
+  @media screen and (max-width: 650px){
+
+    .savanna__train-words {
+      display: flex;
+      flex-direction: column;
+    }
+    .savanna__title {
+      font-size: 350%;
+    }
+
+    .savanna__intro-text {
+      font-size: 175%;
+    }
+
+    .savanna__train-word, .savanna__train-word-question {
+      font-size: 30px;
+    }
+  }
+  
+  @media screen and (max-width: 380px){
+    .savanna__title {
+      font-size: 275%;
+    }
+  }
