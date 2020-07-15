@@ -7,6 +7,7 @@ import Lingvist from '../games/lingvist/index';
 import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
 import Tomfoolery from '../games/tomfoolery';
+import About from '../services/about/index';
 // USER для теста
 const USER = { email: 'test_user_random@gmail.com', password: 'Gfhjkm_123' };
 //
@@ -21,6 +22,7 @@ class Controller {
       AudioCall,
       Sprint,
       Tomfoolery,
+      About,
     ];
 
     this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
