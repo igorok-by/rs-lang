@@ -99,11 +99,12 @@ class Controller {
           this.showGame(hash);
       }
     }
+    this.login.display();
   }
 
   showGame(name) {
     console.log('showGame', name);
-    const game = this.games.find((el) => el.hash === name);
+    let game = this.games.find((el) => el.hash === name);
 
     // if (!game) {
     //   game = this.lingvist;

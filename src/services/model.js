@@ -54,7 +54,7 @@ class Model {
   }
 
   setUser({ token = '', userId = '' } = {}) {
-    console.log('@setUser : ', userId);
+    console.log( '@setUser : ', userId );
     this.token = token;
     this.userId = userId;
     this.save('user', { token, userId });
@@ -62,6 +62,7 @@ class Model {
 
   async SettingsInit() {
     console.log('SettingsInit', this.token);
+
     try {
       console.log('SettingsInit', this.settings);
       const settings = await this.getUserSettings();
