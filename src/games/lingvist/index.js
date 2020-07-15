@@ -6,19 +6,19 @@ import './styles.scss';
 
 import * as constants from './js/utils/constants';
 import create from './js/utils/create';
-import View from '../../services/view';
-import MainModel from '../../services/model';
 import Input from './js/Input';
 import ProgressBar from './js/ProgressBar';
 
 class Lingvist {
   constructor(view, model) {
     this.view = view;
-    this.mainModel = model;
+    this.model = model;
     this.hash = 'lingvist';
     this.name = 'lingvist';
     this.dataOfWords = [];
     this.cardIndex = 0;
+    this.pageCount = 0;
+    this.groupCount = 0;
 
     this.audioBtn = create('button', 'card__audio card__audio--inactive', null, null, ['type', 'button']);
     this.checkBtn = create('button', 'card__btn', 'Проверить', null, ['type', 'submit']);
@@ -41,40 +41,52 @@ class Lingvist {
     this.holderBindFunc = null;
   }
 
+  async correctWordsData() {
+    const difference = this.model.settings.wordsPerDay - this.dataOfWords.length;
+
+    if (difference < 0) {
+      this.dataOfWords = this.dataOfWords.slice(0, difference);
+    }
+    if (difference > 0) {
+      this.pageCount += 1;
+      const additionalWords = await this.model.getWords({
+        group: this.groupCount,
+        page: this.pageCount,
+      });
+
+      this.dataOfWords = this.dataOfWords.concat(additionalWords);
+      this.correctWordsData();
+    }
+  }
+
   async getWords() {
-    const words = await this.mainModel.getWords({ group: 0, page: 1 });
+    const words = await this.model.getWords({ group: this.groupCount, page: this.pageCount });
+
     return words;
   }
 
-  insertAudioBtn() {
-    const iconAudio = '<svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>';
-    this.audioBtn.innerHTML = iconAudio;
-
-    this.header = this.view.getElement('.card__header');
-    this.header.append(this.audioBtn);
+  async correctCardsAmount() {
+    await this.correctWordsData();
+    if (this.progressBar) this.progressBar.container.remove();
+    this.insertProgressBar();
+    this.cardIndex = -1;
+    this.goNextCard();
   }
 
-  insertControlBtns() {
-    this.footer = this.view.getElement('.card__footer');
-    this.footer.append(this.lookBtn, this.checkBtn);
-  }
-
-  checkSettings(settings) {
-    const options = [
-      'picture',
-      'transcription',
-      'translate',
-      'meaningEng',
-      'meaningRu',
-      'example',
-      'lookBtn',
-    ];
+  async checkSettings() {
+    const options = Object.keys(this.model.settings.optional);
 
     options.map((option) => {
-      settings.optional[option]
-        ? this[option].classList.remove('card--hidden')
-        : this[option].classList.add('card--hidden');
+      if (this[option]) {
+        this.model.settings.optional[option]
+          ? this[option].classList.remove('card--hidden')
+          : this[option].classList.add('card--hidden');
+      }
     });
+
+    if (this.dataOfWords.length !== this.model.settings.wordsPerDay) {
+      await this.correctCardsAmount();
+    }
   }
 
   replaceLearnWord(howToToggle) {
@@ -109,7 +121,7 @@ class Lingvist {
     this.progressBar.container.remove();
 
     this.cardIndex = -1;
-    this.dataOfWords = await this.mainModel.getWords({ group: 0, page: 2 });
+    this.dataOfWords = await this.model.getWords({ group: 0, page: 2 });
     this.goNextCard();
     this.insertProgressBar();
   }
@@ -198,6 +210,19 @@ class Lingvist {
     main.append(this.progressBar.renderBar());
   }
 
+  insertAudioBtn() {
+    const iconAudio = '<svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>';
+    this.audioBtn.innerHTML = iconAudio;
+
+    this.header = this.view.getElement('.card__header');
+    this.header.append(this.audioBtn);
+  }
+
+  insertControlBtns() {
+    this.footer = this.view.getElement('.card__footer');
+    this.footer.append(this.lookBtn, this.checkBtn);
+  }
+
   insertLearning() {
     const dataOfWord = this.dataOfWords[this.cardIndex];
     this.input = new Input(dataOfWord.word);
@@ -236,8 +261,7 @@ class Lingvist {
     this.body.append(this.picture, cardRightColumn);
 
     this.dataOfWords = await this.getWords();
-    this.insertLearning();
-    this.insertProgressBar();
+    await this.checkSettings();
   }
 
   bindEventListeners() {

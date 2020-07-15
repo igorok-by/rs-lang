@@ -28,7 +28,7 @@ class Controller {
       this.tomfoolery,
     ];
 
-    this.model.bindGameSettings(Lingvist);
+    this.model.bindGameSettings(this.lingvist);
     this.isInit = false;
   }
 

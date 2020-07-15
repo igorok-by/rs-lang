@@ -73,7 +73,6 @@ class Model {
         this.settings = settings;
         console.log('SettingsInit ok', settings);
       }
-      this.games.map((game) => game.checkSettings(this.settings));
     } catch (e) {
       if (e.response.status === 404) {
         this.setUserSettings(this.defaultSettings);
@@ -313,6 +312,7 @@ class Model {
     }
 
     this.displayMainSettings(this.settings);
+    this.games.map((game) => game.checkSettings());
 
     // clearTimeout(this.saveSettingsTimeout);
     // this.saveSettingsTimeout = setTimeout(async () => {
