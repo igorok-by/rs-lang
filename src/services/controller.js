@@ -6,6 +6,7 @@ import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
 import Tomfoolery from '../games/tomfoolery';
 import Savanna from '../games/savanna';
+import Homepage from '../services/homepage/index'
 
 class Controller {
   constructor(view, model) {
@@ -21,6 +22,7 @@ class Controller {
     this.tomfoolery = new Tomfoolery(view, model);
     this.savanna = new Savanna(view, model);
     this.games = [
+      Homepage,
       this.lingvist,
       this.audioCall,
       this.speakIt,

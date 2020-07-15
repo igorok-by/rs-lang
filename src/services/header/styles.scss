@@ -10,21 +10,28 @@
 
   text-align: center;
 
-  background-color: #fccd86;
+  background-color: #0DA8C9;;
 }
 
-.app-header__button{
-  display: inline-block;
-  height: 100%;
-  padding: 5px;
-  border: 1px solid #fff;
-  border-radius: 5px;
-  margin: 0 10px;
-  font-family: "Lato";
-  font-size: 15px;
-  background-color: #fff;
+.app-header__button{ display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 30px;
+width: 115px;
+height: 40px;
+font-family: Montserrat;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 29px;
+color: #FBFBFB;
+background: #05778F;
+box-shadow: 0px 2px 8px rgba(21, 116, 136, 0.9);
+border-radius: 49px;
 }
-
 .app-header__button_settings_hide {
   display: none;
 }
+
+.app-header__button:hover{box-shadow: 0px 4px 12px rgba(21, 116, 136, 0.9); cursor: pointer;}
+.app-header__button_settings{}

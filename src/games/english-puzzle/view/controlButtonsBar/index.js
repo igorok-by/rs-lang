@@ -22,7 +22,7 @@ class ControlButtons {
   changeToContinue() {
     const p = this.checkButton.children[0];
 
-    p.textContent = 'Continue';
+    p.textContent = 'Продолжить';
 
     this.checkButton.dataset.type = 'continue';
   }
@@ -30,7 +30,7 @@ class ControlButtons {
   changeToNextLevel() {
     const p = this.checkButton.children[0];
 
-    p.textContent = 'Next level';
+    p.textContent = 'Следующий уровень';
 
     this.checkButton.dataset.type = 'nextlevel';
   }
@@ -38,7 +38,7 @@ class ControlButtons {
   changeToCheck() {
     const p = this.checkButton.children[0];
 
-    p.textContent = 'Check';
+    p.textContent = 'Проверка';
 
     this.checkButton.dataset.type = 'check';
   }
