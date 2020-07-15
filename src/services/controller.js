@@ -48,7 +48,7 @@ class Controller {
     });
 
     this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
-    return {}
+
     console.log('controller', this.view.asidePanel.asideElements);
     this.model.bindDisplayMainPage(this.showGame.bind(this));
 
