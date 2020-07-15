@@ -28,6 +28,7 @@ class Controller {
       this.tomfoolery,
     ];
 
+    this.model.bindGameSettings(this.lingvist);
     this.isInit = false;
   }
 
@@ -98,6 +99,7 @@ class Controller {
           this.showGame(hash);
       }
     }
+    this.login.display();
   }
 
   showGame(name) {
@@ -113,10 +115,9 @@ class Controller {
       }
     });
 
-    if (game ){
+    if (game) {
       game.display(this.view.showInMain.bind(this.view));
     }
-
   }
 }
 

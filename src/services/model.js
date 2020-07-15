@@ -1,6 +1,9 @@
+/* eslint-disable class-methods-use-this */
 import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
+
+import View from './view';
 
 const synth = window.speechSynthesis;
 const STORAGE_NAME = 'rs-lang';
@@ -10,6 +13,7 @@ class Model {
   constructor() {
     this.token = '';
     this.userId = '';
+    this.games = [];
     this.utterance = new SpeechSynthesisUtterance();
     this.defaultSettings = {
       wordsPerDay: 20,
@@ -17,6 +21,10 @@ class Model {
         picture: true,
         transcription: false,
         translate: true,
+        meaningEng: true,
+        meaningRu: true,
+        example: true,
+        lookBtn: true,
         inComplicatedList: false,
         difficulty: true,
       },
@@ -53,7 +61,8 @@ class Model {
   }
 
   async SettingsInit() {
-    console.log('SettingsInit', this.token)
+    console.log('SettingsInit', this.token);
+
     try {
       console.log('SettingsInit', this.settings);
       const settings = await this.getUserSettings();
@@ -287,6 +296,10 @@ class Model {
     this.displayMainPage = cb;
   }
 
+  bindGameSettings(game) {
+    this.games.push(game);
+  }
+
   async mainSettingsChange(setting, value) {
     console.log('@mainSettingsChange : ', setting, value);
     const hasOwn = Object.prototype.hasOwnProperty;
@@ -300,6 +313,7 @@ class Model {
     }
 
     this.displayMainSettings(this.settings);
+    this.games.map((game) => game.checkSettings());
 
     // clearTimeout(this.saveSettingsTimeout);
     // this.saveSettingsTimeout = setTimeout(async () => {

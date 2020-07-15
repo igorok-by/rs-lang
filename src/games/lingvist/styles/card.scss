@@ -16,6 +16,10 @@
 
   transition: $def-transition;
 
+  &--hidden {
+    display: none;
+  }
+
   &--finished {
     padding: 30px;
 

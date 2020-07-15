@@ -1,32 +1,35 @@
+/* eslint-disable dot-notation */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable array-callback-return */
 import markup from './lingvist.html';
 import './styles.scss';
 
 import * as constants from './js/utils/constants';
 import create from './js/utils/create';
-import View from '../../services/view';
-import MainModel from '../../services/model';
 import Input from './js/Input';
 import ProgressBar from './js/ProgressBar';
+import { Promise } from 'core-js';
 
 class Lingvist {
   constructor(view, model) {
     this.view = view;
-    this.mainModel = model;
+    this.model = model;
     this.hash = 'lingvist';
     this.name = 'lingvist';
     this.dataOfWords = [];
     this.cardIndex = 0;
+    this.pageCount = 0;
+    this.groupCount = 0;
 
     this.audioBtn = create('button', 'card__audio card__audio--inactive', null, null, ['type', 'button']);
     this.checkBtn = create('button', 'card__btn', 'Проверить', null, ['type', 'submit']);
     this.lookBtn = create('button', 'card__btn card__btn--light', 'Показать перевод', null, ['type', 'button']);
-    this.image = create('img', 'card__image');
-    this.translated = create('p', 'card__translated');
+    this.picture = create('img', 'card__image');
+    this.translate = create('p', 'card__translated');
     this.meaningEng = create('p', 'card__meaning');
     this.meaningRu = create('p', 'card__meaning card__meaning--primary');
     this.example = create('p', 'card__sentence');
-    this.transcript = create('p', 'card__transcript');
+    this.transcription = create('p', 'card__transcript');
     this.inputWrapper = create('div', 'input');
 
     this.header = null;
@@ -40,21 +43,83 @@ class Lingvist {
   }
 
   async getWords() {
-    const words = await this.mainModel.getWords({ group: 0, page: 1 });
+    const words = await this.model.getWords({ group: this.groupCount, page: this.pageCount });
+
     return words;
   }
 
-  insertAudioBtn() {
-    const iconAudio = '<svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>';
-    this.audioBtn.innerHTML = iconAudio;
-
-    this.header = this.view.getElement('.card__header');
-    this.header.append(this.audioBtn);
+  shuffleWords() {
+    for (let i = this.dataOfWords.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.dataOfWords[i], this.dataOfWords[j]] = [this.dataOfWords[j], this.dataOfWords[i]];
+    }
   }
 
-  insertControlBtns() {
-    this.footer = this.view.getElement('.card__footer');
-    this.footer.append(this.lookBtn, this.checkBtn);
+  async correctWordsData() {
+    const newAmountOfCards = this.model.settings.wordsPerDay;
+    const difference = newAmountOfCards - this.dataOfWords.length;
+
+    if (difference < 0) {
+      this.dataOfWords = this.dataOfWords.slice(0, difference);
+    }
+
+    if (difference > 0) {
+      if (newAmountOfCards <= constants.WORDS_PER_PAGE) {
+        this.dataOfWords = await this.model.getWords({
+          group: this.groupCount,
+          page: this.pageCount,
+        });
+
+        this.correctWordsData();
+      } else {
+        let amountOfPages = Math.ceil(newAmountOfCards / constants.WORDS_PER_PAGE);
+        this.dataOfWords = [];
+        let additionalWords = [];
+
+        while (amountOfPages > 0) {
+          additionalWords.push(this.model.getWords({
+            group: this.groupCount,
+            page: this.pageCount,
+          }));
+          this.pageCount += 1;
+          amountOfPages -= 1;
+        }
+
+        additionalWords = await Promise.all(additionalWords);
+        this.dataOfWords = additionalWords.flat();
+
+        this.correctWordsData();
+      }
+    }
+
+    return this.dataOfWords;
+  }
+
+  async correctCardsAmount() {
+    this.pageCount = 0;
+    await this.correctWordsData();
+    this.shuffleWords();
+
+    if (this.progressBar) this.progressBar.container.remove();
+    this.insertProgressBar();
+    this.cardIndex = -1;
+    this.goNextCard();
+  }
+
+  async checkSettings() {
+    const options = Object.keys(this.model.settings.optional);
+
+    options.map((option) => {
+      if (this[option]) {
+        this.model.settings.optional[option]
+          ? this[option].classList.remove('card--hidden')
+          : this[option].classList.add('card--hidden');
+      }
+    });
+
+    if (this.dataOfWords.length !== this.model.settings.wordsPerDay) {
+      await this.correctCardsAmount();
+    }
   }
 
   replaceLearnWord(howToToggle) {
@@ -89,7 +154,7 @@ class Lingvist {
     this.progressBar.container.remove();
 
     this.cardIndex = -1;
-    this.dataOfWords = await this.mainModel.getWords({ group: 0, page: 2 });
+    this.dataOfWords = await this.model.getWords({ group: 0, page: 2 });
     this.goNextCard();
     this.insertProgressBar();
   }
@@ -178,6 +243,19 @@ class Lingvist {
     main.append(this.progressBar.renderBar());
   }
 
+  insertAudioBtn() {
+    const iconAudio = '<svg><use xlink:href="./img/sprite.svg#speaker"></use></svg>';
+    this.audioBtn.innerHTML = iconAudio;
+
+    this.header = this.view.getElement('.card__header');
+    this.header.append(this.audioBtn);
+  }
+
+  insertControlBtns() {
+    this.footer = this.view.getElement('.card__footer');
+    this.footer.append(this.lookBtn, this.checkBtn);
+  }
+
   insertLearning() {
     const dataOfWord = this.dataOfWords[this.cardIndex];
     this.input = new Input(dataOfWord.word);
@@ -185,12 +263,12 @@ class Lingvist {
 
     this.inputWrapper.innerHTML = '';
     this.inputWrapper.append(...inputTemplate);
-    this.translated.innerHTML = dataOfWord.wordTranslate;
-    this.transcript.innerHTML = dataOfWord.transcription;
+    this.translate.innerHTML = dataOfWord.wordTranslate;
+    this.transcription.innerHTML = dataOfWord.transcription;
     this.meaningEng.innerHTML = dataOfWord.textMeaning;
     this.meaningRu.innerHTML = dataOfWord.textMeaningTranslate;
     this.example.innerHTML = `<span>Пример:</span> "${dataOfWord.textExample}" <span>— ${dataOfWord.textExampleTranslate}</span>`;
-    this.image.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
+    this.picture.src = `${constants.FOLDER_WITH_ASSETS}${dataOfWord.image}`;
 
     this.replaceLearnWord('hide');
     this.input.inputAnswer.focus();
@@ -207,17 +285,17 @@ class Lingvist {
 
     cardRightColumn.append(
       this.inputWrapper,
-      this.translated,
-      this.transcript,
+      this.translate,
+      this.transcription,
       this.meaningEng,
       this.meaningRu,
       this.example,
     );
-    this.body.append(this.image, cardRightColumn);
+    this.body.append(this.picture, cardRightColumn);
 
+    this.pageCount = 0;
     this.dataOfWords = await this.getWords();
-    this.insertLearning();
-    this.insertProgressBar();
+    await this.checkSettings();
   }
 
   bindEventListeners() {
