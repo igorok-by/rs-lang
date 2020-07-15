@@ -1,22 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 const errorAudio = new Audio('./img/savanna/error.mp3')
 const correctAudio = new Audio('./img/savanna/correct.mp3')
 
-export default function start(model) {
-=======
-=======
->>>>>>> 2aa7d07b26bb108fd2f2798f473eab22f993099e
-import Model from '../../../services/model';
-const model = new Model();
-const errorAudio = new Audio('./img/savanna/error.mp3')
-const correctAudio = new Audio('./img/savanna/correct.mp3')
-
-export default async function start() {
-<<<<<<< HEAD
->>>>>>> feat: fix game
-=======
->>>>>>> 2aa7d07b26bb108fd2f2798f473eab22f993099e
+export default async function start(model) {
     const background = document.querySelector('.savanna_game-wrapper');
     background.style.backgroundPositionY = '100%';
     background.style.display = 'flex';

@@ -4,18 +4,8 @@ import EnglishPuzzle from '../games/english-puzzle';
 import Lingvist from '../games/lingvist';
 import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
-<<<<<<< HEAD
 import Tomfoolery from '../games/tomfoolery';
 import Savanna from '../games/savanna';
-=======
-import Savanna from '../games/savanna'
-import Login from './login/index';
-
-// USER для теста
-const USER = { email: 'test_user_random@gmail.com', password: 'Gfhjkm_123' };
-const view = new View();
-const model = new Model();
->>>>>>> 2aa7d07b26bb108fd2f2798f473eab22f993099e
 
 class Controller {
   constructor(view, model) {
@@ -30,9 +20,7 @@ class Controller {
     this.sprint = new Sprint(view, model);
     this.tomfoolery = new Tomfoolery(view, model);
     this.savanna = new Savanna(view, model);
-
     this.games = [
-<<<<<<< HEAD
       this.lingvist,
       this.audioCall,
       this.speakIt,
@@ -40,14 +28,6 @@ class Controller {
       this.sprint,
       this.tomfoolery,
       this.savanna
-=======
-      SpeakIt,
-      EnglishPuzzle,
-      Lingvist,
-      AudioCall,
-      Sprint,
-      Savanna
->>>>>>> 2aa7d07b26bb108fd2f2798f473eab22f993099e
     ];
 
     this.isInit = false;
