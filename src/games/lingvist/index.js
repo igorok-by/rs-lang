@@ -41,6 +41,13 @@ class Lingvist {
     this.holderBindFunc = null;
   }
 
+  shuffleWords() {
+    for (let i = this.dataOfWords.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.dataOfWords[i], this.dataOfWords[j]] = [this.dataOfWords[j], this.dataOfWords[i]];
+    }
+  }
+
   async correctWordsData() {
     const difference = this.model.settings.wordsPerDay - this.dataOfWords.length;
 
@@ -67,6 +74,9 @@ class Lingvist {
 
   async correctCardsAmount() {
     await this.correctWordsData();
+    this.shuffleWords();
+    console.log('22222222222', this.dataOfWords);
+
     if (this.progressBar) this.progressBar.container.remove();
     this.insertProgressBar();
     this.cardIndex = -1;
