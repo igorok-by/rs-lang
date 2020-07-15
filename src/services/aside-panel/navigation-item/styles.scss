@@ -1,7 +1,148 @@
+@font-face {
+  font-family: "Montserrat"; 
+  src: url(../../homepage/fonts/montserrat.ttf); 
+  font-style: normal; 
+font-weight: normal;
+ }
+
+ $icon-size: 35px;
+
+.app-panel__container{
+  display: flex;
+  margin-left: 40px;
+  // background: #FFFFFF;
+ 
+// border-radius: 189px;
+}
+
 .app-panel__item {
-  display: block;
-  width: 100px;
-  height: 100px;
-  border: 2px solid #4659ff;
+  display: table-cell;
+  vertical-align: bottom;
   text-align: center;
+  
+    padding-bottom: 10px;
+  width: 104px;
+  height: 80px;
+}
+
+
+
+.app-panel__elements{
+  position: relative;
+  padding: 20px 0;
+  z-index: 1;
+
+  li > a{
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  &::before{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-radius: 189px;
+    background-color: rgba(255,255,255,0.29);
+    z-index: -1;
+    transform: translateY(-50%);
+  }
+}
+
+
+.app-panel__elements>li:nth-child(1){
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #0B7E97;
+  
+  
+  background-image: url("../../homepage/img/home.svg");
+  background-position:top;
+  background-repeat: no-repeat;
+  background-size:  $icon-size auto;
+  border-radius: 189px;
+}
+.app-panel__elements>li:nth-child(2){
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #0B7E97;
+  background-image: url("../../homepage/img/mic.png");
+  background-position:top;
+  background-repeat: no-repeat;
+  background-size:  $icon-size auto;
+  border-radius: 189px;
+}
+.app-panel__elements>li:nth-child(3){
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #0B7E97;
+  background-image: url("../../homepage/img/puzzle.svg");
+  background-position:top;
+  background-repeat: no-repeat;
+  background-size:  $icon-size auto;
+  border-radius: 189px;
+}
+.app-panel__elements>li:nth-child(4){
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #0B7E97;
+  background-image: url("../../homepage/img/flag.svg");
+  background-position:top;
+  background-repeat: no-repeat;
+  background-size:  $icon-size;
+  border-radius: 189px;
+}
+.app-panel__elements>li:nth-child(5){
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #0B7E97;
+  background-image: url("../../homepage/img/audio.svg");
+  background-position:top;
+  background-repeat: no-repeat;
+  background-size: $icon-size auto;
+  border-radius: 189px;
+}
+.app-panel__elements>li:nth-child(6){
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #0B7E97;
+  background-image: url("../../homepage/img/sprint.svg");
+  background-position:top;
+  background-repeat: no-repeat;
+  background-size:  $icon-size auto;
+  border-radius: 189px;
+}
+.app-panel__elements>li:nth-child(7){
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 29px;
+  color: #0B7E97;
+  background-image: url("../../homepage/img/peka.png");
+  background-position:top;
+  background-repeat: no-repeat;
+  background-size:  $icon-size auto;
+  border-radius: 189px;
 }

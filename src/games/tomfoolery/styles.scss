@@ -4,8 +4,8 @@
 
 .tomfoolery__main{
   width: 100%;
-  height: 100vh;
-  background: #135E6E;
+  height: 100%;
+  background: #0DA8C9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,7 +25,7 @@
 .tomfoolery__intro-text {
   max-width: 600px;
   margin: 0 auto 60px;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 1.4;
   font-weight: 300;
   color: #fff;
@@ -58,13 +58,30 @@
 }
 
 .tomfoolery__container{
-  background-image: url(https://pbs.twimg.com/media/D-BIOJfX4AEBGcy?format=jpg&name=large);
   
+  position: relative;
+  z-index: 1;
   background-size: cover;
+  border-radius: 25px;
   width: 100%;
   height: 100%;
   @include flex-col;
   color:#37383c;
+  &::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url(https://pbs.twimg.com/media/D-BIOJfX4AEBGcy?format=jpg&name=large);
+    opacity: 0.3;
+    border-radius: 25px;
+    // background-color: rgba(39, 17, 17, 0.29);
+    z-index: -1;
+    
+}
 }
 
 .tomfoolery__timer{

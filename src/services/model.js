@@ -16,7 +16,7 @@ class Model {
     this.games = [];
     this.utterance = new SpeechSynthesisUtterance();
     this.defaultSettings = {
-      wordsPerDay: 20,
+      wordsPerDay: 15,
       optional: {
         picture: true,
         transcription: false,
@@ -54,7 +54,7 @@ class Model {
   }
 
   setUser({ token = '', userId = '' } = {}) {
-    console.log( '@setUser : ', userId );
+    console.log('@setUser : ', userId);
     this.token = token;
     this.userId = userId;
     this.save('user', { token, userId });

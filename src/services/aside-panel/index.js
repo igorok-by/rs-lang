@@ -9,7 +9,8 @@ class NavigationPanel {
 
   addNavigationItem(game) {
     const itemHtml = this.view.render(NavigationItem, game);
-
+    console.log('addto aside', itemHtml, game)
+    console.log('this.asideElements', this.asideElements)
     this.asideElements.insertAdjacentHTML('beforeend', itemHtml);
   }
 

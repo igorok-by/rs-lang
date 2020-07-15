@@ -11,7 +11,7 @@
   height: 40px;
   padding: 10px 0;
 
-  background-color: #158fef;
+  background-color: #0DA8C9;
   .container {
     text-align: center;
   }
@@ -42,7 +42,7 @@
 .app-panel {
   height: calc(100vh - 60px);
 
-  background-color: #b3d4fc;
+  background-color: #0DA8C9;
 
   grid-area: app-panel;
   .menuItem {
@@ -56,19 +56,20 @@
 }
 
 .app-main {
-  background-color: #6593fc;
+  background-color: #0DA8C9;;
 
   grid-area: app-main;
   .menuItem {
     width: 150px;
   }
   .game-section{
-    padding: 1px;
+    background-color: #0DA8C9 !important;
+    padding: 0px;
   }
 }
 
 .app-menu-header {
-  background-color: #91fc65;
+  background-color: #0DA8C9;
 
   grid-area: app-panel-header;
 }
