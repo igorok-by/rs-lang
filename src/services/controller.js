@@ -5,6 +5,7 @@ import Lingvist from '../games/lingvist';
 import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
 import Tomfoolery from '../games/tomfoolery';
+import Savanna from '../games/savanna';
 
 class Controller {
   constructor(view, model) {
@@ -18,6 +19,7 @@ class Controller {
     this.speakIt = new SpeakIt(view, model);
     this.sprint = new Sprint(view, model);
     this.tomfoolery = new Tomfoolery(view, model);
+    this.savanna = new Savanna(view, model);
 
     this.games = [
       this.lingvist,
@@ -26,6 +28,7 @@ class Controller {
       this.englishPuzzle,
       this.sprint,
       this.tomfoolery,
+      this.savanna
     ];
 
     this.isInit = false;
