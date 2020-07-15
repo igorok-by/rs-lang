@@ -3,7 +3,6 @@ import Model from '../../services/model.js';
 import View from '../../services/view.js';
 import start from './js/scripts.js';
 import './savanna.scss';
-
 export default class Savanna extends View {
     constructor(view, model) {
         super();

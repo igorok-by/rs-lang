@@ -51,8 +51,6 @@ module.exports = {
           }, {
             loader: 'postcss-loader',
             options: { sourceMap: true, config: { path: 'src/config/postcss.config.js' } },
-            loader : 'postcss-loader',
-            options : {sourceMap : true, config : {path : './src/config/postcss.config.js'}},
           },
         ],
       },
@@ -67,10 +65,6 @@ module.exports = {
           }, {
             loader: 'postcss-loader',
             options: { sourceMap: true, config: { path: 'src/config/postcss.config.js' } },
-
-            loader  : 'postcss-loader',
-            options : {sourceMap : true, config : {path : './src/config/postcss.config.js'}},
-
           }, {
             loader: 'sass-loader',
             options: { sourceMap: true },
@@ -98,10 +92,7 @@ module.exports = {
       { from: './src/games/sprint/assets/img', to: './img/sprint' },
       { from: './src/games/savanna/assets/img', to: './img/savanna' }
     ]),
-<<<<<<< HEAD
 
-=======
->>>>>>> feat: fix game
   ],
   resolve: {
     extensions: ['.js'],
