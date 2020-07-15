@@ -6,7 +6,7 @@ export default class Savanna {
   constructor(view, model) {
     this.view = view;
     this.model = model;
-    this.hash = 'Savanna';
+    this.hash = 'Savannah';
   }
 
   init() {
@@ -21,7 +21,7 @@ export default class Savanna {
   }
 
   display(show) {
-    const html = this.view.render(markup, { title: 'Savanna' });
+    const html = this.view.render(markup, { title: 'Savannah' });
     show(html);
     this.init();
   }
