@@ -1,20 +1,20 @@
-import markup from './about.html';
+import markup from './team.html';
 import Core from './js/scripts';
 import './styles.scss';
 
-class About {
+class Team {
   constructor(view, model) {
     this.view = view;
     this.model = model;
     this.markup = markup;
     this.core = new Core(view, model);
-    this.hash = 'About';
+    this.hash = 'Team';
   }
 
   display(show) {
-    const html = this.view.render(this.markup, { title: 'About' });
+    const html = this.view.render(this.markup, { title: 'Team' });
     this.view.showInModal(html);
     this.core.init(this.view, this.model);
   }
 }
-export default About;
+export default Team;

@@ -8,6 +8,7 @@ import Tomfoolery from '../games/tomfoolery';
 import Savanna from '../games/savanna';
 import Homepage from './homepage/index';
 import About from './about/index';
+import Team from './team/index';
 
 class Controller {
   constructor(view, model) {
@@ -23,6 +24,7 @@ class Controller {
     this.tomfoolery = new Tomfoolery(view, model);
     this.savanna = new Savanna(view, model);
     this.about = new About(view, model);
+    this.team = new Team(view, model);
     this.homepage = new Homepage(view, model);
     this.games = [
       this.homepage,
@@ -43,6 +45,8 @@ class Controller {
     this.view.header.init({
       onSettings: this.showSettings.bind(this),
       onLogin: this.loginToggle.bind(this),
+      onAboutClick: this.showAbout.bind(this),
+      onTeamClick: this.showTeam.bind(this)
     });
 
     this.view.settings.init({
@@ -63,6 +67,15 @@ class Controller {
 
   async onSettingsClose() {
     await this.model.setUserSettings(this.model.settings);
+  }
+
+  showAbout() {
+
+    this.about.display();
+  }
+  showTeam() {
+
+    this.team.display();
   }
 
   showSettings() {
@@ -98,6 +111,9 @@ class Controller {
       this.showGame(this.homepage.hash);
     } else if (this.isInit) {
       switch (hash) {
+        case 'team':
+          this.team.display();
+          break;
         case 'about':
           this.about.display();
           break;
