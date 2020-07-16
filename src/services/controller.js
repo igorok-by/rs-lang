@@ -6,10 +6,8 @@ import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
 import Tomfoolery from '../games/tomfoolery';
 import Savanna from '../games/savanna';
-import Homepage from '../services/homepage/index';
-import About from '../services/about/index';
-
-
+import Homepage from './homepage/index';
+import About from './about/index';
 
 class Controller {
   constructor(view, model) {
@@ -25,8 +23,9 @@ class Controller {
     this.tomfoolery = new Tomfoolery(view, model);
     this.savanna = new Savanna(view, model);
     this.about = new About(view, model);
+    this.homepage = new Homepage(view, model);
     this.games = [
-      Homepage,
+      this.homepage,
       this.lingvist,
       this.audioCall,
       this.speakIt,
@@ -54,7 +53,6 @@ class Controller {
 
     this.games.forEach(this.view.asidePanel.addNavigationItem.bind(this.view.asidePanel));
 
-    console.log('controller', this.view.asidePanel.asideElements);
     this.model.bindDisplayMainPage(this.showGame.bind(this));
 
     this.model.bindDisplayMainSettings(this.view.settings.display.bind(this.view.settings));
@@ -98,10 +96,15 @@ class Controller {
 
   show(hash, params) {
     console.log('hash', hash);
-    if (this.isInit) {
-      switch (hash) {
+    let Hash = hash;
+
+    if (!Hash) {
+      Hash = this.homepage.hash;
+    }
+
+    if (this.isInit || Hash === this.homepage.hash) {
+      switch (Hash) {
         case 'about':
-          console.log('about');
           this.about.display();
           break;
         case 'login':
@@ -111,7 +114,7 @@ class Controller {
           this.view.settings.display(this.model.settings);
           break;
         default:
-          this.showGame(hash);
+          this.showGame(Hash);
       }
     }
   }

@@ -19,7 +19,7 @@ class Router {
 
   init() {
     window.addEventListener('hashchange', this.handleHash.bind(this));
-    // this.handleHash();
+    this.handleHash();
   }
 }
 

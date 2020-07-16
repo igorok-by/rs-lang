@@ -1,24 +1,21 @@
 import markup from './homepage.html';
-import View from '../../services/view';
 import Core from './js/scripts';
-import Model from '../../services/model';
 import './styles.scss';
 
-class Homepage extends View {
-  constructor(template, basic) {
-    super();
-    this.markup = template;
-    this.core = basic;
+class Homepage {
+  constructor(view, model) {
+    this.view = view;
+    this.model = model;
+    this.markup = markup;
+    this.core = new Core(view);
     this.hash = 'Homepage';
   }
 
-
-
   display(show) {
-    const html = this.render(this.markup, { title: 'Home' });
+    const html = this.view.render(this.markup, { title: 'Home' });
     show(html);
     this.core.init();
   }
 }
 
-export default new Homepage(markup, new Core(new Model()));
+export default Homepage;

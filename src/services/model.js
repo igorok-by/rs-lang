@@ -54,25 +54,19 @@ class Model {
   }
 
   setUser({ token = '', userId = '' } = {}) {
-    console.log('@setUser : ', userId);
     this.token = token;
     this.userId = userId;
     this.save('user', { token, userId });
   }
 
   async SettingsInit() {
-    console.log('SettingsInit', this.token);
-
     try {
-      console.log('SettingsInit', this.settings);
       const settings = await this.getUserSettings();
-      console.log('SettingsInit cloud', settings);
       if (!settings) {
         this.setUserSettings(this.defaultSettings);
         this.settings = this.defaultSettings;
       } else {
         this.settings = settings;
-        console.log('SettingsInit ok', settings);
       }
     } catch (e) {
       if (e.response.status === 404) {

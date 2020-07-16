@@ -41,7 +41,6 @@ class View extends baseView {
   }
 
   showIn(targetElement, html) {
-    console.log('showIn', targetElement, html)
     // const targetElement = this[targetElement];
     if (targetElement instanceof HTMLElement) {
       targetElement.innerHTML = html;
