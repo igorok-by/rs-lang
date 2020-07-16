@@ -33,7 +33,6 @@ class Controller {
       this.sprint,
       this.tomfoolery,
       this.savanna,
-
     ];
 
     this.model.bindGameSettings(this.lingvist);
@@ -95,15 +94,10 @@ class Controller {
   }
 
   show(hash, params) {
-    console.log('hash', hash);
-    let Hash = hash;
-
-    if (!Hash) {
-      Hash = this.homepage.hash;
-    }
-
-    if (this.isInit || Hash === this.homepage.hash) {
-      switch (Hash) {
+    if (!hash || hash === this.homepage.hash) {
+      this.showGame(this.homepage.hash);
+    } else if (this.isInit) {
+      switch (hash) {
         case 'about':
           this.about.display();
           break;
@@ -114,8 +108,10 @@ class Controller {
           this.view.settings.display(this.model.settings);
           break;
         default:
-          this.showGame(Hash);
+          this.showGame(hash);
       }
+    } else {
+      this.login.display(params);
     }
   }
 

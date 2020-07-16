@@ -57,7 +57,6 @@ export default class Difficult {
       // start({ model: this.model, page, group, isDot, buttonResult, buttonSpeak, mainImage, buttonRestart });
 
       // start(i, point,  isDot, buttonResult: this.buttonResult, buttonSpeak: this.buttonSpeak, mainImage: this.mainImage, buttonRestart: this.buttonRestart )
-      console.log('difficult start', this.model);
       start({
         model: this.model,
         page,

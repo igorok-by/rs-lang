@@ -49,7 +49,6 @@ class SpeakIt {
       const isDot = true;
       // page,group,isDot,buttonResult,buttonSpeak,mainImage,buttonRestart
       // start(1, 2, true, buttonResult, buttonSpeak, mainImage, buttonRestart);
-      console.log('start', this.model);
       start({ model: this.model, page, group, isDot, buttonResult, buttonSpeak, mainImage, buttonRestart });
       document.querySelector('.speak__container').style.display = 'flex';
       document.querySelector('.speak__main').style.display = 'none';

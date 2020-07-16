@@ -12,11 +12,8 @@ class ResultsController {
   }
 
   async show() {
-    console.log( '@show : ' );
     const self = this;
     await this.view.showInModal(Results);
-
-    console.log('onFinish');
 
     setTimeout(this.show.bind(this), 1000);
   }

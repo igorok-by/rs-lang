@@ -73,12 +73,10 @@ class Model {
         this.setUserSettings(this.defaultSettings);
         this.settings = this.defaultSettings;
       }
-      console.log(e.response);
     }
   }
 
   async signIn(user) {
-    console.log('login', user);
     const url = UrlPath(REST_URL, 'signin');
     const result = await FetchRequire(url, {
       method: 'POST',
@@ -134,7 +132,6 @@ class Model {
 
   async setUserSettings({ wordsPerDay, optional } = {}) {
     const url = UrlPath(REST_URL, 'users', this.userId, 'settings');
-    console.log('setUserSettings', url, { token: this.token });
 
     const result = await FetchRequire(url, {
       method: 'PUT',
@@ -145,12 +142,10 @@ class Model {
       },
       body: JSON.stringify({ wordsPerDay, optional }),
     });
-    console.log('setUserSettings', result);
     return result;
   }
 
   async createUserWord({ wordId, word }) {
-    console.log('createUserWord', wordId, word);
     const url = UrlPath(REST_URL, 'users', this.userId, 'words', wordId);
     const result = await FetchRequire(url, {
       method: 'POST',
@@ -295,7 +290,6 @@ class Model {
   }
 
   async mainSettingsChange(setting, value) {
-    console.log('@mainSettingsChange : ', setting, value);
     const hasOwn = Object.prototype.hasOwnProperty;
 
     if (setting === 'wordsPerDay') {
