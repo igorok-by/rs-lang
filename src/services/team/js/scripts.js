@@ -30,12 +30,11 @@ export default class Core {
 
 
   async init() {
-    this.closeElement = this.view.getElement('.about_header__link');
+    this.closeElement = this.view.getElement('.team_header__link');
     this.closeElement.addEventListener('click', () => {
       this.view.hideModal();
     })
     console.log('element', this.closeElement);
 
   }
-
 }
