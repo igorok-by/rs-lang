@@ -6,7 +6,10 @@ import AudioCall from '../games/audio-call';
 import Sprint from '../games/sprint';
 import Tomfoolery from '../games/tomfoolery';
 import Savanna from '../games/savanna';
-import Homepage from '../services/homepage/index'
+import Homepage from '../services/homepage/index';
+import About from '../services/about/index';
+
+
 
 class Controller {
   constructor(view, model) {
@@ -21,6 +24,7 @@ class Controller {
     this.sprint = new Sprint(view, model);
     this.tomfoolery = new Tomfoolery(view, model);
     this.savanna = new Savanna(view, model);
+    this.about = new About(view, model);
     this.games = [
       Homepage,
       this.lingvist,
@@ -30,6 +34,7 @@ class Controller {
       this.sprint,
       this.tomfoolery,
       this.savanna,
+
     ];
 
     this.model.bindGameSettings(this.lingvist);
@@ -92,8 +97,13 @@ class Controller {
   }
 
   show(hash, params) {
+    console.log('hash', hash);
     if (this.isInit) {
       switch (hash) {
+        case 'about':
+          console.log('about');
+          this.about.display();
+          break;
         case 'login':
           this.login.display(params);
           break;

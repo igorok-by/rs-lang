@@ -13,6 +13,7 @@ class HeaderHandler {
     this.container = this.view.getElement('.app-header__container');
     this.loginButton = this.view.getElement('.app-header__button_login');
     this.settingsButton = this.view.getElement('.app-header__button_settings');
+    this.aboutButton = this.view.getElement('.app-header__button_about');
 
     this.bindLoginClick(onLogin);
     this.bindSettingsClick(onSettings);
@@ -32,6 +33,8 @@ class HeaderHandler {
       handler();
     });
   }
+
+
 
   bindLoginClick(handler) {
     this.loginButton.addEventListener('click', () => {
