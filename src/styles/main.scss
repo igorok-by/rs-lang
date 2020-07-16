@@ -40,6 +40,9 @@
 }
 
 .app-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   height: calc(100vh - 60px);
 
   background-color: #0DA8C9;

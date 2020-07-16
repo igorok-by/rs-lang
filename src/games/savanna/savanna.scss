@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .game-section {
   display: flex;
   justify-content: center;
@@ -6,7 +8,7 @@
 
 .savanna_game-wrapper {
   margin: 20px;
-  
+
     width: 100%;
     height: 100%;
     border-radius: 20px;
@@ -41,6 +43,7 @@
     letter-spacing: 13px;
     font-weight: 300;
     padding-left: 20px;
+    font-family: $game-title-header;
 }
 
 .savanna__intro-text {
@@ -52,6 +55,7 @@
     color: #fff;
     opacity: .8;
     text-align: center;
+    font-family: $game-describe-text;
 }
 
 .savanna__btn {
@@ -70,6 +74,7 @@
     cursor: pointer;
     transition: .15s;
     box-shadow: 0 0 0 1px hsla(0,0%,100%,.1), 0 2px 4px 0 rgba(14,30,37,.12);
+  font-family: $game-describe-text;
 }
 
 .savanna__btn:hover{

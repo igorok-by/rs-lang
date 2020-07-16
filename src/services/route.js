@@ -17,9 +17,15 @@ class Router {
     this.controller.show(name, params);
   }
 
+
+  setHash(hash) {
+    window.location.hash = hash;
+  }
+
   init() {
     window.addEventListener('hashchange', this.handleHash.bind(this));
     this.handleHash();
+    this.controller.bindChangeHash(this.setHash.bind(this));
   }
 }
 

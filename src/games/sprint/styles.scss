@@ -1,3 +1,5 @@
+@import "../../styles/variables";
+
 .sprint.game-section{
   position: relative;
 }
@@ -24,6 +26,7 @@
   letter-spacing: 13px;
   font-weight: 300;
   padding-left: 20px;
+  font-family: $game-title-header;
 }
 .sprint__intro-text {
   max-width: 600px;
@@ -34,6 +37,7 @@
   color: #fff;
   opacity: .8;
   text-align: center;
+  font-family: $game-describe-text;
 }
 .sprint__btn {
   display: inline-block;
@@ -51,6 +55,7 @@
   transition: .15s;
   box-shadow: 0 0 0 1px rgba(255,255,255,.1), 0 2px 4px 0 rgba(14,30,37,.12);
   cursor: pointer;
+  font-family: $game-describe-text;
 }
 
 @mixin flex-col{

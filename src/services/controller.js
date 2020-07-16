@@ -75,8 +75,8 @@ class Controller {
       this.model.logout();
       this.view.header.changeLoginedTo(false);
       this.view.header.displaySettingsButton(false);
+      this.changeHash('');
       this.view.showIn(this.view.main, '');
-
       this.isInit = false;
     }
 
@@ -117,6 +117,10 @@ class Controller {
           this.showGame(Hash);
       }
     }
+  }
+
+  bindChangeHash(cb) {
+    this.changeHash = cb;
   }
 
   showGame(name) {

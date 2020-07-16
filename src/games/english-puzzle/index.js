@@ -5,7 +5,7 @@ class EnglishPuzzle {
   constructor(view, model) {
     this.gui = new GUI(view);
     this.model = new EnglishPuzzleModel(model);
-    this.hash = 'englishPuzzle';
+    this.hash = 'puzzle';
   }
 
   init() {

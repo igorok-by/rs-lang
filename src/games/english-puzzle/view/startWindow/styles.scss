@@ -26,7 +26,7 @@
     text-transform: uppercase;
     letter-spacing: 13px;
     font-weight: 300;
-    font-family: "Lato-Black";
+    font-family: $game-title-header;
   }
   p {
     max-width: 600px;
@@ -34,8 +34,9 @@
     font-size: 20px;
     line-height: 1.4;
     font-weight: 300;
-    color: #d2fff5;
+    color: #ffffff;
     opacity: .8;
+    font-family: $game-describe-text;
   }
   button {
     display: inline-block;
