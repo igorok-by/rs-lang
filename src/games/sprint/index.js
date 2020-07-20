@@ -9,14 +9,14 @@ class Sprint { //extends View
   constructor(view, model) {
     // super();
     this.view = view;
-    this.model = model;
+    // this.model = model;
     this.hash = 'Sprint';
   }
 
   init() {
     document.querySelector('.sprint__img').src = './img/sprint/speaker.png'
     document.querySelector('.sprint__btn').addEventListener('click', ()=>{
-      start({ model: this.model });
+      start();
       document.querySelector('.sprint__container').style.display = 'flex';
       document.querySelector('.sprint__main').style.display = 'none'
     })
