@@ -3,13 +3,10 @@ import { messages } from '../constants/index';
 import { REST_URL, MEDIA_CONTENT_URL } from '../utils/urls';
 import { FetchRequire, UrlPath, UrlConstructor } from '../utils/fetch';
 
-import View from './view';
-
 const synth = window.speechSynthesis;
 const STORAGE_NAME = 'rs-lang';
 
 class Model {
-  // TODO
   constructor() {
     this.token = '';
     this.userId = '';
@@ -32,12 +29,6 @@ class Model {
     };
     this.saveSettingsTimeout = null;
   }
-
-  // async init() {
-  //   console.log('model.init');
-  //   await this.userInit();
-  //   await this.SettingsInit();
-  // }
 
   userInit() {
     if (!this.userId) {
@@ -93,15 +84,7 @@ class Model {
 
   logout() {
     this.setUser();
-    // this.displayLogin();
   }
-  // message: "Authenticated"
-  // refreshToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMGNhMDBhZjI2ZGUyMDAxNzQ3YzYwYSIsInRva2VuSWQiOiIxMDE2MzkxMi00ZmExLTQyZWUtYmM4ZS1mZWU4YWU3ZDdhOGYiLCJpYXQiOjE1OTQ2NjMwMzgsImV4cCI6MTU5NDY3OTIzOH0.aawfeoMJftXVbk2J6F_wMH3ZAciK7aZWtNijAlljY5Y"
-  // token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmMGNhMDBhZjI2ZGUyMDAxNzQ3YzYwYSIsImlhdCI6MTU5NDY2MzAzOCwiZXhwIjoxNTk0Njc3NDM4fQ.DsrF0dyJDtG0lviibHQLLIFa_DN2YEM_Er8nIG4PpTI"
-  // userId: "5f0ca00af26de2001747c60a"
-
-  // email: "test23@rrr.by"
-  // id: "5f0ca0cbf26de2001747c647"
 
   async createUser(user) {
     const url = UrlPath(REST_URL, 'users');
@@ -188,21 +171,6 @@ class Model {
     return result;
   }
 
-  // id: "5e9f5ee35eb9e72bc21af4af"
-  // group: 0
-  // page: 0
-  // word: "typical"
-  // image: "files/01_0016.jpg"
-  // audio: "files/01_0016.mp3"
-  // audioMeaning: "files/01_0016_meaning.mp3"
-  // audioExample: "files/01_0016_example.mp3"
-  // textMeaning: "If something is <i>typical</i>, it is normal, or something that usually happens."
-  // textExample: "My <b>typical</b> breakfast is toast and eggs."
-  // transcription: "[típikəl]"
-  // textExampleTranslate: "Мой типичный завтрак - тост и яйца"
-  // textMeaningTranslate: "Если что-то типичное, это нормально, или что-то, что обычно происходит"
-  // wordTranslate: "типичный"
-  // wordsPerExampleSentence: 7
   async getWords({ group, page } = {}) {
     let url = UrlPath(REST_URL, 'words');
 

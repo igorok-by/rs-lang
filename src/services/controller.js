@@ -12,7 +12,6 @@ import Team from './team/index';
 
 class Controller {
   constructor(view, model) {
-    this.mainGame = Lingvist;
     this.view = view;
     this.model = model;
     this.login = new Login(view, model);
@@ -46,7 +45,7 @@ class Controller {
       onSettings: this.showSettings.bind(this),
       onLogin: this.loginToggle.bind(this),
       onAboutClick: this.showAbout.bind(this),
-      onTeamClick: this.showTeam.bind(this)
+      onTeamClick: this.showTeam.bind(this),
     });
 
     this.view.settings.init({
@@ -70,11 +69,10 @@ class Controller {
   }
 
   showAbout() {
-
     this.about.display();
   }
-  showTeam() {
 
+  showTeam() {
     this.team.display();
   }
 

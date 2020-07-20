@@ -17,7 +17,6 @@ class Router {
     this.controller.show(name, params);
   }
 
-
   setHash(hash) {
     window.location.hash = hash;
   }

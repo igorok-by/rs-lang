@@ -41,8 +41,8 @@ class View extends baseView {
   }
 
   showIn(targetElement, html) {
-    // const targetElement = this[targetElement];
     if (targetElement instanceof HTMLElement) {
+    // eslint-disable-next-line no-param-reassign
       targetElement.innerHTML = html;
     }
   }

@@ -8,6 +8,7 @@ import * as constants from './js/utils/constants';
 import create from './js/utils/create';
 import Input from './js/Input';
 import ProgressBar from './js/ProgressBar';
+// eslint-disable-next-line import/order
 import { Promise } from 'core-js';
 
 class Lingvist {
