@@ -1,11 +1,9 @@
-import Model from '../../../services/model';
-// const model = new Model();
 
 const errorAudio = new Audio('./img/sprint/error.mp3')
 const correctAudio = new Audio('./img/sprint/correct.mp3')
 
 
-export default function start({ model, isTimer = true }){
+export default function start(isTimer = true){
     
     document.querySelector('.sprint__new').onclick = () => {
         document.querySelector('.sprint__result').style.display = 'none'
@@ -18,7 +16,7 @@ export default function start({ model, isTimer = true }){
         document.querySelector('.sprint__ru').innerHTML = ''
         document.querySelectorAll('.sprint__res_word').forEach((el)=>{el.remove()})
 
-        start({ model, isTimer: true });
+        start(true);
     }
 
     const timerBlock = document.querySelector('.sprint__timer');
@@ -50,15 +48,27 @@ export default function start({ model, isTimer = true }){
 
 
     async function getWord(page,group) {  
+
+        async function getWords(page,group) {
+            const url = `https://afternoon-falls-25894.herokuapp.com/words?page=${group}&group=${page}`;
+            const res = await fetch(url);
+            const json = await res.json();
+            return json
+        }
+        
+
         let fakeGroup = group>=29 ? group-1 : group+1;
 
-        let fakeWords = await model.getWords(page,fakeGroup);
-        let trueWords = await model.getWords(page,group);
+        let fakeWords = await getWords(page,fakeGroup);
+        let trueWords = await getWords(page,group);
 
 
         let trueWord =  trueWords.map(el => el.word);
         let fakeWord = fakeWords.map(el => el.word);
         let audio = trueWords.map(el => el.audio)
+
+        // console.log(page,fakeGroup, '---', page,group)
+        // console.log(fakeWord, '---', trueWord)
 
         check(trueWord, fakeWord, audio)
     }
@@ -76,6 +86,8 @@ export default function start({ model, isTimer = true }){
         translateWord(trues[randWord],word,trues,fakes,audio[randWord],audio)
 
         function translateWord(trues,word,trueWord,fakeWord,audioWord, audio) {
+
+            console.log(trueWord,fakeWord)
             
 
                 document.querySelector('.sprint__img').onclick = () => {
@@ -96,16 +108,14 @@ export default function start({ model, isTimer = true }){
                         document.querySelector('.sprint__ru').innerHTML = data.text;
 
                         document.querySelector('.sprint__right').onclick = ()=>{
-                            trueWord.length == 0 ? start(false) : check(trueWord, fakeWord, audio)
-
                             word[0] == 1 ? correct(trues) : error(trues);
+                            trueWord.length == 0 ? start(false) : check(trueWord, fakeWord, audio)
                         }
                         
 
                         document.querySelector('.sprint__noright').onclick = ()=>{
-                            trueWord.length == 0 ? start(false) : check(trueWord, fakeWord, audio)
-                            
                             word[0] == 0 ? correct(trues) : error(trues);
+                            trueWord.length == 0 ? start(false) : check(trueWord, fakeWord, audio)
                         }
 
 
